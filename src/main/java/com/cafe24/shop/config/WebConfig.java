@@ -18,5 +18,4 @@ import com.cafe24.config.web.SwaggerConfig;
 @Import({MVCConfig.class, MessageConfig.class,SwaggerConfig.class})//SecurityConfig.class,FileuploadConfig.class
 public class WebConfig {
 	
-	
 }

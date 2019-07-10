@@ -9,20 +9,27 @@ public class UserVo {
 	private String password;
 	private String email;
 	private String phone;
-	private enum sex{ USER,ADMIN };
-	private enum auth{ USER,ADMIN };
+	private String gender;
+	private String auth;
 	private String join_date;
 	private String wdraw_date;
-
-	/*
-	 * @NotEmpty
-	 * 
-	 * @Length(min=2, max=8) private String name;
-	 * 
-	 * @Email
-	 * 
-	 * @NotEmpty private String email;
-	 */
+	
+	public UserVo() {}
+	
+	public UserVo(Long no, String name, String id, String password, String email, String phone, String gender,
+			String auth, String join_date, String wdraw_date) {
+		super();
+		this.no = no;
+		this.name = name;
+		this.id = id;
+		this.password = password;
+		this.email = email;
+		this.phone = phone;
+		this.gender = gender;
+		this.auth = auth;
+		this.join_date = join_date;
+		this.wdraw_date = wdraw_date;
+	}
 	
 	
 	public Long getNo() {
@@ -61,6 +68,18 @@ public class UserVo {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public String getAuth() {
+		return auth;
+	}
+	public void setAuth(String auth) {
+		this.auth = auth;
+	}
 	public String getJoin_date() {
 		return join_date;
 	}
@@ -77,8 +96,19 @@ public class UserVo {
 	@Override
 	public String toString() {
 		return "UserVo [no=" + no + ", name=" + name + ", id=" + id + ", password=" + password + ", email=" + email
-				+ ", phone=" + phone + ", join_date=" + join_date + ", wdraw_date=" + wdraw_date + "]";
+				+ ", phone=" + phone + ", gender=" + gender + ", auth=" + auth + ", join_date=" + join_date
+				+ ", wdraw_date=" + wdraw_date + "]";
 	}
+
+	/*
+	 * @NotEmpty
+	 * 
+	 * @Length(min=2, max=8) private String name;
+	 * 
+	 * @Email
+	 * 
+	 * @NotEmpty private String email;
+	 */
 	
 	
 	
