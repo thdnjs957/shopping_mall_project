@@ -6,6 +6,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -34,7 +35,7 @@ import com.google.gson.Gson;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes= {AppConfig.class, WebConfig.class})
+@ContextConfiguration(classes= {AppConfig.class, TestWebConfig.class})
 @WebAppConfiguration
 public class UserControllerTest {
 	
@@ -48,17 +49,8 @@ public class UserControllerTest {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 	
-	@Autowired
-	private UserService userService; 
-	
-	
 	@Test
-	public void testDIUserService() {
-		assertNotNull(userService);
-	}
-	
-	@Test
-	public void testCheckEmail() throws Exception{
+	public void testA_CheckEmail() throws Exception{
 		ResultActions resultActions =
 				mockMvc
 				.perform(get("/api/user/checkemail").contentType(MediaType.APPLICATION_JSON));
@@ -71,9 +63,8 @@ public class UserControllerTest {
 		
 	}
 	
-	
 	@Test
-	public void testInsertUser() throws Exception{
+	public void testB_JoinUser() throws Exception{
 
 		UserVo vo = new UserVo();
 		
@@ -85,63 +76,58 @@ public class UserControllerTest {
 		
 		ResultActions resultActions = 
 			mockMvc
-			.perform(post("/api/user/add").contentType(MediaType.APPLICATION_JSON)
+			.perform(post("/api/user/join").contentType(MediaType.APPLICATION_JSON)
 			 .content(new Gson().toJson(vo)))
 			.andExpect(status().isOk())
-			.andDo(print());
+			.andDo(print())
+			.andExpect(jsonPath("$.result", is("success")))
+			.andExpect(jsonPath("$.data.result", is(true)));
 		
-		String result = resultActions.andReturn().getResponse().getContentAsString();
-			
-		assertEquals(result,"\"ok\"");
+		//String result = resultActions.andReturn().getResponse().getContentAsString();
+		//assertEquals(result,"\"ok\"");
 	}
 	
-	@Ignore
+	
 	@Test
-	public void testGetUser() throws Exception{
-
-//		Long no = null;
+	public void testC_LoginUser() throws Exception{
 		
-		ResultActions resultActions = 
-			mockMvc
-			.perform(get("/api/user/{no}").contentType(MediaType.APPLICATION_JSON));
+		ResultActions resultActions =
+				mockMvc
+				.perform(post("/api/user/login").param("id", "thdnjs9570")
+						.param("password", "1234")
+						.contentType(MediaType.APPLICATION_JSON));
 		
-
-		//가져온 userVo의 no 이 요청한 no 이랑 같으면 통과
-		resultActions.andExpect(status().isOk())
-		.andDo(print());
-		//.andExpect(jsonPath("$.data.no", is(no)));
+		resultActions
+				.andExpect(status().isOk())
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("success")))
+				.andExpect(jsonPath("$.data.userVo.id", is("thdnjs9570")))
+				.andExpect(jsonPath("$.data.userVo.name", is("박소원")))
+				;
 		
-		
-		//assertEquals(resultActions,"ok");
-
 	}
 	
-	@Ignore
+	
 	@Test
-	public void testUpdateUser() throws Exception{
+	public void testD_UpdateUser() throws Exception{
 
 		UserVo vo = new UserVo();
-		
+		//수정
 		vo.setName("박소원");
-		vo.setId("thdnjs9570");
-		vo.setPassword("1234");
 		vo.setEmail("thdnjs9570@naver.com");
-		vo.setPhone("01076363123");
+		vo.setPhone("0101111111");
 		
 		ResultActions resultActions = 
 			mockMvc
-			.perform(post("/api/user/update").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+			.perform(put("/api/user/update").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
 		resultActions.andExpect(status().isOk())
 		.andDo(print())
 		.andExpect(jsonPath("$.result", is("success")))
-		.andExpect(jsonPath("$.data.name", is(vo.getName())))
-		.andExpect(jsonPath("$.data.id", is(vo.getId())))
-		.andExpect(jsonPath("$.data.email", is(vo.getEmail())))
-		.andExpect(jsonPath("$.data.phone", is(vo.getPhone())))
+		.andExpect(jsonPath("$.data", is(true)))
 		;
+		
 
 	}
-	
 	
 }
