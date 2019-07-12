@@ -72,7 +72,6 @@ public class UserController {
 		
 	}
 	
-	
 	@ApiOperation(value="회원 로그인 form")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="userVo", value ="회원 userVo", required=true, dataType="UserVo", defaultValue="")
@@ -85,7 +84,6 @@ public class UserController {
 		return JSONResult.success(returnView);
 		
 	}
-	
 	
 	@ApiOperation(value="회원 로그인")
 	@ApiImplicitParams({
@@ -110,7 +108,6 @@ public class UserController {
 		
 	}
 	
-	
 	@ApiOperation(value="회원 정보 수정 form")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="userVo", value ="회원 userVo", required=true, dataType="UserVo", defaultValue="")
@@ -121,7 +118,6 @@ public class UserController {
 		String returnView = "user/update";
 		
 		return JSONResult.success(returnView);
-		
 	}
 	
 	@ApiOperation(value="회원 정보 수정")
@@ -143,7 +139,6 @@ public class UserController {
 		boolean result = userService.updateUser(userVo); 
 		
 		return JSONResult.success(result);
-		
 	}
 	
 }

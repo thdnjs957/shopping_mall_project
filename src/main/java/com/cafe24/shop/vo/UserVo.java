@@ -1,14 +1,32 @@
 package com.cafe24.shop.vo;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class UserVo {
 	
 	private Long no;
+	
+	@NotEmpty
+	@Length(min=2, max=5)
 	private String name;
+	
+	@NotEmpty
+	@Length(min=2)
 	private String id;
+	
+	@NotEmpty
+	@Pattern(regexp="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{8,}") //최소 8자리에 숫자, 문자, 특수문자 각각 1개 이상 포함
 	private String password;
+	
+	@NotEmpty
+	@Email
 	private String email;
 	private String phone;
+	
 	private String gender;
 	private String role;
 	private String join_date;
@@ -18,7 +36,6 @@ public class UserVo {
 
 	public UserVo(Long no, String name, String id, String password, String email, String phone, String gender,
 			String role, String join_date, String wdraw_date) {
-		super();
 		this.no = no;
 		this.name = name;
 		this.id = id;
@@ -118,16 +135,5 @@ public class UserVo {
 				+ ", phone=" + phone + ", gender=" + gender + ", role=" + role + ", join_date=" + join_date
 				+ ", wdraw_date=" + wdraw_date + "]";
 	}
-	
-	
-	/*
-	 * @NotEmpty
-	 * 
-	 * @Length(min=2, max=8) private String name;
-	 * 
-	 * @Email
-	 * 
-	 * @NotEmpty private String email;
-	 */
 	
 }
