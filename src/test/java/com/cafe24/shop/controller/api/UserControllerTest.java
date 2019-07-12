@@ -60,7 +60,6 @@ public class UserControllerTest {
 				.andDo(print())
 				.andExpect(jsonPath("$.result", is("success")))
 				;
-		
 	}
 	
 	@Test
@@ -83,8 +82,6 @@ public class UserControllerTest {
 			.andExpect(jsonPath("$.result", is("success")))
 			.andExpect(jsonPath("$.data.result", is(true)));
 		
-		//String result = resultActions.andReturn().getResponse().getContentAsString();
-		//assertEquals(result,"\"ok\"");
 	}
 	
 	
@@ -107,7 +104,6 @@ public class UserControllerTest {
 		
 	}
 	
-	
 	@Test
 	public void testD_UpdateUser() throws Exception{
 
@@ -126,8 +122,6 @@ public class UserControllerTest {
 		.andExpect(jsonPath("$.result", is("success")))
 		.andExpect(jsonPath("$.data", is(true)))
 		;
-		
-
 	}
 	
 }

@@ -11,11 +11,11 @@ public class UserVo {
 	private Long no;
 	
 	@NotEmpty
-	@Length(min=2, max=5)
+	@Length(min=2, max=6)
 	private String name;
 	
 	@NotEmpty
-	@Length(min=2)
+	@Length(min=2, max=10)
 	private String id;
 	
 	@NotEmpty

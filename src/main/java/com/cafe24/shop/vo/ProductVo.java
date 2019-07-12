@@ -1,11 +1,16 @@
 package com.cafe24.shop.vo;
 
+
 public class ProductVo {
 
 	private Long no;
 	private String name;
 	private String summary;
+	
+	//@NotNull
+	//@Pattern(regexp="(^[0-9]*$)") //숫자만 
 	private int price;
+	
 	private String is_show;
 	private String detail;
 	private int tot_stock;

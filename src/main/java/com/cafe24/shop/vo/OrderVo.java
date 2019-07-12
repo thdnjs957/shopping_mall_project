@@ -1,6 +1,7 @@
 package com.cafe24.shop.vo;
 
 public class OrderVo {
+	
 	private Long no;
 	private String ju_name;
 	private String ju_phone;
