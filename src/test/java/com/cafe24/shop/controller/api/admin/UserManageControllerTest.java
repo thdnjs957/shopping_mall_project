@@ -68,7 +68,7 @@ private MockMvc mockMvc;
 		
 		ResultActions resultActions = 
 				mockMvc
-				.perform(post("/api/admin/userManage").param("name", "박소원")
+				.perform(post("/api/admin/userManage/searchUser").param("name", "박소원")
 						.param("id", "thdnjs9570").param("isOrdered","Y").contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions.andExpect(status().isOk())
@@ -88,7 +88,7 @@ private MockMvc mockMvc;
 		
 		ResultActions resultActions = 
 				mockMvc
-				.perform(post("/api/admin/searchUser").param("orderInquery", "201907120001")
+				.perform(post("/api/admin/userManage/searchUser").param("orderInquery", "201907120001")
 						.param("isOrdered","Y").contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions.andExpect(status().isOk())

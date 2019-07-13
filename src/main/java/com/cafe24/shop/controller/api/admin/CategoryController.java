@@ -7,7 +7,10 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +20,6 @@ import com.cafe24.security.Auth;
 import com.cafe24.shop.dto.JSONResult;
 import com.cafe24.shop.service.CategoryService;
 import com.cafe24.shop.vo.CategoryVo;
-import com.cafe24.shop.vo.ProductVo;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -41,7 +43,7 @@ public class CategoryController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="categoryVo", value ="카테고리 categoryVo", required=true, dataType="categoryVo", defaultValue="")
 	})
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@PostMapping("/register")
 	public JSONResult productRegister(@RequestBody @Valid CategoryVo vo ,BindingResult b_result) {
 		
 		if(b_result.hasErrors()) {
@@ -60,7 +62,7 @@ public class CategoryController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="categoryVo", value ="카테고리 categoryVo", required=true, dataType="categoryVo", defaultValue="")
 	})
-	@RequestMapping(value = "/{no}", method = RequestMethod.PUT)
+	@PutMapping("/{no}")
 	public JSONResult categoryUpdate(@PathVariable(value="no") Long no,@RequestBody @Valid CategoryVo vo) { 
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -79,7 +81,7 @@ public class CategoryController {
 	//관리자 상품 삭제
 	@Auth(role=Auth.Role.ADMIN)
 	@ApiOperation(value="관리자 카테고리 삭제")
-	@RequestMapping(value = "/{no}", method = RequestMethod.DELETE)
+	@DeleteMapping("/{no}")
 	public JSONResult categoryDelete(@PathVariable(value="no") Long no) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();

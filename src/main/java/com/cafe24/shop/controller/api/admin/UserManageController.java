@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cafe24.security.Auth;
 import com.cafe24.shop.dto.JSONResult;
 import com.cafe24.shop.service.UserService;
-import com.cafe24.shop.vo.ProductVo;
 import com.cafe24.shop.vo.UserVo;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -31,7 +32,7 @@ public class UserManageController {
 	//관리자 고객 목록 조회
 	@Auth(role=Auth.Role.ADMIN)
 	@ApiOperation(value="관리자 고객 목록 조회")
-	@RequestMapping(value = "", method = RequestMethod.GET)
+	@GetMapping("")
 	public JSONResult manageList() {
 		
 		//고객 리스트
@@ -49,7 +50,7 @@ public class UserManageController {
          @ApiImplicitParam(name = "orderInquery", value = "비회원주문번호", dataType = "string", paramType = "query", defaultValue = ""),
          @ApiImplicitParam(name = "isOrdered", value = "주문여부", dataType = "string", paramType = "query", defaultValue = ""),
 	})
-	@RequestMapping(value = "/searchUser", method = RequestMethod.POST)
+	@PostMapping("/searchUser")
 	public JSONResult userSearch(@RequestParam(value = "name", defaultValue = "") String name,
 			@RequestParam(value = "id", defaultValue = "") String id,
 			@RequestParam(value = "orderInquery", defaultValue = "") String orderInquery,

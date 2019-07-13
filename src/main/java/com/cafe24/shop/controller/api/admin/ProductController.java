@@ -8,7 +8,11 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,7 +47,7 @@ public class ProductController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="productVo", value ="상품 productVo", required=true, dataType="ProductVo", defaultValue="")
 	})
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@PostMapping("/register")
 	public JSONResult productRegister(@RequestBody @Valid ProductVo vo ,BindingResult b_result) {
 		
 		if(b_result.hasErrors()) {
@@ -60,7 +64,7 @@ public class ProductController {
 	//관리자 상품 목록 조회
 	@Auth(role=Auth.Role.ADMIN)
 	@ApiOperation(value="관리자 상품 목록 조회")
-	@RequestMapping(value = "", method = RequestMethod.GET)
+	@GetMapping("")
 	public JSONResult productList() {
 		
 		//상품 리스트
@@ -75,9 +79,8 @@ public class ProductController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="productVo", value ="상품 productVo", required=true, dataType="ProductVo", defaultValue="")
 	})
-	@RequestMapping(value = "", method = RequestMethod.POST)
+	@PostMapping("")
 	public JSONResult productSearch(@RequestBody @Valid ProductVo vo) {
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", vo.getName());
 		map.put("categoryNo",vo.getCategory_no());
@@ -92,7 +95,7 @@ public class ProductController {
 	//관리자 상품 삭제
 	@Auth(role=Auth.Role.ADMIN)
 	@ApiOperation(value="관리자 상품 삭제")
-	@RequestMapping(value = "/{no}", method = RequestMethod.DELETE)
+	@DeleteMapping("/{no}")
 	public JSONResult productDelete(@PathVariable(value="no") Long no) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -112,7 +115,7 @@ public class ProductController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="productVo", value ="상품 productVo", required=true, dataType="ProductVo", defaultValue="")
 	})
-	@RequestMapping(value = "/{no}", method = RequestMethod.PUT)
+	@PutMapping("/{no}")
 	public JSONResult productUpdate(@PathVariable(value="no") Long no,@RequestBody @Valid ProductVo vo) { 
 		
 		Map<String, Object> map = new HashMap<String, Object>();

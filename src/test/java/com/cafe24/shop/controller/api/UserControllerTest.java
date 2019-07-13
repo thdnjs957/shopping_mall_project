@@ -51,10 +51,10 @@ public class UserControllerTest {
 	
 	@Test
 	public void testA_CheckEmail() throws Exception{
+		
 		ResultActions resultActions =
 				mockMvc
 				.perform(get("/api/user/checkemail").contentType(MediaType.APPLICATION_JSON));
-		
 		resultActions
 				.andExpect(status().isOk())
 				.andDo(print())
@@ -89,10 +89,10 @@ public class UserControllerTest {
 	public void testC_LoginUser() throws Exception{
 		
 		ResultActions resultActions =
-				mockMvc
-				.perform(post("/api/user/login").param("id", "thdnjs9570")
-						.param("password", "1234")
-						.contentType(MediaType.APPLICATION_JSON));
+			mockMvc
+			.perform(post("/api/user/login").param("id", "thdnjs9570")
+			.param("password", "1234")
+			.contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions
 				.andExpect(status().isOk())

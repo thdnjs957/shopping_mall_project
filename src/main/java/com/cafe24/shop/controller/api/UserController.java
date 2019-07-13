@@ -8,9 +8,11 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +33,7 @@ public class UserController {
 	private UserService userService;
 
 	@ApiOperation(value="회원가입 form")
-	@RequestMapping(value = "/join", method = RequestMethod.GET)
+	@GetMapping("/join")
 	public JSONResult join() {
 		
 		String returnView = "user/loginform";
@@ -43,7 +45,7 @@ public class UserController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="userVo", value ="회원 userVo", required=true, dataType="UserVo", defaultValue="")
 	})
-	@RequestMapping(value="/join", method=RequestMethod.POST)
+	@PostMapping("/join")
 	public JSONResult join(@RequestBody @Valid UserVo userVo,BindingResult bResult) { //body에 json으로 오는거 받아내기
 		
 		if( bResult.hasErrors() ) {
@@ -63,7 +65,7 @@ public class UserController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="email", value ="이메일주소", required=true, dataType="string", defaultValue="") // 파라미터에 대한 설명해주기 
 	})
-	@RequestMapping(value = "/checkemail", method = RequestMethod.GET)
+	@GetMapping("/checkmail")
 	public JSONResult checkEmail(@RequestParam(value="email", required=true, defaultValue="") String email) {
 		
 		boolean exist = userService.existEmail(email); //있으면 exist 임
@@ -76,7 +78,7 @@ public class UserController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="userVo", value ="회원 userVo", required=true, dataType="UserVo", defaultValue="")
 	})
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@GetMapping("/login")
 	public JSONResult login() {
 		
 		String returnView = "user/loginform";
@@ -90,7 +92,7 @@ public class UserController {
 		@ApiImplicitParam(name = "id", value = "아이디",  dataType="string", required = true, defaultValue = ""),
 		@ApiImplicitParam(name = "password", value = "비밀번호",  dataType="string", required = true, defaultValue = "")
 	})
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@PostMapping("/login")
 	public JSONResult login(@RequestParam(value = "id", required = true, defaultValue = "") String id,
 							@RequestParam(value = "password", required = true, defaultValue = "") String password) {
 		
@@ -112,7 +114,7 @@ public class UserController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="userVo", value ="회원 userVo", required=true, dataType="UserVo", defaultValue="")
 	})
-	@RequestMapping(value = "/update", method = RequestMethod.GET)
+	@GetMapping("/update")
 	public JSONResult update() {
 		
 		String returnView = "user/update";
@@ -124,7 +126,7 @@ public class UserController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="userVo", value ="회원 userVo", required=true, dataType="UserVo", defaultValue="")
 	})
-	@RequestMapping(value = "/update", method = RequestMethod.PUT)
+	@PutMapping("/update")
 	public JSONResult update(HttpSession session,@RequestBody UserVo userVo) {
 		
 		//session에서 가져오기

@@ -76,5 +76,10 @@ public class UserService {
 		return null;
 	}
 
+	public UserVo getUser(UserVo userVo) {
+		
+		return null;
+	}
+
 	
 }
