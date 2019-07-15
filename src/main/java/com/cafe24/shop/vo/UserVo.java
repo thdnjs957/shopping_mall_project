@@ -6,6 +6,8 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.cafe24.shop.validator.constraints.ValidPassword;
+
 public class UserVo {
 	
 	private Long no;
@@ -18,13 +20,13 @@ public class UserVo {
 	@Length(min=2, max=10)
 	private String id;
 	
-	@NotEmpty
-	@Pattern(regexp="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{8,}") //최소 8자리에 숫자, 문자, 특수문자 각각 1개 이상 포함
+	@ValidPassword
 	private String password;
 	
 	@NotEmpty
 	@Email
 	private String email;
+	
 	private String phone;
 	
 	private String gender;

@@ -1,13 +1,17 @@
 package com.cafe24.shop.controller.api;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -46,10 +50,13 @@ public class UserController {
 		@ApiImplicitParam(name="userVo", value ="회원 userVo", required=true, dataType="UserVo", defaultValue="")
 	})
 	@PostMapping("/join")
-	public JSONResult join(@RequestBody @Valid UserVo userVo,BindingResult bResult) { //body에 json으로 오는거 받아내기
+	public ResponseEntity<JSONResult> join(@RequestBody @Valid UserVo userVo,BindingResult bResult) { //body에 json으로 오는거 받아내기
 		
-		if( bResult.hasErrors() ) {
-			return JSONResult.fail("잘못된 입력값입니다.");
+		if(bResult.hasErrors()) {
+			List<ObjectError> list = bResult.getAllErrors();
+			for(ObjectError error: list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
 		}
 		
 		boolean result = userService.addUser(userVo);
@@ -57,15 +64,15 @@ public class UserController {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
 		resultMap.put("result", result);
-		
-		return JSONResult.success(resultMap);
+
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultMap));
 	}
 	
 	@ApiOperation(value="이메일 존재 여부")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="email", value ="이메일주소", required=true, dataType="string", defaultValue="") // 파라미터에 대한 설명해주기 
 	})
-	@GetMapping("/checkmail")
+	@GetMapping("/checkemail")
 	public JSONResult checkEmail(@RequestParam(value="email", required=true, defaultValue="") String email) {
 		
 		boolean exist = userService.existEmail(email); //있으면 exist 임

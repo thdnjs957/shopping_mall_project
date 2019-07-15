@@ -49,6 +49,8 @@ public class UserControllerTest {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 	
+	
+	@Ignore
 	@Test
 	public void testA_CheckEmail() throws Exception{
 		
@@ -62,29 +64,59 @@ public class UserControllerTest {
 				;
 	}
 	
+	
 	@Test
 	public void testB_JoinUser() throws Exception{
 
-		UserVo vo = new UserVo();
+		UserVo userVo = new UserVo();
 		
-		vo.setName("박소원");
-		vo.setId("thdnjs9570");
-		vo.setPassword("1234");
-		vo.setEmail("thdnjs9570@naver.com");
-		vo.setPhone("01076363123");
+		// 1. Normal User's Join Data
+		userVo.setName("박소원");
+		userVo.setId("thdnjs9570");
+		userVo.setEmail("thdnjs9570@naver.com");
+		userVo.setPassword("Aalskd@1334");
+		//userVo.setGender("MALE");
 		
-		ResultActions resultActions = 
+		ResultActions resultActions =
 			mockMvc
-			.perform(post("/api/user/join").contentType(MediaType.APPLICATION_JSON)
-			 .content(new Gson().toJson(vo)))
-			.andExpect(status().isOk())
-			.andDo(print())
-			.andExpect(jsonPath("$.result", is("success")))
-			.andExpect(jsonPath("$.data.result", is(true)));
+			.perform(post("/api/user/join").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(userVo)));
+
+		resultActions.andExpect(status().isOk())
+		.andDo(print());
+		
+		
+		// 2. Invalidation in Name : 
+		userVo.setName("박");
+		userVo.setId("thdnjs9570");
+		userVo.setEmail("thdnjs9570@naver.com");
+		userVo.setPassword("Aalskd@121334");
+		
+		resultActions =
+			mockMvc
+			.perform(post("/api/user/join").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(userVo)));
+
+		resultActions.andExpect(status().isBadRequest())
+		.andDo(print())
+		.andExpect(jsonPath("$.result",is("fail")));
+		
+		
+		// 3. Invalidation in Password : 
+		userVo.setName("박소원");
+		userVo.setId("thdnjs9570");
+		userVo.setEmail("thdnjs9570@naver.com");
+		userVo.setPassword("1334");
+		
+		resultActions =
+			mockMvc
+			.perform(post("/api/user/join").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(userVo)));
+
+		resultActions.andExpect(status().isBadRequest())
+		.andDo(print())
+		.andExpect(jsonPath("$.result",is("fail")));
 		
 	}
 	
-	
+	@Ignore
 	@Test
 	public void testC_LoginUser() throws Exception{
 		
@@ -104,6 +136,7 @@ public class UserControllerTest {
 		
 	}
 	
+	@Ignore
 	@Test
 	public void testD_UpdateUser() throws Exception{
 
