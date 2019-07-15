@@ -141,7 +141,7 @@ public class UserControllerTest {
 	public void testD_UpdateUser() throws Exception{
 
 		UserVo vo = new UserVo();
-		//수정
+
 		vo.setName("박소원");
 		vo.setEmail("thdnjs9570@naver.com");
 		vo.setPhone("0101111111");
