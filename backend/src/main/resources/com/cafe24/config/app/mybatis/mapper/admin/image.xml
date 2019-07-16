@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin_image">
+
+	<insert id="insert" parameterType="productimagevo">
+		<![CDATA[
+			insert into product(no,name,id,password,email,phone,gender,role,join_date,wdraw_date) 
+				values(null,#{name},#{id},#{password},#{email},#{phone},#{gender},#{role},now(),null);
+		]]>
+	</insert>
+
+
+</mapper>

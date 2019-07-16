@@ -1,15 +1,15 @@
 package com.cafe24.shop.vo;
 
-public class OptionMasterVo {
+public class ProductOptionMasterVo {
 	private Long no;
 	private String name;
 	private String value;
 	private Long option_no;
 	
-	public OptionMasterVo() {}
+	public ProductOptionMasterVo() {}
 
 	
-	public OptionMasterVo(Long no, String name, String value, Long option_no) {
+	public ProductOptionMasterVo(Long no, String name, String value, Long option_no) {
 		super();
 		this.no = no;
 		this.name = name;

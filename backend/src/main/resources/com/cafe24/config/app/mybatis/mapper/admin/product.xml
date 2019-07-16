@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin_product">
+
+	<insert id="insert" parameterType="productvo">
+		<![CDATA[
+			insert into product(no,name,summary,price,is_show,detail,tot_stock,reg_date) 
+				values(null,#{name},#{summary},#{price},#{is_show},#{detail},#{tot_stock},now());
+		]]>
+	</insert>
+
+
+</mapper>
