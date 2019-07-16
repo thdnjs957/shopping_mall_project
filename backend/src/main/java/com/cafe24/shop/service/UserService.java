@@ -25,9 +25,7 @@ public class UserService {
 
 	public boolean existEmail(String email) {
 		
-		UserVo vo = new UserVo(1L,"박소원","thdnjs9570","thdnjs@7946","thdnjs9570@naver.com","01076363123",Gender.MALE,Role.USER,"2019-07-10",null);
-		
-		UserVo userVo = vo;
+		UserVo userVo = userDao.get(email);
 		return userVo != null;
 	}
 	

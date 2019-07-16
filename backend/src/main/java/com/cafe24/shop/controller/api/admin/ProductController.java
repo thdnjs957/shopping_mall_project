@@ -7,7 +7,10 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,17 +51,20 @@ public class ProductController {
 		@ApiImplicitParam(name="productVo", value ="상품 productVo", required=true, dataType="ProductVo", defaultValue="")
 	})
 	@PostMapping("/register")
-	public JSONResult productRegister(@RequestBody @Valid ProductVo vo ,BindingResult b_result) {
-		
-		if(b_result.hasErrors()) {
-			return JSONResult.fail("잘못된 입력 값 입니다.");
+	public ResponseEntity<JSONResult> productRegister(@RequestBody @Valid ProductVo vo ,BindingResult bResult) {
+		System.out.println("출력은되나?"+ vo);
+		if(bResult.hasErrors()) {
+			List<ObjectError> list = bResult.getAllErrors();
+			for(ObjectError error: list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
 		}
 		
-		boolean result = productService.addProduct(vo);
+		//boolean result = productService.addProduct(vo);
 		
-		return JSONResult.success(result);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(true));
+		
 	}
-	
 	
 
 	//관리자 상품 목록 조회

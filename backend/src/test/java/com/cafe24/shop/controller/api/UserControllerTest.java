@@ -58,7 +58,7 @@ public class UserControllerTest {
 		
 		ResultActions resultActions =
 				mockMvc
-				.perform(get("/api/user/checkemail").contentType(MediaType.APPLICATION_JSON));
+				.perform(get("/api/user/checkemail").param("email", "thdnjs9570@naver.com").contentType(MediaType.APPLICATION_JSON));
 		resultActions
 				.andExpect(status().isOk())
 				.andDo(print())
@@ -71,7 +71,7 @@ public class UserControllerTest {
 	public void testB_JoinUser() throws Exception{
 
 		// 1. Normal User's Join Data
-		UserVo userVo = new UserVo(null,"박소원","thdnjs9570","Athdnjs@7946","thdnjs9570@naver.com","01076363123",Gender.FEMALE,Role.USER,"2019-07-16",null);
+		UserVo userVo = new UserVo(null,"박소원2","thdnjs9570","Athdnjs@7946","thdnjs9570@naver.com","01076363123",Gender.FEMALE,Role.USER,"2019-07-16",null);
 		
 		ResultActions resultActions =
 			mockMvc
@@ -80,11 +80,23 @@ public class UserControllerTest {
 		resultActions.andExpect(status().isOk())
 		.andDo(print());
 		
+		// 2. Invalidation in Name : 
+		userVo = new UserVo(null,"박","thdnjs9570","Athdnjs@7946","thdnjs9570@naver.com","01076363123",Gender.FEMALE,Role.USER,"2019-07-16",null);
+
+		resultActions =
+			mockMvc
+			.perform(post("/api/user/join").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(userVo)));
+
+		resultActions.andExpect(status().isBadRequest())
+		.andDo(print())
+		.andExpect(jsonPath("$.result",is("fail")));
 	}
 	
+	@Ignore
 	@Test
 	public void testC_LoginUser() throws Exception{
 		
+		//1. Normal User's Join Data
 		ResultActions resultActions =
 			mockMvc
 			.perform(post("/api/user/login").param("id", "thdnjs9570")
@@ -98,9 +110,22 @@ public class UserControllerTest {
 				.andExpect(jsonPath("$.data.userVo.id", is("thdnjs9570")))
 				.andExpect(jsonPath("$.data.userVo.name", is("박소원")))
 				;
+		
+		//2. Invalidation
+		resultActions =
+				mockMvc
+				.perform(post("/api/user/login").param("id", "thdnjs957")
+				.param("password", "Athdnjs@7946")
+				.contentType(MediaType.APPLICATION_JSON));
+			
+			resultActions
+				.andExpect(status().isBadRequest())
+				.andDo(print())
+				.andExpect(jsonPath("$.result", is("fail")))
+				;
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testD_UpdateUser() throws Exception{
 

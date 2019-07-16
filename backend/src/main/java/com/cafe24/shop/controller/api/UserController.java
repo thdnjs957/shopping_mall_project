@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +74,7 @@ public class UserController {
 	@GetMapping("/checkemail")
 	public ResponseEntity<JSONResult> checkEmail(@RequestParam(value="email", required=true, defaultValue="") String email) {
 		
-		boolean exist = userService.existEmail(email); //있으면 exist 임
+		boolean exist = userService.existEmail(email); 
 		
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(exist));
 		
@@ -110,8 +109,11 @@ public class UserController {
 		
 		UserVo vo = new UserVo(id,password);
 		
-		//id, password에 대한 UserVo 찾아서 객체 넘겨줌
 		UserVo AuthUser = userService.getUser(vo);
+		
+		if(AuthUser == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("아이디 혹은 비밀번호가 틀렸습니다."));
+		}
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("userVo", AuthUser);
