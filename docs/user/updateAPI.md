@@ -9,7 +9,7 @@ UserVo
   "email": "thdnjs9570@naver.com",
   "phone": "01012345678",
 }
-<pre>
+</pre>
 
 &#9992; response:
 

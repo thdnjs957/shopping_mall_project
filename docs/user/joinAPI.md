@@ -15,7 +15,7 @@ UserVo
   "role": "USER",
   "wdraw_date": null
 }
-<pre>
+</pre>
 
 &#9992; response:
 
