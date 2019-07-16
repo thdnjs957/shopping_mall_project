@@ -18,12 +18,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 
@@ -40,6 +43,8 @@ import com.google.gson.Gson;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes= {AppConfig.class, TestWebConfig.class})
 @WebAppConfiguration
+@TransactionConfiguration(defaultRollback = true)
+@Transactional
 public class UserControllerTest {
 	
 	private MockMvc mockMvc;
@@ -52,7 +57,7 @@ public class UserControllerTest {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testA_CheckEmail() throws Exception{
 		
@@ -66,12 +71,12 @@ public class UserControllerTest {
 				;
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testB_JoinUser() throws Exception{
 
 		// 1. Normal User's Join Data
-		UserVo userVo = new UserVo(null,"박소원2","thdnjs9570","Athdnjs@7946","thdnjs9570@naver.com","01076363123",Gender.FEMALE,Role.USER,"2019-07-16",null);
+		UserVo userVo = new UserVo(null,"박소원3","thdnjs9570","Athdnjs@7946","thdnjs9570@naver.com","01076363123",Gender.FEMALE,Role.USER,"2019-07-16",null);
 		
 		ResultActions resultActions =
 			mockMvc
@@ -92,7 +97,7 @@ public class UserControllerTest {
 		.andExpect(jsonPath("$.result",is("fail")));
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testC_LoginUser() throws Exception{
 		
@@ -134,7 +139,7 @@ public class UserControllerTest {
 		//수정할 정보 
 		vo.setName("박소원");
 		vo.setEmail("thdnjs9570@naver.com");
-		vo.setPhone("01045613256");
+		vo.setPhone("0101234565");
 		
 		ResultActions resultActions = 
 			mockMvc
