@@ -2,6 +2,8 @@ package com.cafe24.shop.vo;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -9,16 +11,16 @@ public class ProductVo {
 
 	private Long no;
 	
-	@NotEmpty
+	@NotNull
 	@Length(min=2)
 	private String name;
 	
 	private String summary;
 	
-	@NotEmpty
+	@NotNull
 	private int price;
 	
-	@NotEmpty
+	@NotNull
 	private boolean is_show;
 	
 	private String detail;
@@ -29,7 +31,6 @@ public class ProductVo {
 	
 	private List<ProductImageVo> pro_Image;
 	private List<ProductOptionVo> pro_option;
-	private List<ProductOptionMasterVo> pro_option_ma;
 	
 	public ProductVo() {}
 
@@ -61,7 +62,6 @@ public class ProductVo {
 		this.category_no = category_no;
 		this.pro_Image = pro_Image;
 		this.pro_option = pro_option;
-		this.pro_option_ma = pro_option_ma;
 	}
 
 	public Long getNo() {
@@ -152,22 +152,14 @@ public class ProductVo {
 		this.pro_option = pro_option;
 	}
 
-	public List<ProductOptionMasterVo> getPro_option_ma() {
-		return pro_option_ma;
-	}
-
-	public void setPro_option_ma(List<ProductOptionMasterVo> pro_option_ma) {
-		this.pro_option_ma = pro_option_ma;
-	}
-
-
+	
 
 	@Override
 	public String toString() {
 		return "ProductVo [no=" + no + ", name=" + name + ", summary=" + summary + ", price=" + price + ", is_show="
 				+ is_show + ", detail=" + detail + ", tot_stock=" + tot_stock + ", reg_date=" + reg_date
 				+ ", category_no=" + category_no + ", pro_Image=" + pro_Image + ", pro_option=" + pro_option
-				+ ", pro_option_ma=" + pro_option_ma + "]";
+				+ ", pro_option_ma="+"]";
 	}
 	
 }

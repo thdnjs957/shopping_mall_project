@@ -5,10 +5,9 @@
 
 	<insert id="insert" parameterType="productimagevo">
 		<![CDATA[
-			insert into product(no,name,id,password,email,phone,gender,role,join_date,wdraw_date) 
-				values(null,#{name},#{id},#{password},#{email},#{phone},#{gender},#{role},now(),null);
+			insert into image(no,url,is_main,product_no) 
+				values(null,#{url},#{is_main},#{product_no})
 		]]>
 	</insert>
-
 
 </mapper>

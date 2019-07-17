@@ -4,7 +4,7 @@
 	<typeAliases>
 		<typeAlias alias="uservo" type="com.cafe24.shop.vo.UserVo"/>
 		<typeAlias alias="productvo" type="com.cafe24.shop.vo.ProductVo"/>
-		<typeAlias alias="productimagevo" type="com.cafe24.shop.vo.ProductVo"/>
+		<typeAlias alias="productimagevo" type="com.cafe24.shop.vo.ProductImageVo"/>
     </typeAliases>	
 	<mappers>
 		<mapper resource="com/cafe24/config/app/mybatis/mapper/user.xml" />

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.security.Auth;
@@ -52,7 +51,6 @@ public class ProductController {
 	})
 	@PostMapping("/register")
 	public ResponseEntity<JSONResult> productRegister(@RequestBody @Valid ProductVo vo ,BindingResult bResult) {
-		System.out.println("출력은되나?"+ vo);
 		if(bResult.hasErrors()) {
 			List<ObjectError> list = bResult.getAllErrors();
 			for(ObjectError error: list) {
@@ -60,10 +58,9 @@ public class ProductController {
 			}
 		}
 		
-		//boolean result = productService.addProduct(vo);
+		boolean result = productService.addProduct(vo);
 		
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(true));
-		
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
 	
 

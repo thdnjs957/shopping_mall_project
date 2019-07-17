@@ -1,6 +1,7 @@
 package com.cafe24.shop.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,13 +20,20 @@ public class ProductService {
 	
 	public boolean addProduct(ProductVo vo) {
 		
-		boolean result1 = productDao.insertProduct(vo);
+		Long no = productDao.insertProduct(vo);
 		
 		List<ProductImageVo> imageList = vo.getPro_Image();
 		
-		boolean result2 = productDao.insertProductImage(imageList);
+		int count = 0;
+		for(ProductImageVo iv : imageList) {
+			iv.setProduct_no(no);
+			if(productDao.insertProductImage(iv)) {
+				count++;
+			}
+			
+		}
 		
-		return result1 && result2;
+		return count == imageList.size();
 	}
 
 	public List<ProductVo> getProductList() {

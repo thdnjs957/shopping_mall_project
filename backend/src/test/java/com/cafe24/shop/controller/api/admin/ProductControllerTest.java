@@ -51,13 +51,13 @@ public class ProductControllerTest {
 	@Test
 	public void productRegister() throws Exception{
 
-		ProductVo vo = new ProductVo(null,"청바지","청바지입니다.",20000,true,"<div>청바지 상품 설명입니다.</div>",100,"2019-07-16",1L);
+		ProductVo vo = new ProductVo(null,"청바지2","청바지2입니다.",20000,true,"<div>청바지 상품 설명입니다.</div>",100,"2019-07-16",1L);
 		
 		List<ProductImageVo> proImageList = new ArrayList<ProductImageVo>();
 		
-		ProductImageVo image1 = new ProductImageVo(null,"com/cafe24/images/image1",true,1L);
-		ProductImageVo image2 = new ProductImageVo(null,"com/cafe24/images/image2",false,1L);
-		ProductImageVo image3 = new ProductImageVo(null,"com/cafe24/images/image3",false,1L);
+		ProductImageVo image1 = new ProductImageVo(null,"com/cafe24/images/image1",true,null);
+		ProductImageVo image2 = new ProductImageVo(null,"com/cafe24/images/image2",false,null);
+		ProductImageVo image3 = new ProductImageVo(null,"com/cafe24/images/image3",false,null);
 		
 		proImageList.add(image1);
 		proImageList.add(image2);
@@ -66,13 +66,17 @@ public class ProductControllerTest {
 		vo.setPro_Image(proImageList);
 		
 		vo.setPro_option(null);
-		vo.setPro_option_ma(null);
 		
-		//vo 안에 list가 있음 Json으로 toJson 어캐함?
+		
+		//vo.setPro_option_ma(null);
+		
+		String gson = new Gson().toJson(vo);
+		
+		System.out.println(gson);
 		ResultActions resultActions = 
 			mockMvc
 			.perform(post("/api/admin/product/register").contentType(MediaType.APPLICATION_JSON)
-			 .content(new Gson().toJson(new ProductVo(null,"청바지","청바지입니다.",20000,true,"<div>청바지 상품 설명입니다.</div>",100,"2019-07-16",1L,proImageList,null,null))));
+			 .content(new Gson().toJson(vo)));
 		
 		resultActions.andExpect(status().isOk())
 			.andDo(print())
@@ -115,47 +119,47 @@ public class ProductControllerTest {
 		;
 	}
 	
-	@Ignore
-	@Test
-	public void productListSearch() throws Exception{
-
-		//이름과 category로 검색 가능
-		ProductVo vo = new ProductVo();
-		
-		vo.setName("원피스");
-		vo.setCategory_no(1L);
-		
-		ResultActions resultActions = 
-				mockMvc
-				.perform(post("/api/admin/product").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
-		
-		resultActions.andExpect(status().isOk())
-		.andDo(print())
-		.andExpect(jsonPath("$.result", is("success")))
-		.andExpect(jsonPath("$.data[0].no", is(2)))
-		.andExpect(jsonPath("$.data[0].name", is("원피스")))
-		.andExpect(jsonPath("$.data[0].price", is(10000)));
-		;
-	}
-	
-	@Ignore
-	@Test
-	public void productUpdate() throws Exception{
-
-		ProductVo vo = new ProductVo();
-		
-		vo.setName("청반바지");
-		vo.setPrice(15000);
-		
-		ResultActions resultActions = 
-				mockMvc
-				.perform(put("/api/admin/product/{no}",1L).contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
-		
-		resultActions.andExpect(status().isOk())
-		.andDo(print())
-		.andExpect(jsonPath("$.result", is("success")))
-		;
-	}
+//	@Ignore
+//	@Test
+//	public void productListSearch() throws Exception{
+//
+//		//이름과 category로 검색 가능
+//		ProductVo vo = new ProductVo();
+//		
+//		vo.setName("원피스");
+//		vo.setCategory_no(1L);
+//		
+//		ResultActions resultActions = 
+//				mockMvc
+//				.perform(post("/api/admin/product").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+//		
+//		resultActions.andExpect(status().isOk())
+//		.andDo(print())
+//		.andExpect(jsonPath("$.result", is("success")))
+//		.andExpect(jsonPath("$.data[0].no", is(2)))
+//		.andExpect(jsonPath("$.data[0].name", is("원피스")))
+//		.andExpect(jsonPath("$.data[0].price", is(10000)));
+//		;
+//	}
+//	
+//	@Ignore
+//	@Test
+//	public void productUpdate() throws Exception{
+//
+//		ProductVo vo = new ProductVo();
+//		
+//		vo.setName("청반바지");
+//		vo.setPrice(15000);
+//		
+//		ResultActions resultActions = 
+//				mockMvc
+//				.perform(put("/api/admin/product/{no}",1L).contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+//		
+//		resultActions.andExpect(status().isOk())
+//		.andDo(print())
+//		.andExpect(jsonPath("$.result", is("success")))
+//		;
+//	}
 	
 	
 }

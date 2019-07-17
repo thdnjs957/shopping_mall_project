@@ -8,9 +8,7 @@ public class ProductOptionMasterVo {
 	
 	public ProductOptionMasterVo() {}
 
-	
 	public ProductOptionMasterVo(Long no, String name, String value, Long option_no) {
-		super();
 		this.no = no;
 		this.name = name;
 		this.value = value;

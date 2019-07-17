@@ -6,8 +6,11 @@
 	<insert id="insert" parameterType="productvo">
 		<![CDATA[
 			insert into product(no,name,summary,price,is_show,detail,tot_stock,reg_date) 
-				values(null,#{name},#{summary},#{price},#{is_show},#{detail},#{tot_stock},now());
+				values(null,#{name},#{summary},#{price},#{is_show},#{detail},#{tot_stock},now())
 		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			select last_insert_id()
+		</selectKey>
 	</insert>
 
 

@@ -7,6 +7,8 @@ public class ProductImageVo {
 	private boolean is_main;
 	private Long product_no;
 	
+	public ProductImageVo() {}
+	
 	public ProductImageVo(Long no, String url, boolean is_main, Long product_no) {
 		this.no = no;
 		this.url = url;
