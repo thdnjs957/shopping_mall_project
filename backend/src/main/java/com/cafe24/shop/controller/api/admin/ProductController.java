@@ -3,8 +3,12 @@ package com.cafe24.shop.controller.api.admin;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
+import javax.validation.Validation;
+import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cafe24.security.Auth;
 import com.cafe24.shop.dto.JSONResult;
 import com.cafe24.shop.service.ProductService;
+import com.cafe24.shop.vo.OptionVo;
 import com.cafe24.shop.vo.ProductVo;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -50,7 +55,8 @@ public class ProductController {
 		@ApiImplicitParam(name="productVo", value ="상품 productVo", required=true, dataType="ProductVo", defaultValue="")
 	})
 	@PostMapping("/register")
-	public ResponseEntity<JSONResult> productRegister(@RequestBody @Valid ProductVo vo ,BindingResult bResult) {
+	public ResponseEntity<JSONResult> productRegister(@RequestBody @Valid ProductVo vo,BindingResult bResult) {
+		
 		if(bResult.hasErrors()) {
 			List<ObjectError> list = bResult.getAllErrors();
 			for(ObjectError error: list) {
@@ -62,7 +68,6 @@ public class ProductController {
 		
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
-	
 
 	//관리자 상품 목록 조회
 	@Auth(role=Auth.Role.ADMIN)

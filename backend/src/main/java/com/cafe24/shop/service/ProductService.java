@@ -1,7 +1,6 @@
 package com.cafe24.shop.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cafe24.shop.repository.ProductDao;
+import com.cafe24.shop.vo.OptionMasterVo;
+import com.cafe24.shop.vo.OptionVo;
 import com.cafe24.shop.vo.ProductImageVo;
 import com.cafe24.shop.vo.ProductVo;
 
@@ -20,20 +21,45 @@ public class ProductService {
 	
 	public boolean addProduct(ProductVo vo) {
 		
+		int imageCount = 0;
+		int optionCount = 0;
+		
 		Long no = productDao.insertProduct(vo);
 		
 		List<ProductImageVo> imageList = vo.getPro_Image();
 		
-		int count = 0;
-		for(ProductImageVo iv : imageList) {
-			iv.setProduct_no(no);
-			if(productDao.insertProductImage(iv)) {
-				count++;
+		if( imageList.isEmpty() == false ) {
+			for(ProductImageVo iv : imageList) {
+				iv.setProduct_no(no);
+				if(productDao.insertProductImage(iv)) {
+					imageCount++;
+				}
 			}
-			
 		}
 		
-		return count == imageList.size();
+		int checkSize1 = (imageList.isEmpty()) ? 0 : imageList.size();
+		
+		List<OptionVo> optionList = vo.getOption();
+	
+		if( optionList.isEmpty() == false ) {
+			for(OptionVo ov : optionList) {
+				ov.setProduct_no(no);
+				Long option_no = productDao.insertOption(ov);
+	
+				List<OptionMasterVo> optionMaList = ov.getOption_ma();
+				
+				for(OptionMasterVo mv : optionMaList) {
+					mv.setOption_no(option_no);
+					productDao.insertOptionMaster(mv);
+				}
+				optionCount++;
+			}
+		}
+		
+		int checkSize2 = (optionList.isEmpty()) ? 0 : optionList.size();
+		
+		
+		return imageCount == checkSize1 && optionCount == checkSize2;
 	}
 
 	public List<ProductVo> getProductList() {

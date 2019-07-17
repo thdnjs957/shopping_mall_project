@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 
 public class ProductVo {
 
@@ -30,7 +29,7 @@ public class ProductVo {
 	private Long category_no;
 	
 	private List<ProductImageVo> pro_Image;
-	private List<ProductOptionVo> pro_option;
+	private List<OptionVo> option;
 	
 	public ProductVo() {}
 
@@ -45,25 +44,10 @@ public class ProductVo {
 		this.tot_stock = tot_stock;
 		this.reg_date = reg_date;
 		this.category_no = category_no;
-	}
-	
-	
-	public ProductVo(Long no, String name, String summary, int price, boolean is_show, String detail, int tot_stock,
-			String reg_date, Long category_no, List<ProductImageVo> pro_Image, List<ProductOptionVo> pro_option,
-			List<ProductOptionMasterVo> pro_option_ma) {
-		this.no = no;
-		this.name = name;
-		this.summary = summary;
-		this.price = price;
-		this.is_show = is_show;
-		this.detail = detail;
-		this.tot_stock = tot_stock;
-		this.reg_date = reg_date;
-		this.category_no = category_no;
 		this.pro_Image = pro_Image;
-		this.pro_option = pro_option;
+		this.option = option;
 	}
-
+	
 	public Long getNo() {
 		return no;
 	}
@@ -144,22 +128,16 @@ public class ProductVo {
 		this.pro_Image = pro_Image;
 	}
 
-	public List<ProductOptionVo> getPro_option() {
-		return pro_option;
+	public List<OptionVo> getOption() {
+		return option;
 	}
 
-	public void setPro_option(List<ProductOptionVo> pro_option) {
-		this.pro_option = pro_option;
+	public void setOption(List<OptionVo> option) {
+		this.option = option;
 	}
 
 	
-
-	@Override
-	public String toString() {
-		return "ProductVo [no=" + no + ", name=" + name + ", summary=" + summary + ", price=" + price + ", is_show="
-				+ is_show + ", detail=" + detail + ", tot_stock=" + tot_stock + ", reg_date=" + reg_date
-				+ ", category_no=" + category_no + ", pro_Image=" + pro_Image + ", pro_option=" + pro_option
-				+ ", pro_option_ma="+"]";
-	}
+	
+	
 	
 }
