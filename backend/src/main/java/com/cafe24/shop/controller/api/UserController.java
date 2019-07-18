@@ -140,7 +140,7 @@ public class UserController {
 	@PutMapping("/update")
 	public ResponseEntity<JSONResult> update(@RequestBody UserVo userVo) {
 		
-		userVo.setNo(6L); //수정될 유저 번호
+		userVo.setNo(5L); //수정될 유저 번호
 		
 		boolean result = userService.updateUser(userVo); 
 		

@@ -12,14 +12,14 @@ import com.cafe24.shop.vo.UserVo;
 
 @Repository
 public class UserDao {
-
+	
 	@Autowired
 	private SqlSession sqlSession;
 	
 	public boolean insert(UserVo vo) {
-		System.out.println(vo);
+	
 		int count = sqlSession.insert("user.insert",vo);
-		System.out.println(vo);
+
 		return 1 == count;
 	}
 

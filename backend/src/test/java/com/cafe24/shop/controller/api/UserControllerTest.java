@@ -13,9 +13,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
@@ -43,8 +45,9 @@ import com.google.gson.Gson;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes= {AppConfig.class, TestWebConfig.class})
 @WebAppConfiguration
-@TransactionConfiguration(defaultRollback = true)
-@Transactional
+//@TransactionConfiguration(defaultRollback = true)
+//@Transactional
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserControllerTest {
 	
 	private MockMvc mockMvc;
@@ -57,9 +60,9 @@ public class UserControllerTest {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 	
-	
+	@Ignore
 	@Test
-	public void testA_CheckEmail() throws Exception{
+	public void aTest_CheckEmail() throws Exception{
 		
 		ResultActions resultActions =
 				mockMvc
@@ -71,12 +74,11 @@ public class UserControllerTest {
 				;
 	}
 	
-	
 	@Test
-	public void testB_JoinUser() throws Exception{
+	public void btest_JoinUser() throws Exception{
 
 		// 1. Normal User's Join Data
-		UserVo userVo = new UserVo(null,"박소원3","thdnjs9570","Athdnjs@7946","thdnjs9570@naver.com","01076363123",Gender.FEMALE,Role.USER,"2019-07-16",null);
+		UserVo userVo = new UserVo(null,"박소원","thdnjs9570","Athdnjs@7946","thdnjs9570@naver.com","01076363123",Gender.FEMALE,Role.USER,"2019-07-16",null);
 		
 		ResultActions resultActions =
 			mockMvc
@@ -99,7 +101,7 @@ public class UserControllerTest {
 	
 	
 	@Test
-	public void testC_LoginUser() throws Exception{
+	public void ctest_LoginUser() throws Exception{
 		
 		//1. Normal User's Join Data
 		ResultActions resultActions =
@@ -130,9 +132,9 @@ public class UserControllerTest {
 				;
 	}
 	
-	
+	@Ignore
 	@Test
-	public void testD_UpdateUser() throws Exception{
+	public void dtest_UpdateUser() throws Exception{
 
 		UserVo vo = new UserVo();
 		
