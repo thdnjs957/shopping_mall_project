@@ -30,7 +30,6 @@ public class UserManageController {
 	
 	
 	//관리자 고객 목록 조회
-	@Auth(role=Auth.Role.ADMIN)
 	@ApiOperation(value="관리자 고객 목록 조회")
 	@GetMapping("")
 	public JSONResult manageList() {
@@ -42,7 +41,6 @@ public class UserManageController {
 	}
 	
 	//관리자 고객 조건 검색
-	@Auth(role=Auth.Role.ADMIN)
 	@ApiOperation(value="관리자 고객 조건 검색")
 	@ApiImplicitParams({
          @ApiImplicitParam(name = "name", value = "이름", dataType = "string", paramType = "query", defaultValue = ""),

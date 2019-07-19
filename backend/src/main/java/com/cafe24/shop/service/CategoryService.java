@@ -5,44 +5,48 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cafe24.shop.repository.CategoryDao;
 import com.cafe24.shop.vo.CategoryVo;
 import com.cafe24.shop.vo.ProductVo;
 
 @Service
 public class CategoryService {
 	
+	@Autowired
+	private CategoryDao categoryDao;
+	
 	public boolean addCategory(CategoryVo vo) {
 		
-		vo.setNo(1L);
+		boolean result = categoryDao.insert(vo);
 		
-		return true;
+		return result;
 	}
 
-	public boolean updateCategory(Map<String, Object> map) {
-		
-		Long no = (Long) map.get("no");
+	public boolean updateCategory(CategoryVo vo) {
 
-		//no 통해서 getCategory 
-		CategoryVo p1 = new CategoryVo(1L,"TOP",0);
+		boolean result = categoryDao.update(vo);
 		
-		CategoryVo vo = (CategoryVo) map.get("CategoryVo");
-
-		p1.setName(vo.getName());
-		p1.setTop_category(vo.getTop_category());
-		
-		return true;
+		return result;
 	}
 
 	public boolean deleteCategory(Long no) {
-
-		//Long no = 삭제할 카테고리 no
-		//categoryDao.delete(no);
 		
-		return true;
+		//int count_top = categoryDao.count(no);
+		//boolean hasBottom = count_top != 0 ? true : false;
+		boolean result = categoryDao.delete(no);
+		
+		return result;
 	}
 
+	
+	public List<CategoryVo> showCategory() {
+		
+		List<CategoryVo> cList = categoryDao.getAllList();
+		return cList;
+	}
 	
 	
 }

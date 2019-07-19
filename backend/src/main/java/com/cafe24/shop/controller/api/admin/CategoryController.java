@@ -1,22 +1,25 @@
 package com.cafe24.shop.controller.api.admin;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cafe24.security.Auth;
 import com.cafe24.shop.dto.JSONResult;
 import com.cafe24.shop.service.CategoryService;
 import com.cafe24.shop.vo.CategoryVo;
@@ -29,70 +32,98 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/api/admin/category")
 public class CategoryController {
 	
+	//관리자 카테고리 목록 
 	//관리자 카테고리 등록
 	//관리자 카테고리 수정
 	//관리자 카테고리 삭제
 	
-	
 	@Autowired
 	CategoryService categoryService;
 	
+	//관리자 카테고리 추가
+	@ApiOperation(value="관리자 카테고리 추가")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="categoryVo", value ="카테고리 categoryVo", required=true, dataType="categoryVo", defaultValue="")
+	})
+	@PostMapping("")
+	public  ResponseEntity<JSONResult> categoryList(@RequestBody @Valid CategoryVo vo ,BindingResult bResult) {
+		
+		if(bResult.hasErrors()) {
+			List<ObjectError> list = bResult.getAllErrors();
+			for(ObjectError error: list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
+		}
+		
+		boolean result = categoryService.addCategory(vo);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
+	}
+	
+	
+	
 	//관리자 카테고리 등록
-	@Auth(role=Auth.Role.ADMIN)
 	@ApiOperation(value="관리자 카테고리 등록")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="categoryVo", value ="카테고리 categoryVo", required=true, dataType="categoryVo", defaultValue="")
 	})
 	@PostMapping("/register")
-	public JSONResult productRegister(@RequestBody @Valid CategoryVo vo ,BindingResult b_result) {
+	public  ResponseEntity<JSONResult> categoryRegister(@RequestBody @Valid CategoryVo vo ,BindingResult bResult) {
 		
-		if(b_result.hasErrors()) {
-			return JSONResult.fail("잘못된 입력 값 입니다.");
+		if(bResult.hasErrors()) {
+			List<ObjectError> list = bResult.getAllErrors();
+			for(ObjectError error: list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
 		}
 		
 		boolean result = categoryService.addCategory(vo);
 		
-		return JSONResult.success(result);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
 
-	
 	//관리자 카테고리 수정
-	@Auth(role=Auth.Role.ADMIN)
 	@ApiOperation(value="관리자 카테고리 수정")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="categoryVo", value ="카테고리 categoryVo", required=true, dataType="categoryVo", defaultValue="")
 	})
 	@PutMapping("/{no}")
-	public JSONResult categoryUpdate(@PathVariable(value="no") Long no,@RequestBody @Valid CategoryVo vo) { 
+	public ResponseEntity<JSONResult> categoryUpdate(@PathVariable(value="no") Long no,@RequestBody @Valid CategoryVo vo) { 
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("no", no);
-		map.put("CategoryVo", vo);
+		// no 값 세팅
+		vo.setNo(no);
 		
-		boolean result = categoryService.updateCategory(map);
+		boolean result = categoryService.updateCategory(vo);
 		
-		map.put("result", result);
-		map.put("no", no);
-		
-		return JSONResult.success(map);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
 		
-	
-	//관리자 상품 삭제
-	@Auth(role=Auth.Role.ADMIN)
+	//관리자 카테고리 삭제
 	@ApiOperation(value="관리자 카테고리 삭제")
 	@DeleteMapping("/{no}")
-	public JSONResult categoryDelete(@PathVariable(value="no") Long no) {
+	public ResponseEntity<JSONResult> categoryDelete(@PathVariable(value="no") Long no) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-
+		
+		
 		boolean result = categoryService.deleteCategory(no);
+		
 		
 		map.put("result", result);
 		map.put("no", no);
 		
-		return JSONResult.success(map);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(map));
 	}
 
+	
+	//관리자 카테고리 조회
+	@ApiOperation(value="관리자 카테고리 목록 조회")
+	@GetMapping("")
+	public ResponseEntity<JSONResult> categoryList() {
+		
+		List<CategoryVo> cList = categoryService.showCategory();
+		
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(cList));
+	}
 	
 }

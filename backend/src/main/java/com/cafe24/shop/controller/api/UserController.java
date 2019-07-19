@@ -27,7 +27,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
-
 @RestController("userAPIController")
 @RequestMapping("/api/user")
 public class UserController {

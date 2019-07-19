@@ -62,7 +62,7 @@ public class UserControllerTest {
 	
 	@Ignore
 	@Test
-	public void aTest_CheckEmail() throws Exception{
+	public void aTestCheckEmail() throws Exception{
 		
 		ResultActions resultActions =
 				mockMvc
@@ -75,7 +75,7 @@ public class UserControllerTest {
 	}
 	
 	@Test
-	public void btest_JoinUser() throws Exception{
+	public void bTestJoinUser() throws Exception{
 
 		// 1. Normal User's Join Data
 		UserVo userVo = new UserVo(null,"박소원","thdnjs9570","Athdnjs@7946","thdnjs9570@naver.com","01076363123",Gender.FEMALE,Role.USER,"2019-07-16",null);
@@ -101,7 +101,7 @@ public class UserControllerTest {
 	
 	
 	@Test
-	public void ctest_LoginUser() throws Exception{
+	public void cTestLoginUser() throws Exception{
 		
 		//1. Normal User's Join Data
 		ResultActions resultActions =
@@ -134,7 +134,7 @@ public class UserControllerTest {
 	
 	@Ignore
 	@Test
-	public void dtest_UpdateUser() throws Exception{
+	public void dTestUpdateUser() throws Exception{
 
 		UserVo vo = new UserVo();
 		

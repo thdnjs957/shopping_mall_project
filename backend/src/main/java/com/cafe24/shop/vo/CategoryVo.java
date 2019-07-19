@@ -1,7 +1,14 @@
 package com.cafe24.shop.vo;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
 public class CategoryVo {
+	
 	private Long no;
+
+	@NotNull
 	private String name;
 	private int top_category;
 	

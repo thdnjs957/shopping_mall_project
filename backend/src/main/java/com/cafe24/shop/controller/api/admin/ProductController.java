@@ -49,7 +49,6 @@ public class ProductController {
 	private ProductService productService;
 	
 	//관리자 상품 등록
-	@Auth(role=Auth.Role.ADMIN)
 	@ApiOperation(value="관리자 상품 등록")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="productVo", value ="상품 productVo", required=true, dataType="ProductVo", defaultValue="")
@@ -70,7 +69,6 @@ public class ProductController {
 	}
 
 	//관리자 상품 목록 조회
-	@Auth(role=Auth.Role.ADMIN)
 	@ApiOperation(value="관리자 상품 목록 조회")
 	@GetMapping("")
 	public JSONResult productList() {
@@ -82,7 +80,6 @@ public class ProductController {
 	}
 	
 	//관리자 상품 검색 조회
-	@Auth(role=Auth.Role.ADMIN)
 	@ApiOperation(value="관리자 상품 검색 조회(이름, 카테고리)")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="productVo", value ="상품 productVo", required=true, dataType="ProductVo", defaultValue="")
@@ -101,7 +98,6 @@ public class ProductController {
 	
 	
 	//관리자 상품 삭제
-	@Auth(role=Auth.Role.ADMIN)
 	@ApiOperation(value="관리자 상품 삭제")
 	@DeleteMapping("/{no}")
 	public JSONResult productDelete(@PathVariable(value="no") Long no) {
@@ -118,7 +114,6 @@ public class ProductController {
 	
 	
 	//관리자 상품 수정
-	@Auth(role=Auth.Role.ADMIN)
 	@ApiOperation(value="관리자 상품 수정")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="productVo", value ="상품 productVo", required=true, dataType="ProductVo", defaultValue="")
