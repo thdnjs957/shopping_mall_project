@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="address">
+
+	<insert id="insert" parameterType="addressvo">
+		<![CDATA[
+			insert into addresses(no,name,top_category) values(null,#{name},#{top_category})
+		]]>
+	</insert>
+	
+	
+	<update id="update" parameterType="addressvo">
+		
+		<![CDATA[
+			update addresses set name= #{name} where no = #{no}
+		]]>
+		
+	</update>
+	
+	<delete id="delete" parameterType="Long">
+	
+		<![CDATA[
+			DELETE FROM addresses
+				WHERE no = #{value} 
+				OR top_category=(SELECT * FROM (SELECT no from category where no= #{value}) as c)
+		]]>	
+	</delete>
+	
+	<select id="getList" resultType="addressvo">
+		<![CDATA[
+			select * from addresses order by no
+		]]>
+	</select>
+	
+		
+
+</mapper>
