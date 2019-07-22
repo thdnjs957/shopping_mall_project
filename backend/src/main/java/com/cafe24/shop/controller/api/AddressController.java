@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 @RestController("addrAPIController")
-@RequestMapping("/api/addr")
+@RequestMapping("/api/address")
 public class AddressController {
 
 	@Autowired

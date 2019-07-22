@@ -5,25 +5,22 @@
 
 	<insert id="insert" parameterType="addressvo">
 		<![CDATA[
-			insert into addresses(no,name,top_category) values(null,#{name},#{top_category})
+			insert into addresses(no,name,address,zip_code,receiver,rec_phone,isRep,user_no) 
+				values(null,#{name},#{address},#{zip_code},#{receiver},#{rec_phone},#{isRep},#{user_no})
 		]]>
 	</insert>
 	
-	
 	<update id="update" parameterType="addressvo">
-		
 		<![CDATA[
-			update addresses set name= #{name} where no = #{no}
+			update addresses set name= #{name}, address = #{address}, receiver = #{receiver}, 
+				rec_phone = #{rec_phone} where no = #{no}
 		]]>
-		
 	</update>
 	
 	<delete id="delete" parameterType="Long">
-	
 		<![CDATA[
 			DELETE FROM addresses
-				WHERE no = #{value} 
-				OR top_category=(SELECT * FROM (SELECT no from category where no= #{value}) as c)
+				WHERE no = #{value}
 		]]>	
 	</delete>
 	

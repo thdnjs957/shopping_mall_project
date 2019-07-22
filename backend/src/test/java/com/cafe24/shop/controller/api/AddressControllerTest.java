@@ -35,8 +35,8 @@ import com.google.gson.Gson;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes= {AppConfig.class, TestWebConfig.class})
 @WebAppConfiguration
-@TransactionConfiguration(defaultRollback = true)
-@Transactional
+//@TransactionConfiguration(defaultRollback = true)
+//@Transactional
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AddressControllerTest {
 
@@ -50,16 +50,16 @@ public class AddressControllerTest {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 	
-	@Ignore
+	
 	@Test
 	public void aTestAddressRegister() throws Exception{
 		
 		// 1. Normal address register Data
-		AddressVo vo = new AddressVo(null,"소원홈스윗홈","경기 성남시 분당구 판교역로 235",13494,"박소원","010237364",true,1L); 
+		AddressVo vo = new AddressVo(null,"소원홈스윗홈","경기 성남시 분당구 판교역로 235",13494,"박소원","010237364",true,9L); 
 		
 		ResultActions resultActions =
 			mockMvc
-			.perform(post("/api/admin/Address/register").contentType(MediaType.APPLICATION_JSON)
+			.perform(post("/api/address/register").contentType(MediaType.APPLICATION_JSON)
 			 .content(new Gson().toJson(vo)));
 		
 		resultActions.andExpect(status().isOk())
@@ -67,11 +67,11 @@ public class AddressControllerTest {
 			.andExpect(jsonPath("$.result", is("success")));
 		
 		// 2. Invalidate name NULL 
-		vo = new AddressVo(null,null,"경기 성남시 분당구 판교역로 235",13494,"박소원","010237364",true,1L); 
+		vo = new AddressVo(null,null,"경기 성남시 분당구 판교역로 235",13494,"박소원","010237364",true,9L); 
 		
 		resultActions =
 				mockMvc
-				.perform(post("/api/admin/Address/register").contentType(MediaType.APPLICATION_JSON)
+				.perform(post("/api/address/register").contentType(MediaType.APPLICATION_JSON)
 				 .content(new Gson().toJson(vo)));
 			
 			resultActions.andExpect(status().isBadRequest())
@@ -86,7 +86,6 @@ public class AddressControllerTest {
 
 		AddressVo vo = new AddressVo();
 		
-		
 		vo.setName("소원홈스윗2");
 		vo.setAddress("경기 성남시 분당구 판교역로 2353");
 		vo.setReceiver("박소원2");
@@ -95,7 +94,7 @@ public class AddressControllerTest {
 		
 		ResultActions resultActions = 
 				mockMvc
-				.perform(put("/api/address/{no}",1L).contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+				.perform(put("/api/address/{no}",3L).contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 		
 		resultActions.andExpect(status().isOk())
 		.andDo(print())
@@ -104,22 +103,22 @@ public class AddressControllerTest {
 		
 	}
 	
-	@Ignore
+	
 	@Test
 	public void cTestAddressDelete() throws Exception{
 		
-		// 1. 하위 카테고리가 없는 경우 
 		ResultActions resultActions = 
 				mockMvc
-				.perform(delete("/api/address/{no}",4L).contentType(MediaType.APPLICATION_JSON));
+				.perform(delete("/api/address/{no}",3L).contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions.andExpect(status().isOk())
 		.andDo(print())
 		.andExpect(jsonPath("$.result", is("success")))
-		.andExpect(jsonPath("$.data.no", is(4)))
+		.andExpect(jsonPath("$.data.no", is(3)))
 		;
 		
 	}
+	
 	
 	@Test
 	public void dTestAddressList() throws Exception{
@@ -130,8 +129,6 @@ public class AddressControllerTest {
 		
 		resultActions.andExpect(status().isOk())
 		.andDo(print());
-		
-		
 	}
 	
 }
