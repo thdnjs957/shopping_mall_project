@@ -5,13 +5,52 @@
 
 	<insert id="insert" parameterType="productvo">
 		<![CDATA[
-			insert into product(no,name,summary,price,is_show,detail,tot_stock,reg_date) 
-				values(null,#{name},#{summary},#{price},#{is_show},#{detail},#{tot_stock},now())
+			insert into product(no,name,summary,price,is_show,detail,tot_stock,reg_date,category_no) 
+				values(null,#{name},#{summary},#{price},#{is_show},#{detail},#{tot_stock},now(),#{category_no})
 		]]>
 		<selectKey keyProperty="no" resultType="long" order="AFTER">
-			select last_insert_id()
+			select
+			last_insert_id()
 		</selectKey>
 	</insert>
 
+	<insert id="insert_image" parameterType="productimagevo">
+		<![CDATA[
+			insert into image(no,url,is_main,product_no) 
+				values(null,#{url},#{is_main},#{product_no})
+		]]>
+	</insert>
+
+	<insert id="insert_option" parameterType="optionvo">
+		<![CDATA[
+			insert into option(no,name,product_no) 
+				values(null,#{name},#{product_no})
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			select
+			last_insert_id()
+		</selectKey>
+	</insert>
+
+	<insert id="insert_option_ma" parameterType="optionmavo">
+		<![CDATA[
+			insert into option_master(no,value,option_no) 
+				values(null,#{value},#{option_no})
+		]]>
+	</insert>
+
+	<insert id="insert_pro_option" parameterType="productoptionvo">
+		<![CDATA[
+			insert into pro_option(no,name,stock,use_stock,plus,product_no) 
+				values(null,#{name},#{stock},#{use_stock},#{plus},#{product_no})
+		]]>
+	</insert>
+
+	<delete id="delete_product" parameterType="Long">
+		<![CDATA[
+			DELETE FROM product
+				WHERE no = #{value}
+		]]>	
+	</delete>
 
 </mapper>

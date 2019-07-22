@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.cafe24.shop.vo.OptionMasterVo;
 import com.cafe24.shop.vo.OptionVo;
 import com.cafe24.shop.vo.ProductImageVo;
+import com.cafe24.shop.vo.ProductOptionVo;
 import com.cafe24.shop.vo.ProductVo;
 
 @Repository
@@ -26,14 +27,14 @@ public class ProductDao {
 	
 	public boolean insertProductImage(ProductImageVo vo) {
 		
-		int count = sqlSession.insert("admin_image.insert",vo);
+		int count = sqlSession.insert("admin_product.insert_image",vo);
 		
 		return 1==count;
 	}
 	
 	public Long insertOption(OptionVo vo) {
 		
-		sqlSession.insert("admin_option.insert",vo);// 여기 가서는 상품에 대한 기본 정보들 insert
+		sqlSession.insert("admin_product.insert_option",vo);// 여기 가서는 상품에 대한 기본 정보들 insert
 		
 		//last autoincrement value
 		Long no = vo.getNo();
@@ -42,8 +43,21 @@ public class ProductDao {
 	}
 
 	public boolean insertOptionMaster(OptionMasterVo mv) {
-		int count = sqlSession.insert("admin_option_ma.insert",mv);
+		int count = sqlSession.insert("admin_product.insert_option_ma",mv);
 		return 1==count;
+	}
+
+	public boolean insertProOption(ProductOptionVo pov) {
+		
+		int count = sqlSession.insert("admin_product.insert_pro_option",pov);
+		
+		return 1==count;
+		
+	}
+
+	public boolean deleteProduct(Long no) {
+		int count = sqlSession.delete("admin_product.delete_product",no);
+		return 1 == count;
 	}
 	
 }

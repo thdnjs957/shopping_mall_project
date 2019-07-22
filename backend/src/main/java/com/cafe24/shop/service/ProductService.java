@@ -11,6 +11,7 @@ import com.cafe24.shop.repository.ProductDao;
 import com.cafe24.shop.vo.OptionMasterVo;
 import com.cafe24.shop.vo.OptionVo;
 import com.cafe24.shop.vo.ProductImageVo;
+import com.cafe24.shop.vo.ProductOptionVo;
 import com.cafe24.shop.vo.ProductVo;
 
 @Service
@@ -56,6 +57,15 @@ public class ProductService {
 			}
 		}
 		
+		List<ProductOptionVo> pro_optionList = vo.getPro_option();
+		
+		if(pro_optionList.isEmpty() == false) {
+			for(ProductOptionVo pov : pro_optionList) {
+				pov.setProduct_no(no);
+				productDao.insertProOption(pov);
+			}
+		}
+		
 		int checkSize2 = (optionList.isEmpty()) ? 0 : optionList.size();
 		
 		
@@ -86,11 +96,10 @@ public class ProductService {
 	}
 	
 	public boolean deleteProduct(Long no) {
-
 		//Long no = 삭제할 상품 no
-		//productDao.delete(no);
-		
-		return true;
+		boolean result = productDao.deleteProduct(no);
+				
+		return result;
 	}
 
 	public boolean upDateProduct(Map<String, Object> map) {

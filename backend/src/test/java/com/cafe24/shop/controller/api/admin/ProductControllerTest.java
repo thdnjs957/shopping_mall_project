@@ -34,13 +34,14 @@ import com.cafe24.shop.config.AppConfig;
 import com.cafe24.shop.vo.OptionMasterVo;
 import com.cafe24.shop.vo.OptionVo;
 import com.cafe24.shop.vo.ProductImageVo;
+import com.cafe24.shop.vo.ProductOptionVo;
 import com.cafe24.shop.vo.ProductVo;
 import com.google.gson.Gson;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes= {AppConfig.class, TestWebConfig.class})
 @WebAppConfiguration
-@TransactionConfiguration(defaultRollback = true)
+//@TransactionConfiguration(defaultRollback = true)
 @Transactional
 public class ProductControllerTest {
 
@@ -54,16 +55,17 @@ public class ProductControllerTest {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 	
+	@Ignore
 	@Test
 	public void productRegister() throws Exception{
 
-		ProductVo vo = new ProductVo(null,"청바지2","청바지2입니다.",20000,true,"<div>청바지 상품 설명입니다.</div>",100,"2019-07-16",1L);
+		ProductVo vo = new ProductVo(null,"청바지","청바지입니다.",20000,true,"<div>청바지 상품 설명입니다.</div>",100,"2019-07-16",13L);
 		
 		List<ProductImageVo> proImageList = new ArrayList<ProductImageVo>();
 		
-		ProductImageVo image1 = new ProductImageVo(null,"com/cafe24/images/image1",true,null);
-		ProductImageVo image2 = new ProductImageVo(null,"com/cafe24/images/image2",false,null);
-		ProductImageVo image3 = new ProductImageVo(null,"com/cafe24/images/image3",false,null);
+		ProductImageVo image1 = new ProductImageVo(null,"com/cafe24/images/image1.png",true,null);
+		ProductImageVo image2 = new ProductImageVo(null,"com/cafe24/images/image2.png",false,null);
+		ProductImageVo image3 = new ProductImageVo(null,"com/cafe24/images/image3.png",false,null);
 		
 		proImageList.add(image1);
 		proImageList.add(image2);
@@ -76,17 +78,17 @@ public class ProductControllerTest {
 		
 		List<OptionMasterVo> optionMaList1 = new ArrayList<OptionMasterVo>();
 		
-		OptionMasterVo optionMa1 = new OptionMasterVo(null,"색상","RED",null);
-		OptionMasterVo optionMa2 = new OptionMasterVo(null,"색상","BLUE",null);
+		OptionMasterVo optionMa1 = new OptionMasterVo(null,"레드",null);
+		OptionMasterVo optionMa2 = new OptionMasterVo(null,"블루",null);
 		
 		optionMaList1.add(optionMa1);
 		optionMaList1.add(optionMa2);
 		
 		List<OptionMasterVo> optionMaList2 = new ArrayList<OptionMasterVo>();
 		
-		OptionMasterVo optionMa3 = new OptionMasterVo(null,"사이즈","S",null);;
-		OptionMasterVo optionMa4 = new OptionMasterVo(null,"사이즈","M",null);
-		OptionMasterVo optionMa5 = new OptionMasterVo(null,"사이즈","L",null);
+		OptionMasterVo optionMa3 = new OptionMasterVo(null,"S",null);
+		OptionMasterVo optionMa4 = new OptionMasterVo(null,"M",null);
+		OptionMasterVo optionMa5 = new OptionMasterVo(null,"L",null);
 		
 		optionMaList2.add(optionMa3);
 		optionMaList2.add(optionMa4);
@@ -100,6 +102,19 @@ public class ProductControllerTest {
 		
 		vo.setOption(optionList);
 		
+		//미리 위에 리스트에 따라서 동적으로 담아줌 
+		List<ProductOptionVo> proOptionList = new ArrayList<ProductOptionVo>();
+		
+		ProductOptionVo proOption1 = new ProductOptionVo(null, "레드/S",100,true,0,null);
+		ProductOptionVo proOption2 = new ProductOptionVo(null, "레드/M",200,false,1000,null);
+		ProductOptionVo proOption3 = new ProductOptionVo(null, "블랙/S",150,false,0,null);
+		
+		proOptionList.add(proOption1);
+		proOptionList.add(proOption2);
+		proOptionList.add(proOption3);
+		
+		vo.setPro_option(proOptionList);
+		
 		ResultActions resultActions = 
 			mockMvc
 			.perform(post("/api/admin/product/register").contentType(MediaType.APPLICATION_JSON)
@@ -108,41 +123,83 @@ public class ProductControllerTest {
 		resultActions.andExpect(status().isOk())
 			.andDo(print())
 			.andExpect(jsonPath("$.data", is(true)));
-		
-		//NOT NULL bad request check
-		ProductVo vo2 = new ProductVo(null,"청바지2","청바지2입니다.",20000,true,"<div>청바지 상품 설명입니다.</div>",100,"2019-07-16",1L);
-		
-		List<OptionVo> optionList2 = new ArrayList<OptionVo>();
-		
-		//optionMa null 값
-		OptionVo option3 = new OptionVo(null,"색상",null,null);
-		OptionVo option4 = new OptionVo(null,"사이즈",null,null);
-		
-		optionList2.add(option3);
-		optionList2.add(option4);
-		
-		resultActions = 
-				mockMvc
-				.perform(post("/api/admin/product/register").contentType(MediaType.APPLICATION_JSON)
-				 .content(new Gson().toJson(vo2)));
-			
-			resultActions.andExpect(status().isBadRequest())
-				.andDo(print())
-				.andExpect(jsonPath("$.data", is(true)));
 	}
 	
 	@Ignore
+	@Test
+	public void productUpdate() throws Exception{
+
+		ProductVo vo = new ProductVo(null,"원피스","원피스입니다.",20000,true,"<div>원피스 상품 설명입니다.</div>",100,"2019-07-16",13L);
+		
+		List<ProductImageVo> proImageList = new ArrayList<ProductImageVo>();
+		
+		ProductImageVo image1 = new ProductImageVo(null,"com/cafe24/images/image4.png",true,null);
+		ProductImageVo image2 = new ProductImageVo(null,"com/cafe24/images/image5.png",false,null);
+		ProductImageVo image3 = new ProductImageVo(null,"com/cafe24/images/image6.png",false,null);
+		
+		proImageList.add(image1);
+		proImageList.add(image2);
+		proImageList.add(image3);
+		
+		vo.setPro_Image(proImageList);
+		
+		///option 리스트 생성
+		List<OptionVo> optionList = new ArrayList<OptionVo>();
+		
+		List<OptionMasterVo> optionMaList1 = new ArrayList<OptionMasterVo>();
+		
+		OptionMasterVo optionMa1 = new OptionMasterVo(null,"퍼플",null);
+		OptionMasterVo optionMa2 = new OptionMasterVo(null,"옐로우",null);
+		
+		optionMaList1.add(optionMa1);
+		optionMaList1.add(optionMa2);
+		
+		List<OptionMasterVo> optionMaList2 = new ArrayList<OptionMasterVo>();
+		
+		OptionMasterVo optionMa3 = new OptionMasterVo(null,"S",null);
+		
+		optionMaList2.add(optionMa3);
+		
+		OptionVo option1 = new OptionVo(null,"색상",null,optionMaList1);
+		OptionVo option2 = new OptionVo(null,"사이즈",null,optionMaList2);
+		
+		optionList.add(option1);
+		optionList.add(option2);
+		
+		vo.setOption(optionList);
+		
+		List<ProductOptionVo> proOptionList = new ArrayList<ProductOptionVo>();
+		
+		ProductOptionVo proOption1 = new ProductOptionVo(null, "퍼플/S",100,true,0,null);
+		ProductOptionVo proOption2 = new ProductOptionVo(null, "옐로우/S",200,false,1000,null);
+		
+		proOptionList.add(proOption1);
+		proOptionList.add(proOption2);
+		
+		vo.setPro_option(proOptionList);
+		
+		ResultActions resultActions = 
+				mockMvc
+				.perform(put("/api/admin/product/{no}",3L).contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		
+		resultActions.andExpect(status().isOk())
+		.andDo(print())
+		.andExpect(jsonPath("$.result", is("success")))
+		;
+	}
+	
+	
 	@Test
 	public void productDelete() throws Exception{
 
 		ResultActions resultActions = 
 				mockMvc
-				.perform(delete("/api/admin/product/{no}",1L).contentType(MediaType.APPLICATION_JSON));
+				.perform(delete("/api/admin/product/{no}",8L).contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions.andExpect(status().isOk())
 		.andDo(print())
 		.andExpect(jsonPath("$.result", is("success")))
-		.andExpect(jsonPath("$.data.no", is(1)))
+		.andExpect(jsonPath("$.data.no", is(8)))
 		;
 	}
 	
@@ -190,24 +247,7 @@ public class ProductControllerTest {
 		;
 	}
 	
-	@Ignore
-	@Test
-	public void productUpdate() throws Exception{
-
-		ProductVo vo = new ProductVo();
-		
-		vo.setName("청반바지");
-		vo.setPrice(15000);
-		
-		ResultActions resultActions = 
-				mockMvc
-				.perform(put("/api/admin/product/{no}",1L).contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
-		
-		resultActions.andExpect(status().isOk())
-		.andDo(print())
-		.andExpect(jsonPath("$.result", is("success")))
-		;
-	}
+	
 	
 	
 }

@@ -30,9 +30,10 @@ public class ProductVo {
 	
 	private List<ProductImageVo> pro_Image;
 	private List<OptionVo> option;
+	private List<ProductOptionVo> pro_option;
+
 	
 	public ProductVo() {}
-
 	public ProductVo(Long no, String name, String summary, int price, boolean is_show, String detail, int tot_stock,
 			String reg_date, Long category_no) {
 		this.no = no;
@@ -44,10 +45,8 @@ public class ProductVo {
 		this.tot_stock = tot_stock;
 		this.reg_date = reg_date;
 		this.category_no = category_no;
-		this.pro_Image = pro_Image;
-		this.option = option;
 	}
-	
+
 	public Long getNo() {
 		return no;
 	}
@@ -136,7 +135,14 @@ public class ProductVo {
 		this.option = option;
 	}
 
-	
+	public List<ProductOptionVo> getPro_option() {
+		return pro_option;
+	}
+
+	public void setPro_option(List<ProductOptionVo> pro_option) {
+		this.pro_option = pro_option;
+	}
+
 	
 	
 	
