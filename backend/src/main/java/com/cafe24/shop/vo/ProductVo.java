@@ -28,7 +28,7 @@ public class ProductVo {
 	private String reg_date;
 	private Long category_no;
 	
-	private List<ProductImageVo> pro_Image;
+	private List<ImageVo> pro_Image;
 	private List<OptionVo> option;
 	private List<ProductOptionVo> pro_option;
 
@@ -119,11 +119,11 @@ public class ProductVo {
 		this.category_no = category_no;
 	}
 
-	public List<ProductImageVo> getPro_Image() {
+	public List<ImageVo> getPro_Image() {
 		return pro_Image;
 	}
 
-	public void setPro_Image(List<ProductImageVo> pro_Image) {
+	public void setPro_Image(List<ImageVo> pro_Image) {
 		this.pro_Image = pro_Image;
 	}
 

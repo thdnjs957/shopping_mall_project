@@ -31,9 +31,9 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.cafe24.config.web.TestWebConfig;
 import com.cafe24.shop.config.AppConfig;
+import com.cafe24.shop.vo.ImageVo;
 import com.cafe24.shop.vo.OptionMasterVo;
 import com.cafe24.shop.vo.OptionVo;
-import com.cafe24.shop.vo.ProductImageVo;
 import com.cafe24.shop.vo.ProductOptionVo;
 import com.cafe24.shop.vo.ProductVo;
 import com.google.gson.Gson;
@@ -59,13 +59,13 @@ public class ProductControllerTest {
 	@Test
 	public void productRegister() throws Exception{
 
-		ProductVo vo = new ProductVo(null,"청바지","청바지입니다.",20000,true,"<div>청바지 상품 설명입니다.</div>",100,"2019-07-16",13L);
+		ProductVo vo = new ProductVo(null,"원피스","원피스입니다.",20000,true,"<div>웝피스 상품 설명입니다.</div>",100,"2019-07-16",13L);
 		
-		List<ProductImageVo> proImageList = new ArrayList<ProductImageVo>();
+		List<ImageVo> proImageList = new ArrayList<ImageVo>();
 		
-		ProductImageVo image1 = new ProductImageVo(null,"com/cafe24/images/image1.png",true,null);
-		ProductImageVo image2 = new ProductImageVo(null,"com/cafe24/images/image2.png",false,null);
-		ProductImageVo image3 = new ProductImageVo(null,"com/cafe24/images/image3.png",false,null);
+		ImageVo image1 = new ImageVo(null,"com/cafe24/images/image11.png",true,null);
+		ImageVo image2 = new ImageVo(null,"com/cafe24/images/image12.png",false,null);
+		ImageVo image3 = new ImageVo(null,"com/cafe24/images/image13.png",false,null);
 		
 		proImageList.add(image1);
 		proImageList.add(image2);
@@ -131,11 +131,11 @@ public class ProductControllerTest {
 
 		ProductVo vo = new ProductVo(null,"원피스","원피스입니다.",20000,true,"<div>원피스 상품 설명입니다.</div>",100,"2019-07-16",13L);
 		
-		List<ProductImageVo> proImageList = new ArrayList<ProductImageVo>();
+		List<ImageVo> proImageList = new ArrayList<ImageVo>();
 		
-		ProductImageVo image1 = new ProductImageVo(null,"com/cafe24/images/image4.png",true,null);
-		ProductImageVo image2 = new ProductImageVo(null,"com/cafe24/images/image5.png",false,null);
-		ProductImageVo image3 = new ProductImageVo(null,"com/cafe24/images/image6.png",false,null);
+		ImageVo image1 = new ImageVo(null,"com/cafe24/images/image4.png",true,null);
+		ImageVo image2 = new ImageVo(null,"com/cafe24/images/image5.png",false,null);
+		ImageVo image3 = new ImageVo(null,"com/cafe24/images/image6.png",false,null);
 		
 		proImageList.add(image1);
 		proImageList.add(image2);
@@ -188,7 +188,7 @@ public class ProductControllerTest {
 		;
 	}
 	
-	
+	@Ignore
 	@Test
 	public void productDelete() throws Exception{
 
@@ -205,7 +205,7 @@ public class ProductControllerTest {
 	
 	@Ignore
 	@Test
-	public void productList() throws Exception{
+	public void productListforAdmin() throws Exception{
 
 		ResultActions resultActions = 
 				mockMvc
@@ -214,13 +214,19 @@ public class ProductControllerTest {
 		resultActions.andExpect(status().isOk())
 		.andDo(print())
 		.andExpect(jsonPath("$.result", is("success")))
-		.andExpect(jsonPath("$.data", hasSize(2)))
-		.andExpect(jsonPath("$.data[0].no", is(1)))
-		.andExpect(jsonPath("$.data[0].name", is("청바지")))
-		.andExpect(jsonPath("$.data[0].price", is(20000)))
-		.andExpect(jsonPath("$.data[1].no", is(2)))
-		.andExpect(jsonPath("$.data[1].name", is("원피스")))
-		.andExpect(jsonPath("$.data[1].price", is(10000)));
+		;
+	}
+	
+	@Ignore
+	@Test
+	public void productGetByNo() throws Exception{
+
+		ResultActions resultActions = 
+				mockMvc
+				.perform(get("/api/admin/product/{no}",4L).contentType(MediaType.APPLICATION_JSON));
+		resultActions.andExpect(status().isOk())
+		.andDo(print())
+		.andExpect(jsonPath("$.result", is("success")))
 		;
 	}
 	
@@ -246,8 +252,6 @@ public class ProductControllerTest {
 		.andExpect(jsonPath("$.data[0].price", is(10000)));
 		;
 	}
-	
-	
 	
 	
 }

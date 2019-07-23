@@ -4,19 +4,17 @@ public class ImageVo {
 	
 	private Long no;
 	private String url;
-	private String is_main;
+	private boolean is_main;
 	private Long product_no;
 	
 	public ImageVo() {}
 	
-	public ImageVo(Long no, String url, String is_main, Long product_no) {
-		super();
+	public ImageVo(Long no, String url, boolean is_main, Long product_no) {
 		this.no = no;
 		this.url = url;
 		this.is_main = is_main;
 		this.product_no = product_no;
 	}
-	
 	
 	public Long getNo() {
 		return no;
@@ -30,10 +28,10 @@ public class ImageVo {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public String getIs_main() {
+	public boolean isIs_main() {
 		return is_main;
 	}
-	public void setIs_main(String is_main) {
+	public void setIs_main(boolean is_main) {
 		this.is_main = is_main;
 	}
 	public Long getProduct_no() {
@@ -45,8 +43,8 @@ public class ImageVo {
 
 	@Override
 	public String toString() {
-		return "ImageVo [no=" + no + ", url=" + url + ", is_main=" + is_main + ", product_no=" + product_no + "]";
+		return "ProductImageVo [no=" + no + ", url=" + url + ", is_main=" + is_main + ", product_no=" + product_no
+				+ "]";
 	}
-	
 	
 }

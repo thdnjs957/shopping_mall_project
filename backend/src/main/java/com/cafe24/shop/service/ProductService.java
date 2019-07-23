@@ -1,6 +1,7 @@
 package com.cafe24.shop.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cafe24.shop.repository.ProductDao;
+import com.cafe24.shop.vo.CategoryVo;
+import com.cafe24.shop.vo.ImageVo;
 import com.cafe24.shop.vo.OptionMasterVo;
 import com.cafe24.shop.vo.OptionVo;
-import com.cafe24.shop.vo.ProductImageVo;
 import com.cafe24.shop.vo.ProductOptionVo;
 import com.cafe24.shop.vo.ProductVo;
 
@@ -27,10 +29,10 @@ public class ProductService {
 		
 		Long no = productDao.insertProduct(vo);
 		
-		List<ProductImageVo> imageList = vo.getPro_Image();
+		List<ImageVo> imageList = vo.getPro_Image();
 		
 		if( imageList.isEmpty() == false ) {
-			for(ProductImageVo iv : imageList) {
+			for(ImageVo iv : imageList) {
 				iv.setProduct_no(no);
 				if(productDao.insertProductImage(iv)) {
 					imageCount++;
@@ -42,6 +44,7 @@ public class ProductService {
 		
 		List<OptionVo> optionList = vo.getOption();
 	
+		
 		if( optionList.isEmpty() == false ) {
 			for(OptionVo ov : optionList) {
 				ov.setProduct_no(no);
@@ -68,14 +71,19 @@ public class ProductService {
 		
 		int checkSize2 = (optionList.isEmpty()) ? 0 : optionList.size();
 		
-		
 		return imageCount == checkSize1 && optionCount == checkSize2;
 	}
 
 	public List<ProductVo> getProductList() {
 		
-		//dao에서 getList
-		List<ProductVo> pList = new ArrayList<ProductVo>();
+		//product + main image
+		List<ProductVo> pList = productDao.getListforAdmin();
+		
+//		 for(ProductVo p :pList) {
+//			 Long no = p.getNo();
+//			 List<ImageVo> iList = productDao.getImageByNo(no);
+//			 p.setPro_Image(iList);
+//		 }
 		
 		return pList;
 	}
@@ -96,14 +104,13 @@ public class ProductService {
 	}
 	
 	public boolean deleteProduct(Long no) {
-		//Long no = 삭제할 상품 no
+
 		boolean result = productDao.deleteProduct(no);
 				
 		return result;
 	}
 
 	public boolean upDateProduct(Map<String, Object> map) {
-		
 		
 		Long no = (Long) map.get("no");
 
@@ -115,8 +122,14 @@ public class ProductService {
 		p1.setName(vo.getName());
 		p1.setPrice(vo.getPrice());
 		
-		
 		return true;
+	}
+
+	public ProductVo getProductDetail(Long no) {
+		
+		ProductVo vo = productDao.getProductByNo(no);
+		
+		return vo;
 	}
 
 	

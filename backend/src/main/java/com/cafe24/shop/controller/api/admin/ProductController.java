@@ -71,13 +71,26 @@ public class ProductController {
 	//관리자 상품 목록 조회
 	@ApiOperation(value="관리자 상품 목록 조회")
 	@GetMapping("")
-	public JSONResult productList() {
+	public ResponseEntity<JSONResult> productList() {
 		
 		//상품 리스트
 		List<ProductVo> pList = productService.getProductList();
 		
-		return JSONResult.success(pList);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(pList));
 	}
+	
+	
+	//관리자 상품 디테일 조회
+	@ApiOperation(value="관리자 상품 상세 조회")
+	@GetMapping("/{no}")
+	public ResponseEntity<JSONResult> productDetail(@PathVariable(value="no") Long no) {
+		
+		//상품 디테일 조회
+		ProductVo vo = productService.getProductDetail(no);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(vo));
+	}
+	
 	
 	//관리자 상품 검색 조회
 	@ApiOperation(value="관리자 상품 검색 조회(이름, 카테고리)")
@@ -85,17 +98,16 @@ public class ProductController {
 		@ApiImplicitParam(name="productVo", value ="상품 productVo", required=true, dataType="ProductVo", defaultValue="")
 	})
 	@PostMapping("")
-	public JSONResult productSearch(@RequestBody @Valid ProductVo vo) {
+	public ResponseEntity<JSONResult> productSearch(@RequestBody @Valid ProductVo vo) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", vo.getName());
 		map.put("categoryNo",vo.getCategory_no());
 		
 		List<ProductVo> pList = productService.getSearchProductList(map);
 		
-		return JSONResult.success(pList);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(pList));
 	}
 		
-	
 	
 	//관리자 상품 삭제
 	@ApiOperation(value="관리자 상품 삭제")
@@ -111,7 +123,6 @@ public class ProductController {
 		return JSONResult.success(map);
 	}
 
-	
 	
 	//관리자 상품 수정
 	@ApiOperation(value="관리자 상품 수정")
@@ -132,7 +143,6 @@ public class ProductController {
 		
 		return JSONResult.success(map);
 	}
-	
 	
 	
 	

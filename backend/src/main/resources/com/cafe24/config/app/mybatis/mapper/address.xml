@@ -6,7 +6,8 @@
 	<insert id="insert" parameterType="addressvo">
 		<![CDATA[
 			insert into addresses(no,name,address,zip_code,receiver,rec_phone,isRep,user_no) 
-				values(null,#{name},#{address},#{zip_code},#{receiver},#{rec_phone},#{isRep},#{user_no})
+				values(null,#{name}
+				,#{address},#{zip_code},#{receiver},#{rec_phone},#{isRep},#{user_no})
 		]]>
 	</insert>
 	
