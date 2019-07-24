@@ -88,14 +88,14 @@
 		</selectKey>
 	</insert>
 
-	<insert id="insert_image" parameterType="imagevo">
+	<insert id="insertImage" parameterType="imagevo">
 		<![CDATA[
 			insert into image(no,url,is_main,product_no) 
 				values(null,#{url},#{is_main},#{product_no})
 		]]>
 	</insert>
 
-	<insert id="insert_option" parameterType="optionvo">
+	<insert id="insertOption" parameterType="optionvo">
 		<![CDATA[
 			insert into option(no,name,product_no) 
 				values(null,#{name},#{product_no})
@@ -106,25 +106,52 @@
 		</selectKey>
 	</insert>
 
-	<insert id="insert_option_ma" parameterType="optionmavo">
+	<insert id="insertOptionMa" parameterType="optionmavo">
 		<![CDATA[
 			insert into option_master(no,value,option_no) 
 				values(null,#{value},#{option_no})
 		]]>
 	</insert>
 
-	<insert id="insert_pro_option" parameterType="productoptionvo">
+	<insert id="insertProOption" parameterType="productoptionvo">
 		<![CDATA[
 			insert into pro_option(no,name,stock,use_stock,plus,product_no) 
 				values(null,#{name},#{stock},#{use_stock},#{plus},#{product_no})
 		]]>
 	</insert>
 
-	<delete id="delete_product" parameterType="Long">
+	<delete id="deleteProduct" parameterType="Long">
 		<![CDATA[
 			DELETE FROM product
 				WHERE no = #{value}
 		]]>	
 	</delete>
+	
+	<delete id="deleteImage" parameterType="Long">
+		<![CDATA[
+			DELETE FROM image
+				WHERE product_no = #{value}
+		]]>	
+	</delete>
+	
+	<delete id="deleteOption" parameterType="Long">
+		<![CDATA[
+			DELETE FROM option
+				WHERE product_no = #{value}
+		]]>	
+	</delete>
+	
+	<update id="updateProduct" parameterType="productvo">
+		<![CDATA[
+			update product set 
+				name = #{name, jdbcType=VARCHAR},
+				summary = #{summary, jdbcType=VARCHAR},
+				price = #{price, jdbcType=INTEGER},
+				is_show = #{is_show, jdbcType=INTEGER},
+				detail = #{detail, jdbcType=VARCHAR},
+				is_show = #{is_show, jdbcType=BOOLEAN}
+				WHERE no = #{no}
+		]]>
+	</update>
 
 </mapper>

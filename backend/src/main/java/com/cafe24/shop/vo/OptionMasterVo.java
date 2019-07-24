@@ -1,9 +1,11 @@
 package com.cafe24.shop.vo;
 
+import javax.validation.constraints.NotNull;
 
 public class OptionMasterVo {
 
 	private Long no;
+	@NotNull
 	private String value;
 	private Long option_no;
 	

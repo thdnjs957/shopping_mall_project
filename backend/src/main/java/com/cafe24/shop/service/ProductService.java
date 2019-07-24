@@ -110,25 +110,71 @@ public class ProductService {
 		return result;
 	}
 
-	public boolean upDateProduct(Map<String, Object> map) {
+	public boolean upDateProduct(ProductVo vo) {
 		
-		Long no = (Long) map.get("no");
-
-		//no 통해서 getProduct 
-		ProductVo p1 = new ProductVo(null,"청바지","청바지입니다.",20000,true,"<div>청바지 상품 설명입니다.</div>",100,"2019-07-16",1L);
+		int imageCount = 0;
+		int optionCount = 0;
 		
-		ProductVo vo = (ProductVo) map.get("ProductVo");
-
-		p1.setName(vo.getName());
-		p1.setPrice(vo.getPrice());
+		//productVo 수정부터
+		productDao.updateProduct(vo); 
 		
-		return true;
+		Long no = vo.getNo();
+		
+		List<ImageVo> imageList = vo.getPro_Image(); //지금 수정해서 들어갈 데이터 저장
+		
+		if( imageList.isEmpty() == false ) {
+			
+			productDao.deleteImage(no);
+			
+			for(ImageVo iv : imageList) {
+				iv.setProduct_no(no);
+				if(productDao.insertProductImage(iv)) {
+					imageCount++;
+				}
+			}
+		}
+		
+		int checkSize1 = (imageList.isEmpty()) ? 0 : imageList.size();
+		
+		List<OptionVo> optionList = vo.getOption(); //수정해서 들어갈 옵션 데이터
+	
+		//옵션 일단 지움 -> 옵션 디테일도 지워짐		
+		if( optionList.isEmpty() == false ) {
+			
+			productDao.deleteOption(no);
+			
+			for(OptionVo ov : optionList) {
+				ov.setProduct_no(no);
+				Long option_no = productDao.insertOption(ov);
+	
+				List<OptionMasterVo> optionMaList = ov.getOption_ma();
+				
+				for(OptionMasterVo mv : optionMaList) {
+					mv.setOption_no(option_no);
+					productDao.insertOptionMaster(mv);
+				}
+				optionCount++;
+			}
+		}
+		
+		List<ProductOptionVo> pro_optionList = vo.getPro_option();
+		
+		if(pro_optionList.isEmpty() == false) {
+			for(ProductOptionVo pov : pro_optionList) {
+				pov.setProduct_no(no);
+				productDao.insertProOption(pov);
+			}
+		}
+		
+		int checkSize2 = (optionList.isEmpty()) ? 0 : optionList.size();
+		
+		return imageCount == checkSize1 && optionCount == checkSize2;
+		
 	}
 
 	public ProductVo getProductDetail(Long no) {
 		
 		ProductVo vo = productDao.getProductByNo(no);
-		
 		return vo;
 	}
 

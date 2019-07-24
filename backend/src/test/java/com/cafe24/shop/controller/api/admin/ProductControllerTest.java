@@ -1,6 +1,5 @@
 package com.cafe24.shop.controller.api.admin;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -42,7 +41,7 @@ import com.google.gson.Gson;
 @ContextConfiguration(classes= {AppConfig.class, TestWebConfig.class})
 @WebAppConfiguration
 //@TransactionConfiguration(defaultRollback = true)
-@Transactional
+//@Transactional
 public class ProductControllerTest {
 
 	private MockMvc mockMvc;
@@ -55,7 +54,7 @@ public class ProductControllerTest {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 	
-	@Ignore
+	
 	@Test
 	public void productRegister() throws Exception{
 
@@ -123,9 +122,13 @@ public class ProductControllerTest {
 		resultActions.andExpect(status().isOk())
 			.andDo(print())
 			.andExpect(jsonPath("$.data", is(true)));
+		
+		
+		
+		
 	}
 	
-	@Ignore
+	
 	@Test
 	public void productUpdate() throws Exception{
 
@@ -180,12 +183,13 @@ public class ProductControllerTest {
 		
 		ResultActions resultActions = 
 				mockMvc
-				.perform(put("/api/admin/product/{no}",3L).contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+				.perform(put("/api/admin/product/{no}",21L).contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 		
 		resultActions.andExpect(status().isOk())
 		.andDo(print())
 		.andExpect(jsonPath("$.result", is("success")))
 		;
+		
 	}
 	
 	@Ignore

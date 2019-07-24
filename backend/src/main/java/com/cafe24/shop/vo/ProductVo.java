@@ -2,6 +2,7 @@ package com.cafe24.shop.vo;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
@@ -29,7 +30,10 @@ public class ProductVo {
 	private Long category_no;
 	
 	private List<ImageVo> pro_Image;
+	
+	@Valid
 	private List<OptionVo> option;
+	
 	private List<ProductOptionVo> pro_option;
 
 	

@@ -2,11 +2,14 @@ package com.cafe24.shop.vo;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 public class OptionVo {
 	
 	private Long no;
+	
+	@NotNull
 	private String name;
 	private Long product_no;
 	

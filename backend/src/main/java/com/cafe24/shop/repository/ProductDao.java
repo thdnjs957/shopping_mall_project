@@ -35,14 +35,14 @@ public class ProductDao {
 	
 	public boolean insertProductImage(ImageVo vo) {
 		
-		int count = sqlSession.insert("product.insert_image",vo);
+		int count = sqlSession.insert("product.insertImage",vo);
 		
 		return 1==count;
 	}
 	
 	public Long insertOption(OptionVo vo) {
 		
-		sqlSession.insert("product.insert_option",vo);// 여기 가서는 상품에 대한 기본 정보들 insert
+		sqlSession.insert("product.insertOption",vo);// 여기 가서는 상품에 대한 기본 정보들 insert
 		
 		//last autoincrement value
 		Long no = vo.getNo();
@@ -51,19 +51,24 @@ public class ProductDao {
 	}
 
 	public boolean insertOptionMaster(OptionMasterVo mv) {
-		int count = sqlSession.insert("product.insert_option_ma",mv);
+		int count = sqlSession.insert("product.insertOptionMa",mv);
 		return 1==count;
 	}
 
 	public boolean insertProOption(ProductOptionVo pov) {
 		
-		int count = sqlSession.insert("product.insert_pro_option",pov);
+		int count = sqlSession.insert("product.insertProOption",pov);
 		return 1==count;
 		
 	}
 
+	public boolean updateProduct(ProductVo vo) {
+		int count = sqlSession.update("product.updateProduct",vo);
+		return 1 == count;
+	}
+	
 	public boolean deleteProduct(Long no) {
-		int count = sqlSession.delete("product.delete_product",no);
+		int count = sqlSession.delete("product.deleteProduct",no);
 		return 1 == count;
 	}
 
@@ -90,6 +95,16 @@ public class ProductDao {
 	public List<ProductVo> getListforAdmin() {
 		List<ProductVo> list = sqlSession.selectList("product.getListforAdmin");
 		return list;
+	}
+
+	public boolean deleteImage(Long no) {
+		int count = sqlSession.delete("product.deleteImage",no);
+		return 1 == count;
+	}
+
+	public boolean deleteOption(Long no) {
+		int count = sqlSession.delete("product.deleteOption",no);
+		return 1 == count;
 	}
 
 }

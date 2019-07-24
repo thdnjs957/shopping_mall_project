@@ -112,7 +112,7 @@ public class ProductController {
 	//관리자 상품 삭제
 	@ApiOperation(value="관리자 상품 삭제")
 	@DeleteMapping("/{no}")
-	public JSONResult productDelete(@PathVariable(value="no") Long no) {
+	public ResponseEntity<JSONResult> productDelete(@PathVariable(value="no") Long no) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 
@@ -120,7 +120,7 @@ public class ProductController {
 		map.put("result", result);
 		map.put("no", no);
 		
-		return JSONResult.success(map);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(map));
 	}
 
 	
@@ -130,21 +130,14 @@ public class ProductController {
 		@ApiImplicitParam(name="productVo", value ="상품 productVo", required=true, dataType="ProductVo", defaultValue="")
 	})
 	@PutMapping("/{no}")
-	public JSONResult productUpdate(@PathVariable(value="no") Long no,@RequestBody @Valid ProductVo vo) { 
+	public ResponseEntity<JSONResult> productUpdate(@PathVariable(value="no") Long no,@RequestBody @Valid ProductVo vo) { 
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("no", no);
-		map.put("ProductVo", vo);
+		vo.setNo(no);
 		
-		boolean result = productService.upDateProduct(map);
+		boolean result = productService.upDateProduct(vo);
 		
-		map.put("result", result);
-		map.put("no", no);
-		
-		return JSONResult.success(map);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
-	
-	
 	
 }
 
