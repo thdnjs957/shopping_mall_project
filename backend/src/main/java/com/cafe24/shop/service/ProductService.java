@@ -74,7 +74,7 @@ public class ProductService {
 		return imageCount == checkSize1 && optionCount == checkSize2;
 	}
 
-	public List<ProductVo> getProductList() {
+	public List<ProductVo> getProductListforAdmin() {
 		
 		//product + main image
 		List<ProductVo> pList = productDao.getListforAdmin();
@@ -87,6 +87,19 @@ public class ProductService {
 		
 		return pList;
 	}
+	
+	public List<ProductVo> getProductList(Long no) { //no => category_no
+		
+		List<ProductVo> pList = productDao.getListforUser(no);
+
+		return pList;
+	}
+	
+	public List<ProductVo> getProductListforUser() { 
+		List<ProductVo> pList = productDao.getListforUser();
+		return pList;
+	}
+
 	
 	public List<ProductVo> getSearchProductList(Map<String, Object> pMap) {
 		
@@ -173,10 +186,16 @@ public class ProductService {
 	}
 
 	public ProductVo getProductDetail(Long no) {
-		
 		ProductVo vo = productDao.getProductByNo(no);
 		return vo;
 	}
 
+	public ProductVo getProductDetailByUser(Map<String, Object> map) {
+		ProductVo vo = productDao.getProductByMap(map);
+		return vo;
+	}
+	
+	
+	
 	
 }

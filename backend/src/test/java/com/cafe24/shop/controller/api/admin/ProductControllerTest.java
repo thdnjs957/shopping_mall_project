@@ -58,7 +58,7 @@ public class ProductControllerTest {
 	@Test
 	public void productRegister() throws Exception{
 
-		ProductVo vo = new ProductVo(null,"원피스","원피스입니다.",20000,true,"<div>웝피스 상품 설명입니다.</div>",100,"2019-07-16",13L);
+		ProductVo vo = new ProductVo(null,"원피스","원피스입니다.",20000,true,"<div>웝피스 상품 설명입니다.</div>",100,"2019-07-16",11L);
 		
 		List<ImageVo> proImageList = new ArrayList<ImageVo>();
 		
@@ -124,15 +124,14 @@ public class ProductControllerTest {
 			.andExpect(jsonPath("$.data", is(true)));
 		
 		
-		
-		
 	}
 	
 	
 	@Test
 	public void productUpdate() throws Exception{
-
-		ProductVo vo = new ProductVo(null,"원피스","원피스입니다.",20000,true,"<div>원피스 상품 설명입니다.</div>",100,"2019-07-16",13L);
+																	  //디테일만 null
+		ProductVo vo = new ProductVo(null,"원피스","원피스입니다.",20000,true,null,100,"2019-07-16",null);
+		
 		
 		List<ImageVo> proImageList = new ArrayList<ImageVo>();
 		
@@ -183,7 +182,7 @@ public class ProductControllerTest {
 		
 		ResultActions resultActions = 
 				mockMvc
-				.perform(put("/api/admin/product/{no}",21L).contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+				.perform(put("/api/admin/product/{no}",10L).contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 		
 		resultActions.andExpect(status().isOk())
 		.andDo(print())
@@ -219,6 +218,45 @@ public class ProductControllerTest {
 		.andDo(print())
 		.andExpect(jsonPath("$.result", is("success")))
 		;
+	}
+	
+	
+	@Test
+	public void productListforUser() throws Exception{
+
+		//카테고리 no 있을때 
+		ResultActions resultActions = 
+				mockMvc
+				.perform(get("/api/product/{no}",13L).contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions.andExpect(status().isOk())
+		.andDo(print())
+		.andExpect(jsonPath("$.result", is("success")))
+		;
+		
+		//카테고리 선택 x 메인 페이지 상품 리스트 다 보여주기
+		resultActions = 
+				mockMvc
+				.perform(get("/api/product").contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions.andExpect(status().isOk())
+		.andDo(print())
+		.andExpect(jsonPath("$.result", is("success")))
+		;
+	}
+	
+	@Test
+	public void productDetailforUser() throws Exception{
+
+		ResultActions resultActions = 
+				mockMvc
+				.perform(get("/api/product/{no1}/{no2}",13L,10L).contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions.andExpect(status().isOk())
+		.andDo(print())
+		.andExpect(jsonPath("$.result", is("success")))
+		;
+
 	}
 	
 	@Ignore

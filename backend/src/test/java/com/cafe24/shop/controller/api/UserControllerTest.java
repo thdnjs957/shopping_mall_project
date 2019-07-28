@@ -36,6 +36,7 @@ import com.cafe24.config.web.TestWebConfig;
 import com.cafe24.shop.config.AppConfig;
 import com.cafe24.shop.config.WebConfig;
 import com.cafe24.shop.service.UserService;
+import com.cafe24.shop.vo.ProductOptionVo;
 import com.cafe24.shop.vo.UserVo;
 import com.cafe24.shop.vo.UserVo.Gender;
 import com.cafe24.shop.vo.UserVo.Role;
@@ -152,6 +153,28 @@ public class UserControllerTest {
 		.andExpect(jsonPath("$.result", is("success")))
 		.andExpect(jsonPath("$.data", is(true)))
 		;
+	}
+	
+	
+	@Test
+	public void getProductOption() throws Exception{
+		
+		//사용자가 옵션(색상, 사이즈)를 모두 골랐을때 ajax 요청
+		
+		//ajax post로 ProductOptionVo
+		ProductOptionVo pov = new ProductOptionVo();
+		
+		pov.setName("레드/M");
+		pov.setProduct_no(24L); //상품 번호
+		
+		ResultActions resultActions = 
+			mockMvc
+			.perform(post("/api/basket/getNo").contentType(MediaType.APPLICATION_JSON)
+			 .content(new Gson().toJson(pov)));
+		
+		resultActions.andExpect(status().isOk())
+			.andDo(print())
+			.andExpect(jsonPath("$.result", is("success")));
 	}
 	
 //	@AfterClass //각각 말고 한번만

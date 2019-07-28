@@ -20,7 +20,7 @@
 	    <result property="is_show" column="IS_SHOW"/>
 	    <result property="tot_stock" column="TOT_STOCK"/>
 	    <result property="category_no" column="CATEGORY_NO"/>
-	    <collection property="pro_Image" column="NO" javaType="java.util.ArrayList" ofType="imagevo" select="getImageByNo"/>
+	    <collection property="pro_Image" column="NO" javaType="java.util.ArrayList" ofType="imagevo" select="getImageByNoIsMain"/>
 	    <collection property="option" column="NO" javaType="java.util.ArrayList" ofType="optionvo" select="getOptionByNo"/>
 	</resultMap>
 	
@@ -35,15 +35,43 @@
 		select no,name, price, is_show, category_no from product
 	</select>
 	
-	<select id="getImageByNo" resultType="imagevo">
+	<select id="getListforUserCategory" resultMap="productAdminResult" parameterType="Long"> 
+		<![CDATA[
+			select no,name,summary,price from product
+				where is_show = 1 and category_no = #{category_no} order by no  
+		]]>
+	</select>
+	
+	<select id="getListforUser" resultMap="productAdminResult"> 
+		<![CDATA[
+			select no,name,summary,price from product
+				where is_show = 1 order by no  
+		]]>
+	</select>
+	
+	<select id="getImageByNoIsMain" resultType="imagevo">
 		<![CDATA[
 			select url,is_main from image where product_no = #{no} and is_main = 1
+		]]>
+	</select>
+
+	<select id="getImageByNoAll" resultType="imagevo">
+		<![CDATA[
+			select url,is_main from image where product_no = #{no}
 		]]>
 	</select>
 
 	<select id="getByNo" resultMap="productDetailAdminResult" parameterType="Long">
 		<![CDATA[
 			select no,name,summary,price,detail,is_show,tot_stock,category_no from product where no = #{value}
+		]]>
+	</select>
+	
+	<select id="getByMap" resultMap="productDetailAdminResult" parameterType="map">
+		<![CDATA[
+			select no,name,summary,price,detail,is_show,tot_stock,category_no 
+				from product 
+			where no = #{product_no} and category_no = #{category_no}
 		]]>
 	</select>
 	
@@ -59,22 +87,10 @@
 		]]>
 	</select>
 	
-	<select id="getListforUser" resultType="productvo"> 
-		<choose>
-			<when test="category_no == null">
-				<![CDATA[
-					select p.no,name,summary,price,url from product p, image i 
-						where p.no = i.product_no and is_show = 1 and is_main=1 order by no
-				]]>
-			</when>
-			<otherwise>
-				<![CDATA[	
-					select p.no,name,summary,price,url from product p, image i 
-						where p.no = i.product_no and is_show = 1 and is_main=1
-							 and category_no = #{category_no} order by no
-				]]>
-			</otherwise>
-		</choose>
+	<select id="getProductOptionByName" resultType="productoptionvo" parameterType="productoptionvo">
+		<![CDATA[
+			select no,name,stock,use_stock,plus,product_no from pro_option where product_no = #{product_no} and name = #{name}
+		]]>
 	</select>
 	
 	<insert id="insert" parameterType="productvo">
@@ -153,5 +169,7 @@
 				WHERE no = #{no}
 		]]>
 	</update>
+	
+	
 
 </mapper>

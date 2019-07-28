@@ -10,10 +10,12 @@
 		<typeAlias alias="optionmavo" type="com.cafe24.shop.vo.OptionMasterVo"/>
 		<typeAlias alias="categoryvo" type="com.cafe24.shop.vo.CategoryVo"/>
 		<typeAlias alias="addressvo" type="com.cafe24.shop.vo.AddressVo"/>
+		<typeAlias alias="basketvo" type="com.cafe24.shop.vo.BasketVo"/>
     </typeAliases>	
 	<mappers>
 		<mapper resource="com/cafe24/config/app/mybatis/mapper/user.xml" />
 		<mapper resource="com/cafe24/config/app/mybatis/mapper/address.xml" />
+		<mapper resource="com/cafe24/config/app/mybatis/mapper/basket.xml" />
 		<mapper resource="com/cafe24/config/app/mybatis/mapper/product.xml" />
 		<mapper resource="com/cafe24/config/app/mybatis/mapper/admin/category.xml" />
 	</mappers>

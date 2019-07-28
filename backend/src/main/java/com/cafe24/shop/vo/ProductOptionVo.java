@@ -4,12 +4,11 @@ public class ProductOptionVo {
 	
 	private Long no;
 	private String name;
-	private String code;
 	private int stock;
 	private boolean use_stock;
 	private int plus;
 	private Long product_no;
-
+	
 	
 	public ProductOptionVo(){}
 

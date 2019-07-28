@@ -74,7 +74,7 @@ public class ProductController {
 	public ResponseEntity<JSONResult> productList() {
 		
 		//상품 리스트
-		List<ProductVo> pList = productService.getProductList();
+		List<ProductVo> pList = productService.getProductListforAdmin();
 		
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(pList));
 	}

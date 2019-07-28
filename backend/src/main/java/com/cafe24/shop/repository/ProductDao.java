@@ -1,6 +1,7 @@
 package com.cafe24.shop.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ public class ProductDao {
 		List<ProductVo> pList = sqlSession.selectList("product.getList");
 		return pList;
 	}
+	
 	
 	public Long insertProduct(ProductVo vo) {
 		sqlSession.insert("product.insert",vo);// 여기 가서는 상품에 대한 기본 정보들 insert
@@ -77,6 +79,11 @@ public class ProductDao {
 		return vo;
 	}
 
+	public ProductVo getProductByMap(Map<String, Object> map) {
+		ProductVo vo = sqlSession.selectOne("product.getByMap",map);
+		return vo;
+	}
+
 	public List<OptionVo> getOptionByNo(Long no) {
 		List<OptionVo> list = sqlSession.selectList("product.getOptionByNo",no);
 		return list;
@@ -96,7 +103,19 @@ public class ProductDao {
 		List<ProductVo> list = sqlSession.selectList("product.getListforAdmin");
 		return list;
 	}
+	
+	public List<ProductVo> getListforUser(Long no) {
+		List<ProductVo> list = sqlSession.selectList("product.getListforUserCategory",no);
+		return list;
+	}
+	
+	public List<ProductVo> getListforUser() {
+		List<ProductVo> list = sqlSession.selectList("product.getListforUser");
+		return list;
+	}
 
+	
+	
 	public boolean deleteImage(Long no) {
 		int count = sqlSession.delete("product.deleteImage",no);
 		return 1 == count;
@@ -106,5 +125,14 @@ public class ProductDao {
 		int count = sqlSession.delete("product.deleteOption",no);
 		return 1 == count;
 	}
+
+
+	public ProductOptionVo getProductOptionByName(ProductOptionVo vo) {
+		ProductOptionVo pov = sqlSession.selectOne("product.getProductOptionByName",vo);
+		return pov;
+	}
+
+
+
 
 }
