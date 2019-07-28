@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="basket">
+	
+	<insert id="insert" parameterType="basketvo">
+		<![CDATA[
+			insert into basket(no,count,sessionId,pro_option_no,user_no) 
+				values(null,#{count},#{sessionId},#{pro_option_no},#{user_no})
+		]]>
+	</insert>
+	
+	<select id="getList" parameterType="Long" resultType="map"> 
+		<![CDATA[
+			select b.count,b.pro_option_no,b.user_no ,po.product_no,po.name as optionName ,p.name as productName,p.summary,p.price
+				from basket b, pro_option po ,product p
+					where b.user_no = #{value} and b.pro_option_no = po.no and po.product_no = p.no;
+		]]>
+	</select>
+	
+	<update id="update" parameterType="basketvo">
+         <![CDATA[
+                UPDATE basket SET count=#{count} WHERE no = #{no}
+         ]]>
+    </update>
+	
+	<!-- 
+	<select id="getProductOptionBy" parameterType="Long" resultMap="BasketResult"> 
+		<![CDATA[
+			select name,pro_option_no from pro_option where no = #{value}
+		]]>
+	</select>
+	 -->
+	
+</mapper>
