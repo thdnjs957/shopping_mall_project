@@ -195,6 +195,12 @@ public class ProductService {
 		return vo;
 	}
 	
+	public ProductOptionVo getProductOptionNo(ProductOptionVo vo) {
+
+		ProductOptionVo pov = productDao.getProductOptionByName(vo);
+		return pov;
+		
+	}
 	
 	
 	

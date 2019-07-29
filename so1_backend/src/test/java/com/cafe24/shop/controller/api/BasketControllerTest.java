@@ -90,6 +90,29 @@ public class BasketControllerTest {
 	
 	
 	@Test
+	public void aTestBasketCheck() throws Exception{
+		
+		// 장바구니에 이미 존재하는 상품인지 체크 
+		List<BasketVo> bvList = new ArrayList<BasketVo>();
+		
+		BasketVo bv = new BasketVo();
+		
+		bv.setPro_option_no(50L);
+		
+		ResultActions resultActions =
+			mockMvc
+			.perform(post("/api/basket/check").contentType(MediaType.APPLICATION_JSON)
+			 .content(new Gson().toJson(bvList)));
+		
+		resultActions.andExpect(status().isOk())
+			.andDo(print())
+			.andExpect(jsonPath("$.result", is("success")))
+			.andExpect(jsonPath("$.data", is(true)));
+	}
+	
+	
+	
+	@Test
 	public void cTestBasketList() throws Exception{
 
 		ResultActions resultActions =
@@ -142,12 +165,11 @@ public class BasketControllerTest {
 		
 		ResultActions resultActions = 
 				mockMvc
-				.perform(delete("/api/basket/{no}",3L).contentType(MediaType.APPLICATION_JSON));
+				.perform(delete("/api/basket/{no}",11L).contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions.andExpect(status().isOk())
 		.andDo(print())
 		.andExpect(jsonPath("$.result", is("success")))
-		.andExpect(jsonPath("$.data.no", is(3)))
 		;
 		
 	}

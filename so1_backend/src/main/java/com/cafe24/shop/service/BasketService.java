@@ -7,19 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cafe24.shop.repository.BasketDao;
-import com.cafe24.shop.repository.ProductDao;
 import com.cafe24.shop.vo.BasketVo;
-import com.cafe24.shop.vo.ImageVo;
-import com.cafe24.shop.vo.ProductOptionVo;
 
 @Service
 public class BasketService {
 
 	@Autowired
 	private BasketDao basketDao;
-	
-	@Autowired
-	private ProductDao productDao;
 	
 	public boolean addBasket(List<BasketVo> bvoList) { 
 		
@@ -48,30 +42,28 @@ public class BasketService {
 	}
 
 
-	public ProductOptionVo getProductOptionNo(ProductOptionVo vo) {
-
-		ProductOptionVo pov = productDao.getProductOptionByName(vo);
-		return pov;
-		
-	}
-
 	public boolean updateBasket(BasketVo vo) {
 		boolean result = basketDao.update(vo);
 		return result;
 	}
 
 
-//	public boolean updateBasket(BasketVo vo) {
-//		boolean result = basketDao.update(vo);
-//		
-//		return result;
-//	}
-//
-//	public boolean deleteBasket(Long no) {
-//		boolean result = basketDao.delete(no);
-//		return result;
-//	}
-//
+
+	public boolean deleteBasket(Long no) {
+		boolean result = basketDao.delete(no);
+		return result;
+	}
+
+
+
+	public boolean checkBasket(Long no) {
+
+		List<BasketVo> list = basketDao.check(no);
+		
+		return list.size() > 0;
+		
+	}
+
 	
 
 }

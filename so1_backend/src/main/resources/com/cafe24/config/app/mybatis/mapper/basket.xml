@@ -24,12 +24,17 @@
          ]]>
     </update>
 	
-	<!-- 
-	<select id="getProductOptionBy" parameterType="Long" resultMap="BasketResult"> 
+	<delete id="delete" parameterType="Long">
 		<![CDATA[
-			select name,pro_option_no from pro_option where no = #{value}
+			DELETE FROM basket
+				WHERE no = #{value}
+		]]>	
+	</delete>
+	
+	<select id="check" parameterType="Long" resultType="basketvo"> 
+		<![CDATA[
+			select no from basket where pro_option_no = #{value}
 		]]>
 	</select>
-	 -->
 	
 </mapper>

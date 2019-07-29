@@ -28,11 +28,19 @@ public class BasketDao {
 	}
 
 	public boolean update(BasketVo vo) {
-
 		int count = sqlSession.update("basket.update",vo);
 		return 1 == count;
 	
 	}
-	
+
+	public boolean delete(Long no) {
+		int count = sqlSession.update("basket.delete",no);
+		return 1 == count;
+	}
+
+	public List<BasketVo> check(Long no) {
+		List<BasketVo> list = sqlSession.selectList("basket.check",no); 
+		return list;
+	}
 	
 }
