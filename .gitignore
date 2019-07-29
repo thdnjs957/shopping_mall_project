@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 /.settings/
 /target/
 /.classpath
 /.project
+=======
+.project
+.settings
+.classpath
+/target/
+>>>>>>> pjshop/master
