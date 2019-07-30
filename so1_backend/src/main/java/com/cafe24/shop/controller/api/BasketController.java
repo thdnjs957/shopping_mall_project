@@ -82,17 +82,18 @@ public class BasketController {
 	
 
 	//사용자 장바구니 리스트
-	@ApiOperation(value="회원 장바구니 리스트 조회")
+	@ApiOperation(value="장바구니 리스트 조회")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="BasketVo", value ="장바구니 BasketVo", required=true, dataType="BasketVo", defaultValue="")
 	})
 	@GetMapping("")
-	public  ResponseEntity<JSONResult> BasketList() {
+	public  ResponseEntity<JSONResult> BasketList(@RequestBody BasketVo vo) {
 		
-		List<Map<String, Object>> bv = basketService.showBasket(9L); 
+		List<Map<String, Object>> bv = basketService.showBasket(vo); 
 		
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(bv));
 	}
+	
 	
 	//사용자 장바구니 수정
 	@ApiOperation(value="사용자 장바구니 수정")

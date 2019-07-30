@@ -34,9 +34,9 @@ public class BasketService {
 	
 	
 	
-	public List<Map<String, Object>> showBasket(Long no) {
+	public List<Map<String, Object>> showBasket(BasketVo vo) {
 		
-		List<Map<String, Object>> map = basketDao.getList(no);
+		List<Map<String, Object>> map = basketDao.getList(vo);
 		return map;
 		
 	}
@@ -58,9 +58,9 @@ public class BasketService {
 
 	public boolean checkBasket(Long no) {
 
-		List<BasketVo> list = basketDao.check(no);
+		int count = basketDao.check(no);
 		
-		return list.size() > 0;
+		return count > 0;
 		
 	}
 

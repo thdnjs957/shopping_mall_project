@@ -65,13 +65,13 @@ public class BasketControllerTest {
 		BasketVo bv = new BasketVo();
 		
 		bv.setUser_no(9L);
-		bv.setPro_option_no(50L);
+		bv.setPro_option_no(1L);
 		bv.setCount(2);
 		
 		BasketVo bv2 = new BasketVo();
 		
 		bv2.setUser_no(9L);
-		bv2.setPro_option_no(51L);
+		bv2.setPro_option_no(2L);
 		bv2.setCount(5);
 		
 		bvList.add(bv);
@@ -111,18 +111,38 @@ public class BasketControllerTest {
 	}
 	
 	
-	
+	//회원 장바구니 테스트
 	@Test
 	public void cTestBasketList() throws Exception{
-
+		
+		BasketVo vo = new BasketVo();
+		vo.setUser_no(9L);
+		
 		ResultActions resultActions =
 				mockMvc
-				.perform(get("/api/basket").contentType(MediaType.APPLICATION_JSON));
+				.perform(get("/api/basket").contentType(MediaType.APPLICATION_JSON)
+						.content(new Gson().toJson(vo)));
 		
 		resultActions.andExpect(status().isOk())
 		.andDo(print());
 	}
 	
+	//비회원 장바구니 테스트
+	@Test
+	public void cTestNonMemberBasketList() throws Exception{
+		
+		BasketVo vo = new BasketVo();
+		vo.setSessionId("TestSessionId");
+		
+		ResultActions resultActions =
+				mockMvc
+				.perform(get("/api/basket").contentType(MediaType.APPLICATION_JSON)
+						 .content(new Gson().toJson(vo)));
+		
+		resultActions.andExpect(status().isOk())
+		.andDo(print());
+	}
+		
 	
 	@Test
 	public void dTestBasketUpdate() throws Exception{

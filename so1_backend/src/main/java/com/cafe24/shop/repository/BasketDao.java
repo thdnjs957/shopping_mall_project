@@ -22,8 +22,8 @@ public class BasketDao {
 		return 1 == count;
 	}
 
-	public List<Map<String, Object>> getList(Long no) { 
-		List<Map<String, Object>> map  = sqlSession.selectList("basket.getList",no);
+	public List<Map<String, Object>> getList(BasketVo vo) { 
+		List<Map<String, Object>> map  = sqlSession.selectList("basket.getList",vo);
 		return map;
 	}
 
@@ -38,9 +38,9 @@ public class BasketDao {
 		return 1 == count;
 	}
 
-	public List<BasketVo> check(Long no) {
-		List<BasketVo> list = sqlSession.selectList("basket.check",no); 
-		return list;
+	public int check(Long no) {
+		int count = sqlSession.selectOne("basket.check",no); 
+		return count;
 	}
 	
 }
