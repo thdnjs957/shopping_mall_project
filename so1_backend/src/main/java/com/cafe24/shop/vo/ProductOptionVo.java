@@ -9,10 +9,10 @@ public class ProductOptionVo {
 	private int plus;
 	private Long product_no;
 	
-	
 	public ProductOptionVo(){}
 
 	public ProductOptionVo(Long no, String name, int stock, boolean use_stock, int plus, Long product_no) {
+		super();
 		this.no = no;
 		this.name = name;
 		this.stock = stock;
@@ -69,5 +69,6 @@ public class ProductOptionVo {
 		this.product_no = product_no;
 	}
 
+	
 	
 }

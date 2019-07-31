@@ -35,11 +35,10 @@ public class ProductDao {
 		return no;
 	}
 	
-	public boolean insertProductImage(ImageVo vo) {
+	public int insertProductImage(Map<String, Object> map) {
 		
-		int count = sqlSession.insert("product.insertImage",vo);
-		
-		return 1==count;
+		int count = sqlSession.insert("product.insertImage",map);
+		return count;
 	}
 	
 	public Long insertOption(OptionVo vo) {
@@ -52,16 +51,14 @@ public class ProductDao {
 		return no;
 	}
 
-	public boolean insertOptionMaster(OptionMasterVo mv) {
-		int count = sqlSession.insert("product.insertOptionMa",mv);
+	public boolean insertOptionMaster(Map<String, Object> map) {
+		int count = sqlSession.insert("product.insertOptionMa",map);
 		return 1==count;
 	}
 
-	public boolean insertProOption(ProductOptionVo pov) {
-		
-		int count = sqlSession.insert("product.insertProOption",pov);
-		return 1==count;
-		
+	public int insertProOption(Map<String, Object> map) {
+		int count = sqlSession.insert("product.insertProOption",map);
+		return count;
 	}
 
 	public boolean updateProduct(ProductVo vo) {

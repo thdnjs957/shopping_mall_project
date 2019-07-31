@@ -32,12 +32,10 @@ public class ProductService {
 		List<ImageVo> imageList = vo.getPro_Image();
 		
 		if( imageList.isEmpty() == false ) {
-			for(ImageVo iv : imageList) {
-				iv.setProduct_no(no);
-				if(productDao.insertProductImage(iv)) {
-					imageCount++;
-				}
-			}
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("productNo", no);
+			map.put("imageList",imageList);
+			imageCount = productDao.insertProductImage(map);
 		}
 		
 		int checkSize1 = (imageList.isEmpty()) ? 0 : imageList.size();
@@ -50,12 +48,13 @@ public class ProductService {
 				ov.setProduct_no(no);
 				Long option_no = productDao.insertOption(ov);
 	
-				List<OptionMasterVo> optionMaList = ov.getOption_ma();
+				Map<String, Object> map = new HashMap<String, Object>();
 				
-				for(OptionMasterVo mv : optionMaList) {
-					mv.setOption_no(option_no);
-					productDao.insertOptionMaster(mv);
-				}
+				map.put("optionNo", option_no);
+				map.put("productMasterList",ov.getOption_ma());
+
+				productDao.insertOptionMaster(map);
+				
 				optionCount++;
 			}
 		}
@@ -63,13 +62,13 @@ public class ProductService {
 		List<ProductOptionVo> pro_optionList = vo.getPro_option();
 		
 		if(pro_optionList.isEmpty() == false) {
-			for(ProductOptionVo pov : pro_optionList) {
-				pov.setProduct_no(no);
-				productDao.insertProOption(pov);
-			}
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("productNo", no);
+			map.put("proOptionList",pro_optionList);
+			optionCount = productDao.insertProOption(map);
 		}
 		
-		int checkSize2 = (optionList.isEmpty()) ? 0 : optionList.size();
+		int checkSize2 = (pro_optionList.isEmpty()) ? 0 : pro_optionList.size();
 		
 		return imageCount == checkSize1 && optionCount == checkSize2;
 	}
@@ -78,12 +77,6 @@ public class ProductService {
 		
 		//product + main image
 		List<ProductVo> pList = productDao.getListforAdmin();
-		
-//		 for(ProductVo p :pList) {
-//			 Long no = p.getNo();
-//			 List<ImageVo> iList = productDao.getImageByNo(no);
-//			 p.setPro_Image(iList);
-//		 }
 		
 		return pList;
 	}
@@ -139,12 +132,11 @@ public class ProductService {
 			
 			productDao.deleteImage(no);
 			
-			for(ImageVo iv : imageList) {
-				iv.setProduct_no(no);
-				if(productDao.insertProductImage(iv)) {
-					imageCount++;
-				}
-			}
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("productNo", no);
+			map.put("imageList",imageList);
+			imageCount = productDao.insertProductImage(map);
+			
 		}
 		
 		int checkSize1 = (imageList.isEmpty()) ? 0 : imageList.size();
@@ -160,23 +152,22 @@ public class ProductService {
 				ov.setProduct_no(no);
 				Long option_no = productDao.insertOption(ov);
 	
-				List<OptionMasterVo> optionMaList = ov.getOption_ma();
+				Map<String, Object> map = new HashMap<String, Object>();
 				
-				for(OptionMasterVo mv : optionMaList) {
-					mv.setOption_no(option_no);
-					productDao.insertOptionMaster(mv);
-				}
-				optionCount++;
+				map.put("optionNo", option_no);
+				map.put("productMasterList",ov.getOption_ma());
+
+				productDao.insertOptionMaster(map);
 			}
 		}
 		
 		List<ProductOptionVo> pro_optionList = vo.getPro_option();
 		
 		if(pro_optionList.isEmpty() == false) {
-			for(ProductOptionVo pov : pro_optionList) {
-				pov.setProduct_no(no);
-				productDao.insertProOption(pov);
-			}
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("productNo", no);
+			map.put("proOptionList",pro_optionList);
+			optionCount = productDao.insertProOption(map);
 		}
 		
 		int checkSize2 = (optionList.isEmpty()) ? 0 : optionList.size();

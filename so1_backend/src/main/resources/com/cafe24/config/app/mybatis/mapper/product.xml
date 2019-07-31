@@ -104,11 +104,16 @@
 		</selectKey>
 	</insert>
 
-	<insert id="insertImage" parameterType="imagevo">
+	<insert id="insertImage" parameterType="map">
 		<![CDATA[
-			insert into image(no,url,is_main,product_no) 
-				values(null,#{url},#{is_main},#{product_no})
-		]]>
+			INSERT INTO image(no,url,is_main,product_no) 
+				VALUES
+		]]> 
+		<foreach collection="imageList" item="list" separator="," >
+		     <![CDATA[
+				(null,#{list.url},#{list.is_main},#{productNo})  		
+		     ]]>
+   		</foreach>
 	</insert>
 
 	<insert id="insertOption" parameterType="optionvo">
@@ -122,18 +127,28 @@
 		</selectKey>
 	</insert>
 
-	<insert id="insertOptionMa" parameterType="optionmavo">
+	<insert id="insertOptionMa" parameterType="map">
 		<![CDATA[
-			insert into option_master(no,value,option_no) 
-				values(null,#{value},#{option_no})
-		]]>
+			INSERT INTO option_master(no,value,option_no) 
+				VALUES
+		]]> 
+		<foreach collection="productMasterList" item="list" separator="," >
+		     <![CDATA[
+				(null,#{list.value},#{optionNo})   		
+		     ]]>
+   		</foreach>
 	</insert>
-
-	<insert id="insertProOption" parameterType="productoptionvo">
+	
+	<insert id="insertProOption" parameterType="map">
 		<![CDATA[
-			insert into pro_option(no,name,stock,use_stock,plus,product_no) 
-				values(null,#{name},#{stock},#{use_stock},#{plus},#{product_no})
-		]]>
+			INSERT INTO pro_option(no,name,stock,use_stock,plus,product_no)  
+				VALUES
+		]]> 
+		<foreach collection="proOptionList" item="list" separator="," >
+		     <![CDATA[
+				(null,#{list.name},#{list.stock},#{list.use_stock},#{list.plus},#{productNo})  		
+		     ]]>
+   		</foreach>
 	</insert>
 
 	<delete id="deleteProduct" parameterType="Long">

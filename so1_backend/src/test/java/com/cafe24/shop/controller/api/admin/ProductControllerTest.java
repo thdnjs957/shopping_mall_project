@@ -103,8 +103,8 @@ public class ProductControllerTest {
 		//미리 위에 리스트에 따라서 동적으로 담아줌 
 		List<ProductOptionVo> proOptionList = new ArrayList<ProductOptionVo>();
 		
-		ProductOptionVo proOption1 = new ProductOptionVo(null, "진청/S",100,true,0,null);
-		ProductOptionVo proOption2 = new ProductOptionVo(null, "진청/M",200,false,1000,null);
+		ProductOptionVo proOption1 = new ProductOptionVo(null, "진청/S",0,true,0,null);
+		ProductOptionVo proOption2 = new ProductOptionVo(null, "진청/M",4,true,1000,null);
 		ProductOptionVo proOption3 = new ProductOptionVo(null, "진청/L",200,false,1000,null);
 		
 		proOptionList.add(proOption1);
@@ -190,7 +190,7 @@ public class ProductControllerTest {
 		
 	}
 	
-	@Ignore
+	
 	@Test
 	public void productDelete() throws Exception{
 
