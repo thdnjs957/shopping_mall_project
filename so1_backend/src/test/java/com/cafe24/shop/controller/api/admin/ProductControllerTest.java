@@ -58,7 +58,7 @@ public class ProductControllerTest {
 	@Test
 	public void productRegister() throws Exception{
 
-		ProductVo vo = new ProductVo(null,"원피스","원피스입니다.",20000,true,"<div>웝피스 상품 설명입니다.</div>",100,"2019-07-16",11L);
+		ProductVo vo = new ProductVo(null,"바즤","바지입니다.",15000,true,"<div>바지 상품 설명입니다.</div>",100,"2019-07-16",4L);
 		
 		List<ImageVo> proImageList = new ArrayList<ImageVo>();
 		
@@ -77,11 +77,10 @@ public class ProductControllerTest {
 		
 		List<OptionMasterVo> optionMaList1 = new ArrayList<OptionMasterVo>();
 		
-		OptionMasterVo optionMa1 = new OptionMasterVo(null,"레드",null);
-		OptionMasterVo optionMa2 = new OptionMasterVo(null,"블루",null);
+		OptionMasterVo optionMa1 = new OptionMasterVo(null,"진청",null);
 		
 		optionMaList1.add(optionMa1);
-		optionMaList1.add(optionMa2);
+		//optionMaList1.add(optionMa2);
 		
 		List<OptionMasterVo> optionMaList2 = new ArrayList<OptionMasterVo>();
 		
@@ -104,9 +103,9 @@ public class ProductControllerTest {
 		//미리 위에 리스트에 따라서 동적으로 담아줌 
 		List<ProductOptionVo> proOptionList = new ArrayList<ProductOptionVo>();
 		
-		ProductOptionVo proOption1 = new ProductOptionVo(null, "레드/S",100,true,0,null);
-		ProductOptionVo proOption2 = new ProductOptionVo(null, "레드/M",200,false,1000,null);
-		ProductOptionVo proOption3 = new ProductOptionVo(null, "블랙/S",150,false,0,null);
+		ProductOptionVo proOption1 = new ProductOptionVo(null, "진청/S",100,true,0,null);
+		ProductOptionVo proOption2 = new ProductOptionVo(null, "진청/M",200,false,1000,null);
+		ProductOptionVo proOption3 = new ProductOptionVo(null, "진청/L",200,false,1000,null);
 		
 		proOptionList.add(proOption1);
 		proOptionList.add(proOption2);

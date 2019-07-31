@@ -27,7 +27,7 @@ public class ProductDao {
 	
 	
 	public Long insertProduct(ProductVo vo) {
-		sqlSession.insert("product.insert",vo);// 여기 가서는 상품에 대한 기본 정보들 insert
+		sqlSession.insert("product.insert",vo);
 		
 		//last autoincrement value
 		Long no = vo.getNo();
@@ -44,7 +44,7 @@ public class ProductDao {
 	
 	public Long insertOption(OptionVo vo) {
 		
-		sqlSession.insert("product.insertOption",vo);// 여기 가서는 상품에 대한 기본 정보들 insert
+		sqlSession.insert("product.insertOption",vo);
 		
 		//last autoincrement value
 		Long no = vo.getNo();
