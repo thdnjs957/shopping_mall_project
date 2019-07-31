@@ -36,18 +36,21 @@ public class OrderService {
 		
 	}
 
-	public boolean isSoldOut(OrderVo vo) {  
+	public int UnAvailableCauseForOrder(OrderVo vo) {  
+		
 		List<OrderDetailVo> list = vo.getOrderDetailList();
 		
-		List<ProductOptionVo> pvoList =  orderDao.checkStock(list);
-		
-		for(ProductOptionVo pov:pvoList) {
+		for(OrderDetailVo odvo :list) {
+			ProductOptionVo pov = orderDao.checkStock(odvo);
 			if(pov.getStock() < 0 &&  pov.isUse_stock() == true ) {
-				return true;
+				return 1;
+			}
+			if(pov.getStock() < odvo.getCount()) {
+				return 2;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 
 	public List<Map<String, Object>> showOrder(OrderVo vo) {
@@ -56,6 +59,5 @@ public class OrderService {
 		return map;
 	}
 
-	
 	
 }

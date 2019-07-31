@@ -47,10 +47,13 @@ public class OrderController {
 		}
 		
 		//재고 있는지 확인 
-		if(orderService.isSoldOut(vo)) {
+		if(orderService.UnAvailableCauseForOrder(vo) == 1) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("재고가 없는 상품입니다."));
 		}
-	
+		if(orderService.UnAvailableCauseForOrder(vo) == 2) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("재고보다 더 많은 수량을 선택하셨습니다."));
+		}
+		
 		//주문 insert
 		boolean result = orderService.addOrder(vo);
 		

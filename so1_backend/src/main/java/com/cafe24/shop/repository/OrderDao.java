@@ -28,9 +28,9 @@ public class OrderDao {
 		return count == 1;
 	}
 
-	public List<ProductOptionVo> checkStock(List<OrderDetailVo> list) {
-		List<ProductOptionVo> pvoList = sqlSession.selectList("order.checkStock",list);
-		return pvoList;
+	public ProductOptionVo checkStock(OrderDetailVo vo) {
+		ProductOptionVo pvo = sqlSession.selectOne("order.checkStock",vo);
+		return pvo;
 	}
 
 	public boolean reduceProductStock(List<OrderDetailVo> OrderDetailList) {

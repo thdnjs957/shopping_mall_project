@@ -59,12 +59,11 @@
    		</foreach>
 	</update>
 	
-	<select id="checkStock" parameterType="java.util.List" resultType="productoptionvo"> 
-		<foreach collection="list" item="list" separator=";" >
-		     <![CDATA[
-				select stock,use_stock,stock from pro_option where no = #{list.pro_option_no}		
-		     ]]>
-   		</foreach>
+	<select id="checkStock" parameterType="orderdetailvo" resultType="productoptionvo"> 
+	     <![CDATA[
+			select stock,use_stock,stock from pro_option where no = #{pro_option_no}		
+	     ]]>
+   	
 	</select>
 	
 	<select id="getList" parameterType="ordervo" resultType="map"> 
