@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.cafe24.shop.repository.OrderDao;
 import com.cafe24.shop.vo.OrderDetailVo;
 import com.cafe24.shop.vo.OrderVo;
+import com.cafe24.shop.vo.ProductOptionVo;
 
 @Service
 public class OrderService {
@@ -35,10 +36,18 @@ public class OrderService {
 		
 	}
 
-	public boolean checkProductStock(OrderVo vo) {
+	public boolean isSoldOut(OrderVo vo) {  
 		List<OrderDetailVo> list = vo.getOrderDetailList();
-		orderDao.checkStock(list);
-		return true;
+		
+		List<ProductOptionVo> pvoList =  orderDao.checkStock(list);
+		
+		for(ProductOptionVo pov:pvoList) {
+			if(pov.getStock() < 0 &&  pov.isUse_stock() == true ) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	public List<Map<String, Object>> showOrder(OrderVo vo) {

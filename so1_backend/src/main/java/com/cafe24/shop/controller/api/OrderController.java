@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.shop.dto.JSONResult;
 import com.cafe24.shop.service.OrderService;
-import com.cafe24.shop.vo.BasketVo;
 import com.cafe24.shop.vo.OrderVo;
-import com.cafe24.shop.vo.ProductVo;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -49,7 +47,7 @@ public class OrderController {
 		}
 		
 		//재고 있는지 확인 
-		if(!orderService.checkProductStock(vo)) {
+		if(orderService.isSoldOut(vo)) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("재고가 없는 상품입니다."));
 		}
 	

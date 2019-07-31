@@ -44,18 +44,28 @@
 		]]> 
 		<foreach collection="orderDetailList" item="list" separator="," >
 		     <![CDATA[
-				(null,#{list.count},#{orderNo},#{list.pro_option_no})     		
+				(null,#{list.count},#{orderNo},#{list.pro_option_no})    		
 		     ]]>
    		</foreach>
 	</insert>
 	
-	<update id="reductStock" parameterType="list">
-		<foreach collection="list" item="list" separator="," open="DECLARE BEGIN" close="; END;">
+	<update id="reduceStock" parameterType="java.util.List">
+		<foreach collection="list" item="item"  separator=";">
 		     <![CDATA[
-					UPDATE pro_option SET stock = stock - #{list.count} WHERE no = #{list.pro_option_no}   		
+					UPDATE pro_option 
+					SET stock = stock - #{item.count} 
+					WHERE no = #{item.pro_option_no} 	
 		     ]]>
    		</foreach>
 	</update>
+	
+	<select id="checkStock" parameterType="java.util.List" resultType="productoptionvo"> 
+		<foreach collection="list" item="list" separator=";" >
+		     <![CDATA[
+				select stock,use_stock,stock from pro_option where no = #{list.pro_option_no}		
+		     ]]>
+   		</foreach>
+	</select>
 	
 	<select id="getList" parameterType="ordervo" resultType="map"> 
 		<![CDATA[
@@ -80,6 +90,7 @@
 			order by order_date;
 		]]>	
 	</select>
+	
 	
    
 	

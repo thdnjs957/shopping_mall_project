@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cafe24.shop.vo.OrderDetailVo;
 import com.cafe24.shop.vo.OrderVo;
+import com.cafe24.shop.vo.ProductOptionVo;
 
 @Repository
 public class OrderDao {
@@ -27,14 +28,15 @@ public class OrderDao {
 		return count == 1;
 	}
 
-	public void checkStock(List<OrderDetailVo> list) {
+	public List<ProductOptionVo> checkStock(List<OrderDetailVo> list) {
+		List<ProductOptionVo> pvoList = sqlSession.selectList("order.checkStock",list);
+		return pvoList;
 	}
 
-	public boolean reduceProductStock(List<OrderDetailVo> list) {
-
-		int count = sqlSession.update("order.reduceStock",list);
+	public boolean reduceProductStock(List<OrderDetailVo> OrderDetailList) {
+		int count = sqlSession.update("order.reduceStock",OrderDetailList);
 		
-		return count == list.size();
+		return count == OrderDetailList.size();
 	}
 
 	public List<Map<String, Object>> getList(OrderVo vo) {
