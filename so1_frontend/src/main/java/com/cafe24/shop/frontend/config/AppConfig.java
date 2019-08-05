@@ -13,4 +13,5 @@ import com.cafe24.shop.frontend.config.app.OAuth2ClientConfig;
 @ComponentScan({"com.cafe24.shop.frontend.security", "com.cafe24.shop.frontend.service",  "com.cafe24.shop.frontend.repository", "com.cafe24.shop.frontend.aspect"})
 @Import({ AppSecurityConfig.class, OAuth2ClientConfig.class })
 public class AppConfig {
+	
 }
