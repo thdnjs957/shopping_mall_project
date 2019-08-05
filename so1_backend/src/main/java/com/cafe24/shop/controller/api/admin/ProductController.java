@@ -117,6 +117,11 @@ public class ProductController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		boolean result = productService.deleteProduct(no);
+		
+		if(!result) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("입력 형식이 유효하지 않습니다."));
+		}
+		
 		map.put("result", result);
 		map.put("no", no);
 		
@@ -136,8 +141,14 @@ public class ProductController {
 		
 		boolean result = productService.upDateProduct(vo);
 		
+		if(!result) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("입력 형식이 유효하지 않습니다."));
+		}
+		
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
+	
+	
 	
 }
 

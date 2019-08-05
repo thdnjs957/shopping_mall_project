@@ -80,7 +80,7 @@ public class AddressControllerTest {
 			
 	}
 	
-	@Ignore
+	
 	@Test
 	public void bTestAddressUpdate() throws Exception{
 
@@ -90,7 +90,6 @@ public class AddressControllerTest {
 		vo.setAddress("경기 성남시 분당구 판교역로 2353");
 		vo.setReceiver("박소원2");
 		vo.setRec_phone("0103728383");
-		
 		
 		ResultActions resultActions = 
 				mockMvc

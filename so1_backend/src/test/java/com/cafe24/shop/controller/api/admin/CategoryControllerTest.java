@@ -100,31 +100,31 @@ public class CategoryControllerTest {
 		
 	}
 	
-	@Ignore
+	
 	@Test
 	public void cTestCategoryDelete() throws Exception{
 		
 		// 1. 하위 카테고리가 없는 경우 
 		ResultActions resultActions = 
 				mockMvc
-				.perform(delete("/api/admin/category/{no}",4L).contentType(MediaType.APPLICATION_JSON));
+				.perform(delete("/api/admin/category/{no}",11L).contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions.andExpect(status().isOk())
 		.andDo(print())
 		.andExpect(jsonPath("$.result", is("success")))
-		.andExpect(jsonPath("$.data.no", is(4)))
+		.andExpect(jsonPath("$.data.no", is(11)))
 		;
 		
 		//상위 카테고리 지우면 하위 카테고리도 다 지워지게 메시지: (지우려는 카테고리이름)을 삭제하시면, 하위 분류도 함께 삭제 됩니다. 삭제하시겠습니까? front에서 li 체크해서
 		// 2. 하위 카테고리가 있는 경우 
 		resultActions = 
 				mockMvc
-				.perform(delete("/api/admin/category/{no}",13L).contentType(MediaType.APPLICATION_JSON));
+				.perform(delete("/api/admin/category/{no}",10L).contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions.andExpect(status().isOk())
 		.andDo(print())
 		.andExpect(jsonPath("$.result", is("success")))
-		.andExpect(jsonPath("$.data.no", is(13)));
+		.andExpect(jsonPath("$.data.no", is(10)));
 		
 	}
 	

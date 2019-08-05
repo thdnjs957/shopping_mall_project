@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="product">
+
+	<resultMap id="productAdminResult" type="productvo">
+		<result property="no" column="NO"/>
+	    <result property="name" column="NAME"/>
+	    <result property="price" column="PRICE"/>
+	    <result property="is_show" column="IS_SHOW"/>
+	    <result property="category_no" column="CATEGORY_NO"/>
+	    <collection property="pro_Image" column="NO" javaType="java.util.ArrayList" ofType="imagevo" select="getImageByNoIsMain"/>
+	</resultMap>
+
+	<resultMap id="productDetailAdminResult" type="productvo">
+		<result property="no" column="NO"/>
+	    <result property="name" column="NAME"/>
+	    <result property="summary" column="SUMMARY"/>
+	    <result property="detail" column="DETAIL"/>
+	    <result property="is_show" column="IS_SHOW"/>
+	    <result property="tot_stock" column="TOT_STOCK"/>
+	    <result property="category_no" column="CATEGORY_NO"/>
+	    <collection property="pro_Image" column="NO" javaType="java.util.ArrayList" ofType="imagevo" select="getImageByNoIsMain"/>
+	    <collection property="option" column="NO" javaType="java.util.ArrayList" ofType="optionvo" select="getOptionByNo"/>
+	</resultMap>
+	
+	<resultMap id="productOptionAdminResult" type="optionvo">
+		<result property="no" column="NO"/>
+	    <result property="name" column="NAME"/>
+	    <result property="product_no" column="PRODUCT_NO"/>
+	    <collection property="option_ma" column="NO" javaType="java.util.ArrayList" ofType="optionmavo" select="getOptionMasterByNo"/>
+	</resultMap>
+	
+	<select id="getListforAdmin" resultMap="productAdminResult"> 
+		select no,name, price, is_show, category_no from product
+	</select>
+	
+	<select id="getListforUser" resultMap="productAdminResult" parameterType="Long"> 
+		<![CDATA[
+			select no,name,summary,price from product
+				where is_show = 1 
+		]]>
+		 <if test="value != null or value = ''">	
+		 	<![CDATA[	
+				and category_no = #{value}
+			]]>
+		 </if>		
+		 	<![CDATA[	
+			 order by no  
+			]]>
+	</select>
+	
+	
+	<select id="getImageByNoIsMain" resultType="imagevo">
+		<![CDATA[
+			select url,is_main from image where product_no = #{no} and is_main = 1
+		]]>
+	</select>
+
+	<select id="getImageByNoAll" resultType="imagevo">
+		<![CDATA[
+			select url,is_main from image where product_no = #{no}
+		]]>
+	</select>
+
+	<select id="getByNo" resultMap="productDetailAdminResult" parameterType="Long">
+		<![CDATA[
+			select no,name,summary,price,detail,is_show,tot_stock,category_no from product where no = #{value}
+		]]>
+	</select>
+	
+	<select id="getByMap" resultMap="productDetailAdminResult" parameterType="map">
+		<![CDATA[
+			select no,name,summary,price,detail,is_show,tot_stock,category_no 
+				from product 
+			where no = #{product_no} and category_no = #{category_no}
+		]]>
+	</select>
+	
+	<select id="getOptionByNo" resultMap="productOptionAdminResult" parameterType="Long">
+		<![CDATA[
+			select no,name,product_no from option where product_no = #{no}
+		]]>
+	</select>
+
+	<select id="getOptionMasterByNo" resultType="optionmavo" parameterType="Long">
+		<![CDATA[
+			select no,value,option_no from option_master where option_no = #{value}
+		]]>
+	</select>
+	
+	<select id="getProductOptionByName" resultType="productoptionvo" parameterType="productoptionvo">
+		<![CDATA[
+			select no,name,stock,use_stock,plus,product_no from pro_option where product_no = #{product_no} and name = #{name}
+		]]>
+	</select>
+	
+	<insert id="insert" parameterType="productvo">
+		<![CDATA[
+			insert into product(no,name,summary,price,is_show,detail,tot_stock,reg_date,category_no) 
+				values(null,#{name},#{summary},#{price},#{is_show},#{detail},#{tot_stock},now(),#{category_no})
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			select
+			last_insert_id()
+		</selectKey>
+	</insert>
+
+	<insert id="insertImage" parameterType="map">
+		<![CDATA[
+			INSERT INTO image(no,url,is_main,product_no) 
+				VALUES
+		]]> 
+		<foreach collection="imageList" item="list" separator="," >
+		     <![CDATA[
+				(null,#{list.url},#{list.is_main},#{productNo})  		
+		     ]]>
+   		</foreach>
+	</insert>
+
+	<insert id="insertOption" parameterType="optionvo">
+		<![CDATA[
+			insert into option(no,name,product_no) 
+				values(null,#{name},#{product_no})
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			select
+			last_insert_id()
+		</selectKey>
+	</insert>
+
+	<insert id="insertOptionMa" parameterType="map">
+		<![CDATA[
+			INSERT INTO option_master(no,value,option_no) 
+				VALUES
+		]]> 
+		<foreach collection="productMasterList" item="list" separator="," >
+		     <![CDATA[
+				(null,#{list.value},#{optionNo})   		
+		     ]]>
+   		</foreach>
+	</insert>
+	
+	<insert id="insertProOption" parameterType="map">
+		<![CDATA[
+			INSERT INTO pro_option(no,name,stock,use_stock,plus,product_no)  
+				VALUES
+		]]> 
+		<foreach collection="proOptionList" item="list" separator="," >
+		     <![CDATA[
+				(null,#{list.name},#{list.stock},#{list.use_stock},#{list.plus},#{productNo})  		
+		     ]]>
+   		</foreach>
+	</insert>
+
+	<delete id="deleteProduct" parameterType="Long">
+		<![CDATA[
+			DELETE FROM product
+				WHERE no = #{value}
+		]]>	
+	</delete>
+	
+	<delete id="deleteImage" parameterType="Long">
+		<![CDATA[
+			DELETE FROM image
+				WHERE product_no = #{value}
+		]]>	
+	</delete>
+	
+	<delete id="deleteOption" parameterType="Long">
+		<![CDATA[
+			DELETE FROM option
+				WHERE product_no = #{value}
+		]]>	
+	</delete>
+	
+	<update id="updateProduct" parameterType="productvo">
+		<![CDATA[
+			update product set 
+				name = #{name, jdbcType=VARCHAR},
+				summary = #{summary, jdbcType=VARCHAR},
+				price = #{price, jdbcType=INTEGER},
+				is_show = #{is_show, jdbcType=INTEGER},
+				detail = #{detail, jdbcType=VARCHAR},
+				is_show = #{is_show, jdbcType=BOOLEAN}
+				WHERE no = #{no}
+		]]>
+	</update>
+	
+	
+
+</mapper>

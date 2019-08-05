@@ -1,0 +1,40 @@
+server:
+       port: 8888
+#       servlet:
+#               context-path: /v1 버전에 따라서
+       contextPath: /v1
+       error:
+             whitelabel:
+                        enabled: false
+
+spring:
+       profiles:
+                active: dev
+       devtools:
+                livereload:
+                           enabled: true
+       http:
+            encoding:
+                     charset: UTF-8
+                     enabled: true
+                     forced: true
+                     forced-request: true
+                     forced-response: true
+       aop:
+           auto: true
+       aop-proxy-target-class: true                          
+
+       datasource:
+           driver-class-name: org.mariadb.jdbc.Driver
+           url: jdbc:mariadb://192.168.1.211:3307/webdb
+           username: webdb
+           password: webdb				
+         
+security:
+         user:
+              name: user1
+              password: 5678
+#         oauth2:     
+#                client:
+#                        client-id: pjmall
+#                        client-secret: 1234

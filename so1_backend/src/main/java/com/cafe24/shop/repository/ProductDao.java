@@ -2,6 +2,7 @@ package com.cafe24.shop.repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,8 +102,8 @@ public class ProductDao {
 		return list;
 	}
 	
-	public List<ProductVo> getListforUser(Long no) {
-		List<ProductVo> list = sqlSession.selectList("product.getListforUserCategory",no);
+	public List<ProductVo> getListforUser(Optional<Long> no) {
+		List<ProductVo> list = sqlSession.selectList("product.getListforUser",no);
 		return list;
 	}
 	
@@ -111,7 +112,6 @@ public class ProductDao {
 		return list;
 	}
 
-	
 	
 	public boolean deleteImage(Long no) {
 		int count = sqlSession.delete("product.deleteImage",no);

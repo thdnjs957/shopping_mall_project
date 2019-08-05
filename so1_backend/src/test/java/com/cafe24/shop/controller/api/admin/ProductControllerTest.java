@@ -205,7 +205,7 @@ public class ProductControllerTest {
 		;
 	}
 	
-	@Ignore
+	
 	@Test
 	public void productListforAdmin() throws Exception{
 
@@ -220,45 +220,7 @@ public class ProductControllerTest {
 	}
 	
 	
-	@Test
-	public void productListforUser() throws Exception{
-
-		//카테고리 no 있을때 
-		ResultActions resultActions = 
-				mockMvc
-				.perform(get("/api/product/{no}",13L).contentType(MediaType.APPLICATION_JSON));
-		
-		resultActions.andExpect(status().isOk())
-		.andDo(print())
-		.andExpect(jsonPath("$.result", is("success")))
-		;
-		
-		//카테고리 선택 x 메인 페이지 상품 리스트 다 보여주기
-		resultActions = 
-				mockMvc
-				.perform(get("/api/product").contentType(MediaType.APPLICATION_JSON));
-		
-		resultActions.andExpect(status().isOk())
-		.andDo(print())
-		.andExpect(jsonPath("$.result", is("success")))
-		;
-	}
 	
-	@Test
-	public void productDetailforUser() throws Exception{
-
-		ResultActions resultActions = 
-				mockMvc
-				.perform(get("/api/product/{no1}/{no2}",13L,10L).contentType(MediaType.APPLICATION_JSON));
-		
-		resultActions.andExpect(status().isOk())
-		.andDo(print())
-		.andExpect(jsonPath("$.result", is("success")))
-		;
-
-	}
-	
-	@Ignore
 	@Test
 	public void productGetByNo() throws Exception{
 

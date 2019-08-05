@@ -88,6 +88,37 @@ public class BasketControllerTest {
 		
 	}
 	
+	@Test
+	public void aTestBasketNonMemberRegister() throws Exception{
+		
+		// 비히원 Normal basket register Data
+		List<BasketVo> bvList = new ArrayList<BasketVo>();
+		
+		BasketVo bv = new BasketVo();
+		
+		bv.setSessionId("testSessionId");
+		bv.setPro_option_no(1L);
+		bv.setCount(2);
+		
+		BasketVo bv2 = new BasketVo();
+		
+		bv2.setSessionId("testSessionId");
+		bv2.setPro_option_no(2L);
+		bv2.setCount(5);
+		
+		bvList.add(bv);
+		bvList.add(bv2);
+		
+		ResultActions resultActions =
+			mockMvc
+			.perform(post("/api/basket/register").contentType(MediaType.APPLICATION_JSON)
+			 .content(new Gson().toJson(bvList)));
+		
+		resultActions.andExpect(status().isOk())
+			.andDo(print())
+			.andExpect(jsonPath("$.result", is("success")));
+		
+	}
 	
 	@Test
 	public void aTestBasketCheck() throws Exception{
@@ -193,5 +224,20 @@ public class BasketControllerTest {
 		;
 		
 	}
+	
+	@Test
+	public void eTestBasketDelete2() throws Exception{
+		
+		ResultActions resultActions = 
+				mockMvc
+				.perform(delete("/api/basket/{no}",12L).contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions.andExpect(status().isBadRequest())
+		.andDo(print())
+		.andExpect(jsonPath("$.result", is("fail")))
+		;
+		
+	}
+	
 	
 }

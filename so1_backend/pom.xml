@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.cafe24</groupId>
-    <artifactId>shop</artifactId>
+    <artifactId>so1_shop</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>so1_backend</artifactId>
@@ -51,6 +51,12 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
 			<version>${org.springframework-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
+			<version>2.3.4.RELEASE</version>
 		</dependency>
 
 
@@ -277,8 +283,8 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<configuration>
-					<url>http://127.0.0.1:8080/manager/text</url>
-					<path>/shop</path>
+					<url>http://127.0.0.1:8000/manager/text</url>
+					<path>/so1_shop</path>
 					<username>admin</username>
 					<password>manager</password>
 				</configuration>

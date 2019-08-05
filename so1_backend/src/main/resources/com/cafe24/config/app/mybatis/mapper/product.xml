@@ -9,7 +9,7 @@
 	    <result property="price" column="PRICE"/>
 	    <result property="is_show" column="IS_SHOW"/>
 	    <result property="category_no" column="CATEGORY_NO"/>
-	    <collection property="pro_Image" column="NO" javaType="java.util.ArrayList" ofType="imagevo" select="getImageByNo"/>
+	    <collection property="pro_Image" column="NO" javaType="java.util.ArrayList" ofType="imagevo" select="getImageByNoIsMain"/>
 	</resultMap>
 
 	<resultMap id="productDetailAdminResult" type="productvo">
@@ -35,19 +35,21 @@
 		select no,name, price, is_show, category_no from product
 	</select>
 	
-	<select id="getListforUserCategory" resultMap="productAdminResult" parameterType="Long"> 
+	<select id="getListforUser" resultMap="productAdminResult" parameterType="Long"> 
 		<![CDATA[
 			select no,name,summary,price from product
-				where is_show = 1 and category_no = #{category_no} order by no  
+				where is_show = 1 
+		]]>
+		 <if test="value != null">	
+		 	<![CDATA[	
+				and category_no = #{value}
+			]]>
+		 </if>		
+	 	<![CDATA[	
+			 order by no  
 		]]>
 	</select>
 	
-	<select id="getListforUser" resultMap="productAdminResult"> 
-		<![CDATA[
-			select no,name,summary,price from product
-				where is_show = 1 order by no  
-		]]>
-	</select>
 	
 	<select id="getImageByNoIsMain" resultType="imagevo">
 		<![CDATA[

@@ -61,13 +61,13 @@ public class UserControllerTest {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 	
-	@Ignore
+	
 	@Test
-	public void aTestCheckEmail() throws Exception{
+	public void aTestCheckId() throws Exception{
 		
 		ResultActions resultActions =
 				mockMvc
-				.perform(get("/api/user/checkemail").param("email", "thdnjs9570@naver.com").contentType(MediaType.APPLICATION_JSON));
+				.perform(get("/api/user/checkId").param("id", "thdnjs9570").contentType(MediaType.APPLICATION_JSON));
 		resultActions
 				.andExpect(status().isOk())
 				.andDo(print())
@@ -155,21 +155,19 @@ public class UserControllerTest {
 		;
 	}
 	
-	
+	//사용자가 옵션(색상, 사이즈)를 모두 골랐을때 ajax 요청
 	@Test
-	public void getProductOption() throws Exception{
-		
-		//사용자가 옵션(색상, 사이즈)를 모두 골랐을때 ajax 요청
+	public void getProductOptionNo() throws Exception{
 		
 		//ajax post로 ProductOptionVo
 		ProductOptionVo pov = new ProductOptionVo();
 		
-		pov.setName("레드/M");
-		pov.setProduct_no(24L); //상품 번호
+		pov.setName("진청/L");
+		pov.setProduct_no(11L); //상품 번호
 		
 		ResultActions resultActions = 
 			mockMvc
-			.perform(post("/api/basket/getNo").contentType(MediaType.APPLICATION_JSON)
+			.perform(post("/api/product/getProOptionNo").contentType(MediaType.APPLICATION_JSON)
 			 .content(new Gson().toJson(pov)));
 		
 		resultActions.andExpect(status().isOk())
