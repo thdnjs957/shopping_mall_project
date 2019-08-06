@@ -1,4 +1,4 @@
-package com.cafe24.shop.vo;
+package com.cafe24.shop.frontend.vo;
 
 import java.util.List;
 
@@ -35,9 +35,17 @@ public class ProductVo {
 	private List<OptionVo> option;
 	
 	private List<ProductOptionVo> pro_option;
-
 	
 	public ProductVo() {}
+	
+	@Override
+	public String toString() {
+		return "ProductVo [no=" + no + ", name=" + name + ", summary=" + summary + ", price=" + price + ", is_show="
+				+ is_show + ", detail=" + detail + ", tot_stock=" + tot_stock + ", reg_date=" + reg_date
+				+ ", category_no=" + category_no + ", pro_Image=" + pro_Image + ", option=" + option + ", pro_option="
+				+ pro_option + "]";
+	}
+	
 	public ProductVo(Long no, String name, String summary, int price, boolean is_show, String detail, int tot_stock,
 			String reg_date, Long category_no) {
 		this.no = no;
@@ -146,15 +154,6 @@ public class ProductVo {
 	public void setPro_option(List<ProductOptionVo> pro_option) {
 		this.pro_option = pro_option;
 	}
-	@Override
-	public String toString() {
-		return "ProductVo [no=" + no + ", name=" + name + ", summary=" + summary + ", price=" + price + ", is_show="
-				+ is_show + ", detail=" + detail + ", tot_stock=" + tot_stock + ", reg_date=" + reg_date
-				+ ", category_no=" + category_no + ", pro_Image=" + pro_Image + ", option=" + option + ", pro_option="
-				+ pro_option + "]";
-	}
 
-	
-	
 	
 }

@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.cafe24.shop.repository.UserDao;
 import com.cafe24.shop.vo.UserVo;
-import com.cafe24.shop.vo.UserVo.Gender;
-import com.cafe24.shop.vo.UserVo.Role;
 
 @Service
 public class UserService {
@@ -32,7 +30,7 @@ public class UserService {
 	
 	public UserVo getUser(long no) {
 		
-		UserVo vo = new UserVo(1L,"박소원","thdnjs9570","1234","thdnjs9570@naver.com","01076363123",Gender.MALE,Role.USER,"2019-07-10",null);
+		UserVo vo = new UserVo(1L,"박소원","thdnjs9570","1234","thdnjs9570@naver.com","01076363123","MALE","USER","2019-07-10",null);
 		
 		UserVo resultVo = null;
 		
@@ -56,8 +54,8 @@ public class UserService {
 
 	public List<UserVo> getList() {
 		
-		UserVo v1 = new UserVo(1L,"박소원","thdnjs9570","1234","thdnjs9570@naver.com","01076363123",Gender.FEMALE,Role.USER,"2019-07-10",null);
-		UserVo v2 = new UserVo(2L,"박건형","rjsgud","1234","rjsgud@naver.com","0104832923",Gender.MALE,Role.USER,"2019-07-11",null);
+		UserVo v1 = new UserVo(1L,"박소원","thdnjs9570","1234","thdnjs9570@naver.com","01076363123","FEMALE","USER","2019-07-10",null);
+		UserVo v2 = new UserVo(2L,"박건형","rjsgud","1234","rjsgud@naver.com","0104832923","MALE","USER","2019-07-11",null);
 		
 		List<UserVo> list = new ArrayList<UserVo>();
 		

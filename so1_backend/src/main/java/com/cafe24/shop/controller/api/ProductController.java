@@ -36,8 +36,7 @@ public class ProductController {
 		
 		//상품 리스트
 		List<ProductVo> pList = productService.getProductList(no);
-		
-		
+
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(pList));
 	}
 	

@@ -1,21 +1,36 @@
 package com.cafe24.shop.frontend.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.cafe24.shop.frontend.dto.JSONResult;
+import com.cafe24.shop.frontend.vo.CategoryVo;
+import com.cafe24.shop.frontend.vo.ProductVo;
 
 @Service
 public class ProductService {
 	
-	@Autowired
-	private OAuth2RestTemplate restTemplate;
+	RestTemplate restTemplate = new RestTemplate();
 
-	public String getList(){
+	public List<ProductVo> getProductList(){
+		
 		String endpoint = "http://localhost:8080/so1_backend/api/product/";
+		
 		JSONResultProductList jsonResult = restTemplate.getForObject(endpoint, JSONResultProductList.class);
-		System.out.println( "jsonResult"+ jsonResult );
+		
+		return jsonResult.getData();
+	}
+	
+	public List<CategoryVo> getCategoryList(){
+		
+		String endpoint = "http://localhost:8080/so1_backend/api/admin/category/";
+		
+		JSONResultCategoryList jsonResult = restTemplate.getForObject(endpoint, JSONResultCategoryList.class);
+		
+		System.out.println(jsonResult.getData());
+		
 		return jsonResult.getData();
 	}
 	
@@ -25,11 +40,15 @@ public class ProductService {
 //		return jsonResult.getData();
 //	}
 	
+	
 	// DTO Class
 //	private static class JSONResultGoods extends JSONResult<Goods> {
 //	}
 	
-	private static class JSONResultProductList extends JSONResult<String> {
+	private static class JSONResultProductList extends JSONResult<List<ProductVo>> {
+	}
+	
+	private static class JSONResultCategoryList extends JSONResult<List<CategoryVo>> {
 	}
 }
 

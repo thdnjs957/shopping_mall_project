@@ -38,8 +38,6 @@ import com.cafe24.shop.config.WebConfig;
 import com.cafe24.shop.service.UserService;
 import com.cafe24.shop.vo.ProductOptionVo;
 import com.cafe24.shop.vo.UserVo;
-import com.cafe24.shop.vo.UserVo.Gender;
-import com.cafe24.shop.vo.UserVo.Role;
 import com.google.gson.Gson;
 
 
@@ -79,7 +77,7 @@ public class UserControllerTest {
 	public void bTestJoinUser() throws Exception{
 
 		// 1. Normal User's Join Data
-		UserVo userVo = new UserVo(null,"박소원","thdnjs9570","Athdnjs@7946","thdnjs9570@naver.com","01076363123",Gender.FEMALE,Role.USER,"2019-07-16",null);
+		UserVo userVo = new UserVo(null,"박소원","thdnjs9570","Athdnjs@7946","thdnjs9570@naver.com","01076363123","FEMALE","USER","2019-07-16",null);
 		
 		ResultActions resultActions =
 			mockMvc
@@ -89,7 +87,7 @@ public class UserControllerTest {
 		.andDo(print());
 		
 		// 2. Invalidation in Name : 
-		userVo = new UserVo(null,"박","thdnjs9570","Athdnjs@7946","thdnjs9570@naver.com","01076363123",Gender.FEMALE,Role.USER,"2019-07-16",null);
+		userVo = new UserVo(null,"박","thdnjs9570","Athdnjs@7946","thdnjs9570@naver.com","01076363123","FEMALE","USER","2019-07-16",null);
 
 		resultActions =
 			mockMvc
