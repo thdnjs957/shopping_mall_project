@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -12,63 +13,54 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav ml-auto">
-
 				<c:choose>
 					<c:when test='${param.active == "login" }'>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }">홈</a>
-						</li>
-						<li class="nav-item active">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/login">로그인<span class="sr-only">(current)</span></a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/join">회원가입</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a>
-						</li>
+						<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }">홈</a></li>
+						<sec:authorize access="!isAuthenticated()">
+							<li class="nav-item active"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/login">로그인<span class="sr-only">(current)</span></a></li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/join">회원가입</a></li>
+						</sec:authorize>
+						<sec:authorize access="isAuthenticated()">
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/logout">로그아웃</a></li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/basket">장바구니</a></li>
+						</sec:authorize>
+						<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a></li>
 					</c:when>
 					<c:when test='${param.active == "join" }'>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }">홈</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/login">로그인</a>
-						</li>
-						<li class="nav-item active">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/join">회원가입<span class="sr-only">(current)</span></a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a>
-						</li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }">홈</a></li>
+						<sec:authorize access="!isAuthenticated()">
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/login">로그인<span class="sr-only">(current)</span></a></li>
+							<li class="nav-item active"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/join">회원가입</a></li>
+						</sec:authorize>
+						<sec:authorize access="isAuthenticated()">
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/logout">로그아웃</a></li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/basket">장바구니</a></li>
+						</sec:authorize>
+						<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a></li>
 					</c:when>
 					<c:when test='${param.active == "cs" }'>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }">홈</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/login">로그인</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/join">회원가입</a>
-						</li>
-						<li class="nav-item active">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터<span class="sr-only">(current)</span></a>
-						</li>
+						<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }">홈</a></li>
+						<sec:authorize access="!isAuthenticated()">
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/login">로그인<span class="sr-only">(current)</span></a></li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/join">회원가입</a></li>
+						</sec:authorize>
+						<sec:authorize access="isAuthenticated()">
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/logout">로그아웃</a></li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/basket">장바구니</a></li>
+						</sec:authorize>
+						<li class="nav-item active"><a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a></li>
 					</c:when>					
 					<c:otherwise>
-						<li class="nav-item active">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }">홈<span class="sr-only">(current)</span></a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/login">로그인</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/join">회원가입</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a>
-						</li>
+						<li class="nav-item active"><a class="nav-link" href="${pageContext.servletContext.contextPath }">홈</a></li>
+						<sec:authorize access="!isAuthenticated()">
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/login">로그인<span class="sr-only">(current)</span></a></li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/join">회원가입</a></li>
+						</sec:authorize>
+						<sec:authorize access="isAuthenticated()">
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/logout">로그아웃</a></li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/basket">장바구니</a></li>
+						</sec:authorize>
+						<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a></li>
 					</c:otherwise>				
 				</c:choose>
 			</ul>

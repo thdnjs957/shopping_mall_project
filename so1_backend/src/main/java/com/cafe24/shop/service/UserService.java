@@ -27,18 +27,9 @@ public class UserService {
 		return userVo != null;
 	}
 	
-	
-	public UserVo getUser(long no) {
-		
-		UserVo vo = new UserVo(1L,"박소원","thdnjs9570","1234","thdnjs9570@naver.com","01076363123","MALE","USER","2019-07-10",null);
-		
-		UserVo resultVo = null;
-		
-		if(vo.getNo() == no) {
-			resultVo = vo;
-		}
-		
-		return resultVo;
+	public UserVo getUserById(String id) {
+		UserVo userVo = userDao.get(id);
+		return userVo;
 	}
 
 	//Auth login 

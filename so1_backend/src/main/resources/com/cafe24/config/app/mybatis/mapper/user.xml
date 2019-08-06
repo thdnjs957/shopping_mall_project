@@ -28,7 +28,7 @@
 	
 	<select id="getById" parameterType="string" resultType="uservo"> 
 		<![CDATA[
-			select name,email,password,gender,join_date from user where id = HEX(aes_encrypt(#{id},'sowonkey'))
+			select no,name,email,password,gender,join_date,role from user where id = HEX(aes_encrypt(#{value},'sowonkey'))
 		]]>
 	</select>
 	

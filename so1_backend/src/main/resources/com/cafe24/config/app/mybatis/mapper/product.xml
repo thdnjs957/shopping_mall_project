@@ -37,7 +37,7 @@
 	
 	<select id="getListforUser" resultMap="productAdminResult" parameterType="Long"> 
 		<![CDATA[
-			select no,name,summary,price from product
+			select no,name,summary,price,category_no from product
 				where is_show = 1 
 		]]>
 		 <if test="value != null">	

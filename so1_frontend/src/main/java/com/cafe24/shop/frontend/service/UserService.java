@@ -1,31 +1,24 @@
 package com.cafe24.shop.frontend.service;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.cafe24.shop.frontend.dto.Goods;
 import com.cafe24.shop.frontend.dto.JSONResult;
+import com.cafe24.shop.frontend.vo.UserVo;
 
 @Service
 public class UserService {
 	
-//	@Autowired
-//	private OAuth2RestTemplate restTemplate;
+	RestTemplate restTemplate = new RestTemplate();
 	
-	public String getList(){
-		String endpoint = "http://localhost:8080/api/product/";
-		JSONResultGoodsList jsonResult = new RestTemplate().getForObject(endpoint, JSONResultGoodsList.class);
-		System.out.println( jsonResult );
+	public UserVo get(String username) {
+		
+		String endpoint = "http://localhost:8080/so1_backend/api/user/getById?id="+username;
+		JSONResultUser jsonResult = restTemplate.getForObject(endpoint, JSONResultUser.class);
 		return jsonResult.getData();
 	}
 	
-	// DTO Class
-	private static class JSONResultGoods extends JSONResult<Goods> {
+	private static class JSONResultUser extends JSONResult<UserVo> {
 	}
-	
-	private static class JSONResultGoodsList extends JSONResult<String> {
-	}
+
 }

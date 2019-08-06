@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cafe24.security.Auth;
 import com.cafe24.shop.dto.JSONResult;
 import com.cafe24.shop.service.UserService;
 import com.cafe24.shop.vo.UserVo;

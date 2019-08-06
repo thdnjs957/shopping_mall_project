@@ -32,7 +32,7 @@ public class UserDao {
 	public UserVo get(String id) {
 		
 		UserVo result = sqlSession.selectOne("user.getById",id);
-		
+		System.out.println(result+"aflkejflakje");
 		return result;
 	}
 	

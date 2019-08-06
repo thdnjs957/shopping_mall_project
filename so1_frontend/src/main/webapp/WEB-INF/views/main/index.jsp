@@ -30,17 +30,10 @@
 
 	<div class="container">
 		<div class="row">
-
-			<div class="col-lg-3">
-				<h1 class="my-4">PJMall</h1>
-				<div class="list-group">
-						<c:forEach items='${categoryList }' var='vo'>
-							<a href="${pageContext.servletContext.contextPath }/product/list/${vo.no}" class="list-group-item">${vo.name }</a>  
-						</c:forEach>
-				</div>
-			</div>
-			<!-- /.col-lg-3 -->
-
+			<!-- left_section -->
+				<c:import url='/WEB-INF/views/includes/left_section.jsp' />
+			<!-- left_section end -->
+			
 			<div class="col-lg-9">
 				<div id="carouselExampleIndicators" class="carousel slide my-4"
 					data-ride="carousel">
@@ -81,11 +74,12 @@
 					<c:forEach items='${productList }' var='vo'>
 						<div class="col-lg-4 col-md-6 mb-4">
 							<div class="card h-100">
-								<a href="#"><img class="card-img-top"
+								<a href="${pageContext.servletContext.contextPath }/product/${vo.category_no}/${vo.no}"><img class="card-img-top"
 									src="http://placehold.it/700x400" alt=""></a>
 								<div class="card-body">
+									
 									<h4 class="card-title">
-										<a href="#">${vo.name }</a>
+										<a href="${pageContext.servletContext.contextPath }/product/${vo.category_no}/${vo.no}">${vo.name }</a>
 									</h4>
 									<h5>${vo.price }</h5>
 									<p class="card-text">

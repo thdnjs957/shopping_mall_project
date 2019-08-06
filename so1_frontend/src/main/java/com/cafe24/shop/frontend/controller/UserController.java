@@ -1,7 +1,5 @@
 package com.cafe24.shop.frontend.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,11 +18,16 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping( "/login" )
+	@GetMapping("/login")
 	public String login() {
 		return "user/login";
 	}
 
+	@GetMapping("/join")
+	public String join() {
+		return "user/join";
+	}
+	
 //	@PostMapping("/login")
 //	public String login( @ModelAttribute UserVo voModel model) {
 //

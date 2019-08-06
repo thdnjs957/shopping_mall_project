@@ -17,16 +17,15 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 
-import com.cafe24.shop.frontend.dto.JSONResult;
 import com.cafe24.shop.frontend.dto.JSONResultReceive;
-
 
 public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private RequestCache requestCache = new HttpSessionRequestCache();
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+            Authentication authentication) throws ServletException, IOException {
     	
     	SavedRequest savedRequest = requestCache.getRequest( request, response );
         
@@ -45,17 +44,19 @@ public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticati
 			}
 		}
 		
-    	if( accept == null || accept.matches( ".*application/json.*" ) == false ) {
+    	if( accept == null || accept.matches( ".*application/json.*" ) == false ) { // json 이게 false면 웹 요청임
+    		
     		request.getSession(true).setAttribute("loginNow", true);
             getRedirectStrategy().sendRedirect( request, response, "/" );
-    		return;
+
+            return;
     	}
     	
     	MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
     	MediaType jsonMimeType = MediaType.APPLICATION_JSON;
 		
-    	//보낼때 문제임 
-    	JSONResultReceive jsonResult = JSONResultReceive.success( securityUser );
+    	JSONResultReceive jsonResult = JSONResultReceive.success(securityUser);
+    	
     	if( jsonConverter.canWrite( jsonResult.getClass(), jsonMimeType ) ) {
         	jsonConverter.write( jsonResult, jsonMimeType, new ServletServerHttpResponse( response ) );
     	}

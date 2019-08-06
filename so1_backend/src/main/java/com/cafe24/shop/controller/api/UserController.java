@@ -144,11 +144,16 @@ public class UserController {
 		boolean result = userService.updateUser(userVo); 
 		
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
+	}
+
+	@GetMapping("/getById")
+	public ResponseEntity<JSONResult> getById(@RequestParam(value="id", required=true, defaultValue="") String id) {
 		
+		System.out.println("넘겨준 id 값"+ id);
+		UserVo userVo = userService.getUserById(id); 
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(userVo));
 	}
 	
-	
-
 }
 
 

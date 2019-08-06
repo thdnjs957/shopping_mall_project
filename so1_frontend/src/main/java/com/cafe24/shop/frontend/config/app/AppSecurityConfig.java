@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.cafe24.shop.frontend.security.CustomPasswordEncoder;
 import com.cafe24.shop.frontend.security.CustomUrlAuthenticationSuccessHandler;
 
 @Configuration
@@ -56,7 +57,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         		.loginProcessingUrl("/user/auth")
         		.failureUrl("/user/login")
         		.successHandler(authenticationSuccessHandler())
-        		.usernameParameter("email")
+        		.usernameParameter("username")
         		.passwordParameter("password")
         
         // LogoutConfigurer
@@ -75,7 +76,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         // RememberMeConfigurer
         .and()
         	.rememberMe()
-        		.key("mysite")
+        		.key("shop")
         		.rememberMeParameter("remember-me")
 
         // CSRFConfigurer(Temporary for Test)
@@ -103,10 +104,10 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	// Encode the Password on Authentication
-	// BCrypt Password Encoder(with Random Salt)
+	// SHA 512
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-	    return new BCryptPasswordEncoder();
+	    return new CustomPasswordEncoder();
 	}
 	
 	@Bean
