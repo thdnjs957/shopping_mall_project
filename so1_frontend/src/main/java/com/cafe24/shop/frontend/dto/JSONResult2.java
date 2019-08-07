@@ -1,20 +1,20 @@
 package com.cafe24.shop.frontend.dto;
 
-public class JSONResultReceive {
+public class JSONResult2 {
 	
 	private String result; //success , fail
 	private String message; //if fail , set
 	private Object data;   // if success, set
 	
-	public static JSONResultReceive success(Object data) { //data = exist
-		return new JSONResultReceive("success",null,data);
+	public static JSONResult2 success(Object data) { //data = exist
+		return new JSONResult2("success",null,data);
 	}
 	
-	public static JSONResultReceive fail(String message) {
-		return new JSONResultReceive("fail",message,null);
+	public static JSONResult2 fail(String message) {
+		return new JSONResult2("fail",message,null);
 	}
 	
-	private JSONResultReceive(String result,String message, Object data ) {
+	private JSONResult2(String result,String message, Object data ) {
 		this.result = result;
 		this.message = message;
 		this.data = data;

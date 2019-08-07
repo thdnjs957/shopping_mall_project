@@ -56,17 +56,13 @@
                              text="${errors.getFieldError( 'name' ).defaultMessage }" />
                        </p> 
                   </c:if>
-               </spring:hasBindErrors>
+               </spring:hasBindErrors> 
                
                <label class="block-label" for="phone">전화번호</label>
                <form:input path="phone" id="phone" class="form-control"/>
                
                <label class="block-label" for="email">이메일</label>
                <form:input path="email" id="email" class="form-control"/>
-            
-               
-               <label class="block-label" for="birth">생일</label>
-               <form:input path="birth" id="birth" class="form-control"/>
                
                <fieldset>
                   <label class="block-label" for="gender">성별</label><br>

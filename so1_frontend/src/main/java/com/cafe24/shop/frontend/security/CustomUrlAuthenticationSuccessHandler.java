@@ -17,7 +17,7 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 
-import com.cafe24.shop.frontend.dto.JSONResultReceive;
+import com.cafe24.shop.frontend.dto.JSONResult2;
 
 public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
@@ -46,16 +46,21 @@ public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticati
 		
     	if( accept == null || accept.matches( ".*application/json.*" ) == false ) { // json 이게 false면 웹 요청임
     		
-    		request.getSession(true).setAttribute("loginNow", true);
-            getRedirectStrategy().sendRedirect( request, response, "/" );
-
+    		if(securityUser.getAuthorities().equals("ROLE_ADMIN")) {
+    			
+    		}else {
+        		request.getSession(true).setAttribute("loginNow", true);
+                getRedirectStrategy().sendRedirect( request, response, "/" );
+    			
+    		}
+    		
             return;
     	}
     	
     	MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
     	MediaType jsonMimeType = MediaType.APPLICATION_JSON;
 		
-    	JSONResultReceive jsonResult = JSONResultReceive.success(securityUser);
+    	JSONResult2 jsonResult = JSONResult2.success(securityUser);
     	
     	if( jsonConverter.canWrite( jsonResult.getClass(), jsonMimeType ) ) {
         	jsonConverter.write( jsonResult, jsonMimeType, new ServletServerHttpResponse( response ) );

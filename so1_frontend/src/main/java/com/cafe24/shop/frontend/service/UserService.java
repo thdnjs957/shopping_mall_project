@@ -18,7 +18,17 @@ public class UserService {
 		return jsonResult.getData();
 	}
 	
-	private static class JSONResultUser extends JSONResult<UserVo> {
+	public Boolean join(UserVo userVo) {
+		
+		String endpoint = "http://localhost:8080/so1_backend/api/user/join";
+		JSONResultJoin jsonResult = restTemplate.postForObject(endpoint,userVo,JSONResultJoin.class);
+		return jsonResult.getData();
+		
 	}
+	
+	private static class JSONResultUser extends JSONResult<UserVo> {}
+	private static class JSONResultJoin extends JSONResult<Boolean> {}
+
+	
 
 }

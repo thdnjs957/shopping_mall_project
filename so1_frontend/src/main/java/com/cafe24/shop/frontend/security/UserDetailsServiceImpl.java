@@ -39,7 +39,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 		
 		// return new User(); name password 같은 기본만 들어감  no, gender 이런건 확장해서 직접 구현해서 씀 = > 이게 securityUser
-		return securityUser; //UserDetails 
+		return securityUser; //UserDetails
 	}
 
 }
