@@ -11,7 +11,7 @@
 						SHA2(#{password}, 512),
 						HEX(aes_encrypt(#{email},'sowonkey')),
 						HEX(aes_encrypt(#{phone},'sowonkey')),
-						#{gender},#{role},#{join_date},null);
+						#{gender},#{role},now(),null);
 		]]>
 		<selectKey keyProperty="no" resultType="long" order="AFTER">
 			select last_insert_id()

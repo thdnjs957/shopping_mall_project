@@ -49,21 +49,17 @@ public class UserController {
 	})
 	@PostMapping("/join")
 	public ResponseEntity<JSONResult> join(@RequestBody @Valid UserVo userVo,BindingResult bResult) { //body에 json으로 오는거 받아내기
-		
+	
 		if(bResult.hasErrors()) {
 			List<ObjectError> list = bResult.getAllErrors();
 			for(ObjectError error: list) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
 			}
 		}
-		
+
 		boolean result = userService.addUser(userVo);
 		
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		
-		resultMap.put("result", result);
-
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultMap));
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
 	
 	@ApiOperation(value="아이디 존재 여부")
