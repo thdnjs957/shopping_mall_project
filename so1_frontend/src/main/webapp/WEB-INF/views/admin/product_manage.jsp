@@ -86,36 +86,30 @@
         	    });
 				           	    
            	    console.log(nameList,valueList);
-          }); 
-		
+          });
+          
+          $(".inp-img").on('change', function(){
+             	readInputFile(this);
+          });
+           
          //등록 이미지 등록 미리보기
           function readInputFile(input) {
+        	 console.log($(input));
               if(input.files && input.files[0]) {
                   var reader = new FileReader();
                   reader.onload = function (e) {
-                      $('#preview').append("<img src="+ e.target.result +">");
+                      $(input).prev().attr('src',e.target.result);
+                      //$('#preview').append("<img src="+ e.target.result +">");
                   }
                   reader.readAsDataURL(input.files[0]);
               }
           }
-           
-          $(".inp-img").on('change', function(){
-              readInputFile(this);
-          });
-           
-          // 등록 이미지 삭제 ( input file reset )
-          function resetInputFile($input, $preview) {
-              var agent = navigator.userAgent.toLowerCase();
-              if((navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1)) {
-                  // ie 일때
-                  $input.replaceWith($input.clone(true));
-                  $preview.empty();
-              } else {
-                  //other
-                  $input.val("");
-                  $preview.empty();
-              }       
-          }
+         
+          $("input[class='img']").click(function(e) {
+        	    e.preventDefault();
+        	    $(this).next().click();
+           });
+          
 	});
 
 </script>
@@ -188,10 +182,17 @@
 					<h6>메인 이미지</h6>
 					<div id="preview">
 					</div>
-					<input type="file" name="main-image" class="inp-img" accept=".gif, .jpg, .png"> 
+					
+				   <input type="image" class="img" id="img1" src="${pageContext.servletContext.contextPath }/assets/image/placeholder.jpg" width="230px"/>
+				   <input type="file" id="my_file" name="main-image" class="inp-img" style="display: none;" />
+
 					<h6>추가 이미지</h6>
-					<input type="file" name="sub-image1" class="inp-img" accept=".gif, .jpg, .png"> 
-					<input type="file" name="sub-image2" class="inp-img" accept=".gif, .jpg, .png"> 
+					<input type="image" class = "img" id="img2" src="${pageContext.servletContext.contextPath }/assets/image/placeholder.jpg" width="230px"/>
+					<input type="file" id="my_file" name="sub-image1" class="inp-img" style="display: none;" />
+					
+					<input type="image" class = "img" id="img3" src="${pageContext.servletContext.contextPath }/assets/image/placeholder.jpg" width="230px"/>
+					<input type="file" id="my_file" name="sub-image2" class="inp-img" style="display: none;" />
+					
 			
 					<table id="table">
 				        <tr>
