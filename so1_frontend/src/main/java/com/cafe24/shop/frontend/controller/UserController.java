@@ -45,18 +45,11 @@ public class UserController {
 		boolean jResult = userService.join(userVo); 
 		
 		if(jResult)
-			return "redirect:/user/joinsuccess";
+			return "redirect:/";
 		else
 			return "redirect:/user/join";
 	}
 	
-	
-//	@PostMapping("/login")
-//	public String login( @ModelAttribute UserVo voModel model) {
-//
-//		return "redirect:/user/login_result";
-//	}
-//	
 	 
 
 }

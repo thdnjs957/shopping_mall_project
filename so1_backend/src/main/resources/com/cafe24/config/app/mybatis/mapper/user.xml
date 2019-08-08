@@ -64,5 +64,12 @@
 		]]>
 		
 	</update>
-
+	
+	<select id="getUserList" resultType="uservo">
+		<![CDATA[
+			select * from user
+		]]>
+	</select>
+	
+	
 </mapper>

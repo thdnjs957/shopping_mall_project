@@ -85,7 +85,7 @@ public class ProductControllerTest {
 
 		ResultActions resultActions = 
 				mockMvc
-				.perform(get("/api/product/{no1}/{no2}",4L,2L).contentType(MediaType.APPLICATION_JSON));
+				.perform(get("/api/product/{no1}/{no2}",2L,61L).contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions.andExpect(status().isOk())
 		.andDo(print())

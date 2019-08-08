@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -27,7 +29,7 @@
 <script>
 
 	$(document).ready(function() {
-		
+
 	    $('#summernote').summernote({
 	            height: 300,                 // set editor height
 	            minHeight: null,             // set minimum height of editor
@@ -82,8 +84,7 @@
         	    $("input[name=option_value]").each(function(index, item){
         	    	valueList.push($(item).val());
         	    });
-           	    
-           	    
+				           	    
            	    console.log(nameList,valueList);
           }); 
 		
@@ -102,7 +103,6 @@
               readInputFile(this);
           });
            
-           
           // 등록 이미지 삭제 ( input file reset )
           function resetInputFile($input, $preview) {
               var agent = navigator.userAgent.toLowerCase();
@@ -117,12 +117,7 @@
               }       
           }
 	});
-	
-</script>
 
-<script type="text/javascript">
-
-	
 </script>
 
 </head>
@@ -145,26 +140,41 @@
 
 			<div class="container-fluid" id="admin-register">
 				<h3 class="mt-4">관리자 상품 등록</h3>
-				<form action="${pageContext.servletContext.contextPath }/admin/product/register" name="product_form" method="post" enctype="multipart/form-data">
-			
+				<form:form modelAttribute="productVo" action="${pageContext.servletContext.contextPath }/admin/product/register" name="product_form" method="post" enctype="multipart/form-data">
+					
 					<span class="input_name">상품명 : </span>
-					 <input id="input_name" type="text" class="form-control" placeholder="상품명" name="name" required autofocus>
-               		 
+					 <input id="name" type="text" class="form-control" placeholder="상품명" name="name" required autofocus />
+               		 <spring:hasBindErrors name="productVo">
+	                   <c:if test="${errors.hasFieldErrors('name') }">
+	                     <p style="font-weight:bold; color:red; text-align:left; padding:0">
+	                           <spring:message 
+	                             code="${errors.getFieldError( 'name' ).codes[0] }"                  
+	                             text="${errors.getFieldError( 'name' ).defaultMessage }" />
+	                      </p> 
+	                  </c:if>
+             		  </spring:hasBindErrors> 
                		 <span class="input_summary">상품 요약 설명 : </span>
-					 <input id="input_summary" type="text" class="form-control" placeholder="상품요약설명" name="summary">
+					 <input id="input_summary" type="text" class="form-control" placeholder="상품요약설명" name="summary" required>
                		 <span class="input_price">판매가 : </span>
-					 <input id="input_price" class="form-control" placeholder="판매가" name="price">
+					 <input id="input_price" class="form-control" placeholder="판매가" name="price" required>
+					  <spring:hasBindErrors name="productVo">
+	                   <c:if test="${errors.hasFieldErrors('price') }">
+	                     <p style="font-weight:bold; color:red; text-align:left; padding:0">
+	                           <spring:message 
+	                             code="${errors.getFieldError( 'price' ).codes[0] }"                  
+	                             text="${errors.getFieldError( 'price' ).defaultMessage }" />
+	                     </p> 
+	                  </c:if>
+             		  </spring:hasBindErrors> 
+					 
                		 <span class="input_detail">상품 상세 설명 : </span>
                		 <textarea name="detail" id="summernote"></textarea>
                		 
                		 <br />
                		 
                		 <span class="input_summary">진열 여부 : </span>
-               		 <input type="radio" id="r1" name="is_show" checked="checked"/>
-					 <label for="r1"><span></span>진열함</label>
-					 <input type="radio" id="r2" name="is_show" />
-					 <label for="r2"><span></span>진열안함</label>
-               		 
+               		 <input type="radio" name="is_show" value="true" checked="checked"> 진열함<br>
+  					 <input type="radio" name="is_show" value="false"> 진열안함<br>
                			 
 	            	<div id="categoryBox" style="margin-bottom:20px;">
 						<span class="inputCategory">상품분류 :</span> 
@@ -201,17 +211,17 @@
 				            <td><button class="btn btn-info addBtn">+</button></td>
 				        </tr>
 					</table>
+					
 					<button class="btn btn-sm btn-info btn-block" id="makeOption" style="width:100px; margin:20px;">옵션 품목 만들기</button>
-                	<button class="btn btn-lg btn-primary btn-block" type="submit" style="width:200px;">상품 등록</button>
+                	<button class="btn btn-lg btn-primary btn-block" type="submit" id="regist_button" style="width:200px;">상품 등록</button>
 				
-				</form>
+				</form:form>
 			</div>
 		</div>
 		<!-- /#page-content-wrapper -->
 
 	</div>
 	<!-- /#wrapper -->
-
 
 	<!-- Menu Toggle Script -->
 	<script>

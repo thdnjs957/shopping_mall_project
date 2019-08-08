@@ -62,6 +62,7 @@ public class ProductService {
 	public Boolean registProduct(ProductVo productVo) {
 		String endpoint = "http://localhost:8080/so1_backend/api/admin/product/register";
 		JSONResultProductReceive jsonResult = restTemplate.postForObject(endpoint,productVo,JSONResultProductReceive.class);
+		
 		return jsonResult.getData();
 	}
 	

@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cafe24.shop.frontend.service.AdminService;
 import com.cafe24.shop.frontend.service.ProductService;
 import com.cafe24.shop.frontend.service.UserService;
 import com.cafe24.shop.frontend.vo.CategoryVo;
@@ -31,11 +30,12 @@ import com.cafe24.shop.frontend.vo.UserVo;
 @RequestMapping("/admin")
 public class AdminController {
 	
-	@Autowired
-	private AdminService adminService;
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping("")
 	public String main() {
@@ -43,7 +43,7 @@ public class AdminController {
 	}
 
 	@GetMapping("product/register")
-	public String productRegister(Model model) {
+	public String productRegister(@ModelAttribute ProductVo productVo,Model model) {
 		List<CategoryVo> categoryList = productService.getCategoryList();
 		model.addAttribute("categoryList", categoryList);
 		return "admin/product_manage";
@@ -56,6 +56,13 @@ public class AdminController {
 		return "admin/product_list";
 	}
 	
+	@GetMapping("user")
+	public String userList(Model model) {
+		List<UserVo> userList = userService.getUserList();
+		model.addAttribute("userList", userList);
+		return "admin/user_list";
+	}
+	
 	@PostMapping("product/register")
 	public String productRegister(@ModelAttribute @Valid ProductVo productVo, BindingResult result, Model model,
 			@RequestParam(value="main-image") MultipartFile mainImage,
@@ -63,6 +70,11 @@ public class AdminController {
 			@RequestParam(value="sub-image2") MultipartFile subImage2)
 	{
 		productVo.setTot_stock(100);
+		
+		if (result.hasErrors()) {
+			model.addAllAttributes(result.getModel());
+			return "/admin/product_manage";
+		}
 		
 		String main = productService.restore(mainImage);
 		String sub1 = productService.restore(subImage1);
@@ -89,11 +101,11 @@ public class AdminController {
 		productVo.setPro_Image(imageList);
 		
 		Boolean pResult = productService.registProduct(productVo);
-		
-		return "redirect:/admin/product_list";
+		if(pResult) {
+			return "redirect:/admin/product";
+		}
+		return "redirect:/admin/product/register";
 	}
 
-	
-	
 	
 }

@@ -58,6 +58,10 @@ body {
   #wrapper.toggled #sidebar-wrapper {
     margin-left: -15rem;
   }
+  
+  img{
+  	width:150px;
+  }
 }
 
 

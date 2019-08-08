@@ -19,11 +19,7 @@
    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
    <link href="${pageContext.servletContext.contextPath }/assets/css/shop-join.css" rel="stylesheet">
    <script src="${pageContext.servletContext.contextPath }/assets/js/user/shop-join.js" type="text/javascript"></script>
-   <script type="text/javascript">
-   $(function () {
-      $('#id').focus();
-   })
-   </script>
+
 </head>
 <body>
    <!-- Navigation -->

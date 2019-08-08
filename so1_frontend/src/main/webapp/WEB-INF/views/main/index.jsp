@@ -75,11 +75,10 @@
 							<div class="card h-100">
 								<a href="${pageContext.servletContext.contextPath }/product/${vo.category_no}/${vo.no}">
 									<c:forEach items='${vo.pro_Image }' var='iList'>
-							    			<img alt="상품 메인 이미지" src="${pageContext.request.contextPath}/assets-upload${iList.url }">  
+							    			<img class="main-image" alt="상품 메인 이미지" src="${pageContext.request.contextPath}/assets-upload${iList.url }">  
 									</c:forEach>
 								</a>
 								<div class="card-body">
-									
 									<h4 class="card-title">
 										<a href="${pageContext.servletContext.contextPath }/product/${vo.category_no}/${vo.no}">${vo.name }</a>
 									</h4>

@@ -21,26 +21,24 @@
 </head>
 <style>
 	body{margin-top:50px;}
-
+	.img-thumbnail.main{
+		width:300px;	
+	}
+	
+	.img-thumbnail.sub{
+		width:150px;
+	}
+	
+	.left-content{
+		float:left;
+	}
+	.right-content{
+		margin-left:400px;
+		height:650px;
+	}
+	
 </style>
-<script type="text/javascript">
-	$(function () {
-		$('#option-dropdown .dropdown-menu a').bind('click', function (e) {
-		    var html = $(this).html();
-		    $('#option-dropdown button.dropdown-toggle').html(html + ' <span class="caret"></span>');
-			
-		    var rowHtml = '<div>';
-		    
-		    rowHtml += html;
-		    
-		    rowHtml += '<input type="text" style="display: inline; width: 50px; margin-left: 100px;" class="form-control" value="1"/>'
-		    rowHtml += '<button type="button" class="btn btn-light" style="width: 50px;">+</button>'
-		    rowHtml += '<button type="button" class="btn btn-light" style="width: 50px;">-</button>'
-		    rowHtml += '</div>'
-		    $('#temp-list').append(rowHtml);		    
-		});
-	});
-	</script>
+
 <body>
 	<!-- Navigation -->
 	<c:import url='/WEB-INF/views/includes/navigation.jsp'>
@@ -56,14 +54,29 @@
 			<!-- left_section end -->
 
 			<div class="col-lg-9">
-				<div class="card mt-4">
-					<img class="card-img-top img-fluid"
-						src="http://placehold.it/900x400" alt="">
-					<div class="card-body">
-						<h3 class="card-title">${vo.name }</h3>
-						<h4>${vo.price } </h4>
+				<div style="margin-top:110px;">
+					<div class="left-content">
+						<c:forEach items='${vo.pro_Image }' var='iList'>
+							<c:choose>
+								<c:when test="${iList.is_main }">
+									<div>
+										<img alt="상품  메인 이미지" src="${pageContext.request.contextPath}/assets-upload${iList.url }" class="img-thumbnail main">
+									</div>
+								</c:when>
+								<c:otherwise>
+									<img alt="상품  서브 이미지" src="${pageContext.request.contextPath}/assets-upload${iList.url }" class="img-thumbnail sub">  
+								</c:otherwise>
+							</c:choose>	
+						</c:forEach>
+					</div> 
+					<div class="right-content">
+					
+						<h3 class="card-title">상품명 : ${vo.name }</h3>
+						<br />
+						<h4>가격 : ${vo.price } </h4>
+						<br />
 						<p class="card-text">
-							${vo.summary }
+							 설명 : ${vo.summary }
 						</p>
 						<p>
 							<c:forEach items='${vo.option }' var='option_list'>
@@ -77,39 +90,13 @@
 							</c:forEach>
 						</p>
 					</div>
-					
-				</div>
-				<!-- /.card -->
-
-				<div class="card card-outline-secondary my-4">
-					<div class="card-header">Product Reviews</div>
-					<div class="card-body">
+					<div class="detail">
 						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-							Omnis et enim aperiam inventore, similique necessitatibus neque
-							non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum.
-							Sequi mollitia, necessitatibus quae sint natus.
+							${vo.detail }
 						</p>
-						<small class="text-muted">Posted by Anonymous on 3/1/17</small>
-						<hr>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-							Omnis et enim aperiam inventore, similique necessitatibus neque
-							non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum.
-							Sequi mollitia, necessitatibus quae sint natus.
-						</p>
-						<small class="text-muted">Posted by Anonymous on 3/1/17</small>
-						<hr>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-							Omnis et enim aperiam inventore, similique necessitatibus neque
-							non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum.
-							Sequi mollitia, necessitatibus quae sint natus.
-						</p>
-						<small class="text-muted">Posted by Anonymous on 3/1/17</small>
-						<hr>
-						<a href="#" class="btn btn-success">Leave a Review</a>
 					</div>
+					
+					
 				</div>
 				<!-- /.card -->
 

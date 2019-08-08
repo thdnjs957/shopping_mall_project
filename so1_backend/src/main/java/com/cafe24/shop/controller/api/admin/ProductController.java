@@ -76,7 +76,6 @@ public class ProductController {
 		}
 		
 		boolean result = productService.addProduct(vo);
-		
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
 
