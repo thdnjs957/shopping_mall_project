@@ -46,8 +46,6 @@ public class ProductController {
 	@GetMapping("/{no1}/{no2}") //카테고리 + 상품 번호
 	public ResponseEntity<JSONResult> productDetail(@PathVariable(value="no1") Long no1,@PathVariable(value="no2") Long no2) {
 		
-		System.out.println("으아아악"+ no1 + no2);
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("category_no", no1);
 		map.put("product_no", no2);

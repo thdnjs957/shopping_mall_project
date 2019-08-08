@@ -46,8 +46,7 @@
 					<div class="carousel-inner" role="listbox">
 
 						<div class="carousel-item active">
-							<img class="d-block img-fluid" src="http://placehold.it/900x350"
-								alt="First slide">
+							<img class="d-block img-fluid" src="${pageContext.request.contextPath}/assets/image/main1.png" alt="First slide">
 						</div>
 						<div class="carousel-item">
 							<img class="d-block img-fluid" src="http://placehold.it/900x350"
@@ -74,8 +73,11 @@
 					<c:forEach items='${productList }' var='vo'>
 						<div class="col-lg-4 col-md-6 mb-4">
 							<div class="card h-100">
-								<a href="${pageContext.servletContext.contextPath }/product/${vo.category_no}/${vo.no}"><img class="card-img-top"
-									src="http://placehold.it/700x400" alt=""></a>
+								<a href="${pageContext.servletContext.contextPath }/product/${vo.category_no}/${vo.no}">
+									<c:forEach items='${vo.pro_Image }' var='iList'>
+							    			<img alt="상품 메인 이미지" src="${pageContext.request.contextPath}/assets-upload${iList.url }">  
+									</c:forEach>
+								</a>
 								<div class="card-body">
 									
 									<h4 class="card-title">

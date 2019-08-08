@@ -14,11 +14,33 @@
 	<link href="${pageContext.servletContext.contextPath }/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<!-- Custom styles for this template -->
 	<link href="${pageContext.servletContext.contextPath }/assets/css/shop-item.css" rel="stylesheet">
+	<!-- Bootstrap core JavaScript -->
+	<script	src="${pageContext.servletContext.contextPath }/assets/js/jquery/jquery.min.js"></script>
+	<script	src="${pageContext.servletContext.contextPath }/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+	
 </head>
 <style>
 	body{margin-top:50px;}
 
 </style>
+<script type="text/javascript">
+	$(function () {
+		$('#option-dropdown .dropdown-menu a').bind('click', function (e) {
+		    var html = $(this).html();
+		    $('#option-dropdown button.dropdown-toggle').html(html + ' <span class="caret"></span>');
+			
+		    var rowHtml = '<div>';
+		    
+		    rowHtml += html;
+		    
+		    rowHtml += '<input type="text" style="display: inline; width: 50px; margin-left: 100px;" class="form-control" value="1"/>'
+		    rowHtml += '<button type="button" class="btn btn-light" style="width: 50px;">+</button>'
+		    rowHtml += '<button type="button" class="btn btn-light" style="width: 50px;">-</button>'
+		    rowHtml += '</div>'
+		    $('#temp-list').append(rowHtml);		    
+		});
+	});
+	</script>
 <body>
 	<!-- Navigation -->
 	<c:import url='/WEB-INF/views/includes/navigation.jsp'>
@@ -32,33 +54,6 @@
 			<!-- left_section -->
 				<c:import url='/WEB-INF/views/includes/left_section.jsp' />
 			<!-- left_section end -->
-			
-<!-- 	private Long no;
-	
-	@NotNull
-	@Length(min=2)
-	private String name;
-	
-	private String summary;
-	
-	@NotNull
-	private int price;
-	
-	@NotNull
-	private boolean is_show;
-	
-	private String detail;
-	
-	private int tot_stock;
-	private String reg_date;
-	private Long category_no;
-	
-	private List<ImageVo> pro_Image;
-	
-	@Valid
-	private List<OptionVo> option;
-	
-	private List<ProductOptionVo> pro_option; -->
 
 			<div class="col-lg-9">
 				<div class="card mt-4">
@@ -82,6 +77,7 @@
 							</c:forEach>
 						</p>
 					</div>
+					
 				</div>
 				<!-- /.card -->
 

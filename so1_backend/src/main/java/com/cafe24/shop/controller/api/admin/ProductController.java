@@ -1,5 +1,6 @@
 package com.cafe24.shop.controller.api.admin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.shop.dto.JSONResult;
 import com.cafe24.shop.service.ProductService;
+import com.cafe24.shop.vo.ImageVo;
 import com.cafe24.shop.vo.OptionVo;
+import com.cafe24.shop.vo.ProductOptionVo;
 import com.cafe24.shop.vo.ProductVo;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -58,8 +61,18 @@ public class ProductController {
 		if(bResult.hasErrors()) {
 			List<ObjectError> list = bResult.getAllErrors();
 			for(ObjectError error: list) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+				return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail(error.getDefaultMessage()));
 			}
+		}
+		
+		if(vo.getPro_Image() == null) {
+			vo.setPro_Image(new ArrayList<ImageVo>());
+		}
+		if(vo.getOption() == null) {
+			vo.setOption(new ArrayList<OptionVo>());
+		}
+		if(vo.getPro_option() == null) {
+			vo.setPro_option(new ArrayList<ProductOptionVo>());
 		}
 		
 		boolean result = productService.addProduct(vo);

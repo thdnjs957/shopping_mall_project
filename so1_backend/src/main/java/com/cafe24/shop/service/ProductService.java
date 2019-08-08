@@ -32,7 +32,7 @@ public class ProductService {
 		
 		List<ImageVo> imageList = vo.getPro_Image();
 		
-		if( imageList.isEmpty() == false ) {
+		if( !imageList.isEmpty() ) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("productNo", no);
 			map.put("imageList",imageList);
@@ -43,8 +43,7 @@ public class ProductService {
 		
 		List<OptionVo> optionList = vo.getOption();
 	
-		
-		if( optionList.isEmpty() == false ) {
+		if( !optionList.isEmpty()) {
 			for(OptionVo ov : optionList) {
 				ov.setProduct_no(no);
 				Long option_no = productDao.insertOption(ov);

@@ -35,7 +35,7 @@ public class UserController {
 	@PostMapping("/join")
 	public String join(@ModelAttribute @Valid UserVo userVo, BindingResult result, Model model) { // valid하고 만약 에러가 있으면 result에 담음
 		
-		userVo.setRole("USER");
+		userVo.setRole("ROLE_USER");
 		
 		if (result.hasErrors()) {
 			model.addAllAttributes(result.getModel());

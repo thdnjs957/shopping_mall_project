@@ -7,6 +7,18 @@ body {
   overflow-x: hidden;
 }
 
+#admin-register input{
+	margin-bottom:20px;
+}
+
+#optionTable .box{
+	border : 1px solid black;
+}
+
+.ulOptionValueArea li{
+	list-style:none;
+}
+
 #sidebar-wrapper {
   min-height: 100vh;
   margin-left: -15rem;
@@ -47,3 +59,5 @@ body {
     margin-left: -15rem;
   }
 }
+
+

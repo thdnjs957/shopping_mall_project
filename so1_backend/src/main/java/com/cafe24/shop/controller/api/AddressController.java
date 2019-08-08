@@ -51,7 +51,7 @@ public class AddressController {
 		if(bResult.hasErrors()) {
 			List<ObjectError> list = bResult.getAllErrors();
 			for(ObjectError error: list) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+				return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail(error.getDefaultMessage()));
 			}
 		}
 		
