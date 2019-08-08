@@ -27,18 +27,6 @@ public class UserManageController {
 	@Autowired
 	private UserService userService;
 	
-	
-	//관리자 고객 목록 조회
-	@ApiOperation(value="관리자 고객 목록 조회")
-	@GetMapping("")
-	public JSONResult manageList() {
-		
-		//고객 리스트
-		List<UserVo> uList = userService.getList();
-		
-		return JSONResult.success(uList);
-	}
-	
 	//관리자 고객 조건 검색
 	@ApiOperation(value="관리자 고객 조건 검색")
 	@ApiImplicitParams({
@@ -60,9 +48,9 @@ public class UserManageController {
 		map.put("orderInquery",orderInquery);
 		map.put("isOrdered",isOrdered);
 		
-		List<UserVo> uList = userService.getUserSearch(map);
+		//List<UserVo> uList = userService.getUserSearch(map);
 		
-		return JSONResult.success(uList);
+		return JSONResult.success(null);
 	}
 	
 	

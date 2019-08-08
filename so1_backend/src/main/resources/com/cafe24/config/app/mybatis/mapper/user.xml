@@ -62,12 +62,16 @@
 		<![CDATA[
 			where no = #{no}
 		]]>
-		
 	</update>
 	
 	<select id="getUserList" resultType="uservo">
 		<![CDATA[
-			select * from user
+			select no,CAST(aes_decrypt(UNHEX(name),'sowonkey') as char) as name,
+						aes_decrypt(UNHEX(id),'sowonkey') as id,
+						aes_decrypt(UNHEX(email),'sowonkey') as email,
+						aes_decrypt(UNHEX(phone),'sowonkey') as phone,
+						gender,join_date
+				from user where role = "ROLE_USER" order by no
 		]]>
 	</select>
 	

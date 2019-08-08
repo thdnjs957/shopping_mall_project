@@ -1,5 +1,7 @@
 package com.cafe24.shop.frontend.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cafe24.shop.frontend.service.UserService;
+import com.cafe24.shop.frontend.vo.ProductVo;
 import com.cafe24.shop.frontend.vo.UserVo;
 
 @Controller
@@ -50,6 +53,12 @@ public class UserController {
 			return "redirect:/user/join";
 	}
 	
-	 
-
+	@GetMapping("")
+	public String getUserList(Model model) {
+		List<UserVo> userList = userService.getUserList();
+		model.addAttribute("userList",userList);
+		return "admin/user_list";
+	}
+	
+	
 }

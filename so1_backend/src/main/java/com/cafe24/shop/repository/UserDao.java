@@ -1,6 +1,7 @@
 package com.cafe24.shop.repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -53,6 +54,11 @@ public class UserDao {
 		UserVo uservo = sqlSession.selectOne("getByIdAndPassword",map);
 		
 		return uservo;
+	}
+
+	public List<UserVo> getList() {
+		List<UserVo> list = sqlSession.selectList("user.getUserList");
+		return list;
 	}
 
 }

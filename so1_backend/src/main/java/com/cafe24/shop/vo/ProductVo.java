@@ -31,7 +31,7 @@ public class ProductVo {
 	
 	private List<ImageVo> pro_Image;
 	
-	@Valid
+	//@Valid
 	private List<OptionVo> option;
 	
 	private List<ProductOptionVo> pro_option;
