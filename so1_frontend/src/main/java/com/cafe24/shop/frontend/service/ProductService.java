@@ -3,6 +3,7 @@ package com.cafe24.shop.frontend.service;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -12,6 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cafe24.shop.frontend.dto.JSONResult;
 import com.cafe24.shop.frontend.vo.CategoryVo;
+import com.cafe24.shop.frontend.vo.OptionMasterVo;
+import com.cafe24.shop.frontend.vo.OptionVo;
+import com.cafe24.shop.frontend.vo.ProductOptionVo;
 import com.cafe24.shop.frontend.vo.ProductVo;
 
 @Service
@@ -22,6 +26,15 @@ public class ProductService {
 	private static final String SAVE_PATH = "/shop-uploads";
 	private static final String URL = "/images";
 
+	public List<ProductVo> getProductListForAdmin(){
+		
+		String endpoint = "http://localhost:8080/so1_backend/api/admin/product/";
+		
+		JSONResultProductList jsonResult = restTemplate.getForObject(endpoint, JSONResultProductList.class);
+		
+		return jsonResult.getData();
+	}
+	
 	public List<ProductVo> getProductList(){
 		
 		String endpoint = "http://localhost:8080/so1_backend/api/product/";
@@ -60,9 +73,9 @@ public class ProductService {
 	}
 	
 	public Boolean registProduct(ProductVo productVo) {
+		
 		String endpoint = "http://localhost:8080/so1_backend/api/admin/product/register";
 		JSONResultProductReceive jsonResult = restTemplate.postForObject(endpoint,productVo,JSONResultProductReceive.class);
-		
 		return jsonResult.getData();
 	}
 	

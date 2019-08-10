@@ -31,6 +31,7 @@ public class FileuploadConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/assets-upload/images/**").addResourceLocations("file:/shop-uploads/");
+		//registry.addResourceHandler("/assets/**").addResourceLocations("/assets/image/");
 	}
 	
 }

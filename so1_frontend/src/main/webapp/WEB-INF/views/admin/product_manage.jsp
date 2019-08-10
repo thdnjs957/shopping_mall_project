@@ -26,95 +26,9 @@
 <!-- include summernote css/js-->
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-<script>
-
-	$(document).ready(function() {
-
-	    $('#summernote').summernote({
-	            height: 300,                 // set editor height
-	            minHeight: null,             // set minimum height of editor
-	            maxHeight: null,             // set maximum height of editor
-	            focus: true                  // set focus to editable area after initializing summernote
-	    });
-	    
-	    $("#makeOption").click(function(e){
-	    	e.preventDefault();
-	    	optionName = $("").val();
-		    optionValue = $("").val();
-		    
-	    });
-	
-          // 항목추가 버튼 클릭시
-           $(".addBtn").click(function(e){
-          	  e.preventDefault();
-
-          	  var clickedRow = $(this).parent().parent(); 
-              var cls = clickedRow.attr("class"); //class가 있는 요소 오브젝트로 담김 : item
-              var newrow = clickedRow.clone(); //tr복사
-              
-			  newrow.find("td:last").html("<button class='btn btn-info delBtn'>삭제</button>"); //마지막 td요소에 삭제버튼 추가
-              newrow.insertAfter($("#table ."+cls+":last"));	// id가 table인 요소 안의 마지막 class인 요소 선택
-
-          });
-
-          // 삭제버튼 클릭시
-          $(document).on("click",".delBtn",function(e){
-          	e.preventDefault();
-              var clickedRow = $(this).parent().parent();
-              clickedRow.remove();
-          }); 
-          
-          $(document).on("click",".addValueBtn",function(e){
-          	e.preventDefault();
-          	var clickedRow = $(this).parent();
-          	
-          	console.log(clickedRow.find('input'));
-          	var tag = "<input id='option_master' class='form-control' placeholder='예시)블루' name='option_value'>";
-          	clickedRow.append(tag);
-          }); 
-	      
-          $(document).on("click","#makeOption",function(e){
-            	e.preventDefault();
-                var nameList = new Array();
-           	    $("input[name=option_name]").each(function(index, item){
-           	    	nameList.push($(item).val());
-           	    });
-           	    
-           		 var valueList = new Array();
-        	    $("input[name=option_value]").each(function(index, item){
-        	    	valueList.push($(item).val());
-        	    });
-				           	    
-           	    console.log(nameList,valueList);
-          });
-          
-          $(".inp-img").on('change', function(){
-             	readInputFile(this);
-          });
-           
-         //등록 이미지 등록 미리보기
-          function readInputFile(input) {
-        	 console.log($(input));
-              if(input.files && input.files[0]) {
-                  var reader = new FileReader();
-                  reader.onload = function (e) {
-                      $(input).prev().attr('src',e.target.result);
-                      //$('#preview').append("<img src="+ e.target.result +">");
-                  }
-                  reader.readAsDataURL(input.files[0]);
-              }
-          }
-         
-          $("input[class='img']").click(function(e) {
-        	    e.preventDefault();
-        	    $(this).next().click();
-           });
-          
-	});
-
-</script>
-
+<script src="${pageContext.servletContext.contextPath }/assets/js/manage.js"></script>
 </head>
+
 <body>
 
 	<div class="d-flex" id="wrapper">
@@ -140,7 +54,7 @@
 					 <input id="name" type="text" class="form-control" placeholder="상품명" name="name" required autofocus />
                		 <spring:hasBindErrors name="productVo">
 	                   <c:if test="${errors.hasFieldErrors('name') }">
-	                     <p style="font-weight:bold; color:red; text-align:left; padding:0">
+	                      <p style="font-weight:bold; color:red; text-align:left; padding:0">
 	                           <spring:message 
 	                             code="${errors.getFieldError( 'name' ).codes[0] }"                  
 	                             text="${errors.getFieldError( 'name' ).defaultMessage }" />
@@ -153,7 +67,7 @@
 					 <input id="input_price" class="form-control" placeholder="판매가" name="price" required>
 					  <spring:hasBindErrors name="productVo">
 	                   <c:if test="${errors.hasFieldErrors('price') }">
-	                     <p style="font-weight:bold; color:red; text-align:left; padding:0">
+	                      <p style="font-weight:bold; color:red; text-align:left; padding:0">
 	                           <spring:message 
 	                             code="${errors.getFieldError( 'price' ).codes[0] }"                  
 	                             text="${errors.getFieldError( 'price' ).defaultMessage }" />
@@ -167,7 +81,7 @@
                		 <br />
                		 
                		 <span class="input_summary">진열 여부 : </span>
-               		 <input type="radio" name="is_show" value="true" checked="checked"> 진열함<br>
+               		 <input type="radio" name="is_show" value="true" checked="checked"> 진열함
   					 <input type="radio" name="is_show" value="false"> 진열안함<br>
                			 
 	            	<div id="categoryBox" style="margin-bottom:20px;">
@@ -183,44 +97,59 @@
 					<div id="preview">
 					</div>
 					
-				   <input type="image" class="img" id="img1" src="${pageContext.servletContext.contextPath }/assets/image/placeholder.jpg" width="230px"/>
+				   <input type="image" class="img" id="img1" src="${pageContext.servletContext.contextPath }/assets/images/placeholder.jpg" width="230px"/>
 				   <input type="file" id="my_file" name="main-image" class="inp-img" style="display: none;" />
 
 					<h6>추가 이미지</h6>
-					<input type="image" class = "img" id="img2" src="${pageContext.servletContext.contextPath }/assets/image/placeholder.jpg" width="230px"/>
+					<input type="image" class = "img" id="img2" src="${pageContext.servletContext.contextPath }/assets/images/placeholder.jpg" width="230px"/>
 					<input type="file" id="my_file" name="sub-image1" class="inp-img" style="display: none;" />
 					
-					<input type="image" class = "img" id="img3" src="${pageContext.servletContext.contextPath }/assets/image/placeholder.jpg" width="230px"/>
+					<input type="image" class = "img" id="img3" src="${pageContext.servletContext.contextPath }/assets/images/placeholder.jpg" width="230px"/>
 					<input type="file" id="my_file" name="sub-image2" class="inp-img" style="display: none;" />
 					
-			
-					<table id="table">
-				        <tr>
-				            <td>옵션 명</td>
-				            <td>옵션 값</td>
-				        </tr>
-				
-				        <tr class="item">
-				            <td>
-				            	<input type="text" name="option_name" size="15" placeholder="예시)색상"/>
-				            </td>
-				            <td>
-				            	<input type="text" name="option_value" placeholder="예시)블랙">
-				            	<button class="btn btn-info addValueBtn">값 추가</button>
-				            </td>
-				
-				            <td><button class="btn btn-info addBtn">+</button></td>
-				        </tr>
-					</table>
-					
+				    <div class="optionTable">
+				        	<table id="tableId" border = "1" style="width:1000px;">
+				        		<thead>
+				        			<tr>
+				        				<th>옵션명</th>
+				        				<th>옵션값</th>
+				        			</tr>
+				        		</thead>
+				        		<tbody id = "optionTBody">
+				        			<tr class="optionTr"  >
+				        				<td class="tOptioNameArea" optionGroup = 0>
+				        					<input type="text" name="option[0].name" class="option_name" size="15" placeholder="예시)색상"/>
+				        				</td>
+				        				<td class="tOptionValueArea">
+				        					<div class="dOptionValueArea" style="float:left;">
+				        						<ul class="ulOptionValueArea">
+				        							<li>
+				        								<input type="text" name="option[0].option_ma[0].value" class="option_value"  placeholder="예시)블랙">
+				        							</li>
+				        						</ul>
+				        					</div>
+
+				        					<button class="btn btn-info addValueBtn">값 추가</button>
+				        				</td>
+
+				        				<button class="btn btn-info addBtn">+</button>
+				        			</tr>
+				        		</tbody>
+	
+				        	</table>
+				        
+				     </div>
+				     
+				     <div class="optionResult">
+				     </div>
+
 					<button class="btn btn-sm btn-info btn-block" id="makeOption" style="width:100px; margin:20px;">옵션 품목 만들기</button>
                 	<button class="btn btn-lg btn-primary btn-block" type="submit" id="regist_button" style="width:200px;">상품 등록</button>
-				
+
 				</form:form>
 			</div>
 		</div>
 		<!-- /#page-content-wrapper -->
-
 	</div>
 	<!-- /#wrapper -->
 

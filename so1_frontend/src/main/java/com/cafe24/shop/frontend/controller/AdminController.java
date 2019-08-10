@@ -23,6 +23,7 @@ import com.cafe24.shop.frontend.service.ProductService;
 import com.cafe24.shop.frontend.service.UserService;
 import com.cafe24.shop.frontend.vo.CategoryVo;
 import com.cafe24.shop.frontend.vo.ImageVo;
+import com.cafe24.shop.frontend.vo.ProductOptionVo;
 import com.cafe24.shop.frontend.vo.ProductVo;
 import com.cafe24.shop.frontend.vo.UserVo;
 
@@ -44,6 +45,8 @@ public class AdminController {
 
 	@GetMapping("product/register")
 	public String productRegister(@ModelAttribute ProductVo productVo,Model model) {
+		
+		
 		List<CategoryVo> categoryList = productService.getCategoryList();
 		model.addAttribute("categoryList", categoryList);
 		return "admin/product_manage";
@@ -51,7 +54,7 @@ public class AdminController {
 	
 	@GetMapping("product")
 	public String productList(Model model) {
-		List<ProductVo> productList = productService.getProductList();
+		List<ProductVo> productList = productService.getProductListForAdmin();
 		model.addAttribute("productList", productList);
 		return "admin/product_list";
 	}
@@ -70,6 +73,12 @@ public class AdminController {
 			@RequestParam(value="sub-image2") MultipartFile subImage2)
 	{
 		productVo.setTot_stock(100);
+		
+		if(productVo.getPro_option() != null) {
+			for(ProductOptionVo item:productVo.getPro_option()) {
+				item.setUse_stock(true);
+			}
+		}
 		
 		if (result.hasErrors()) {
 			model.addAllAttributes(result.getModel());
@@ -100,7 +109,9 @@ public class AdminController {
 		
 		productVo.setPro_Image(imageList);
 		
+		
 		Boolean pResult = productService.registProduct(productVo);
+		System.out.println("--------------"+pResult);
 		if(pResult) {
 			return "redirect:/admin/product";
 		}

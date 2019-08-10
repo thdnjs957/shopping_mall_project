@@ -8,7 +8,7 @@
 	    <result property="name" column="NAME"/>
 	    <result property="price" column="PRICE"/>
 	    <result property="is_show" column="IS_SHOW"/>
-	    <result property="reg_date" column="reg_date"/>
+	    <result property="reg_date" column="reg_date" />
 	    <result property="category_no" column="CATEGORY_NO"/>
 	    <collection property="pro_Image" column="NO" javaType="java.util.ArrayList" ofType="imagevo" select="getImageByNoIsMain"/>
 	</resultMap>
@@ -21,7 +21,7 @@
 	    <result property="is_show" column="IS_SHOW"/>
 	    <result property="tot_stock" column="TOT_STOCK"/>
 	    <result property="category_no" column="CATEGORY_NO"/>
-	    <result property="reg_date" column="REG_DATE"/>
+	    <result property="reg_date" column="REG_DATE" />
 	    <collection property="pro_Image" column="NO" javaType="java.util.ArrayList" ofType="imagevo" select="getImageByNoAll"/>
 	    <collection property="option" column="NO" javaType="java.util.ArrayList" ofType="optionvo" select="getOptionByNo"/>
 	</resultMap>
@@ -34,9 +34,9 @@
 	</resultMap>
 	
 	<select id="getListforAdmin" resultMap="productAdminResult"> 
-		select no,name, price ,is_show,reg_date, category_no from product order by no desc;
+		select no,name, price ,is_show,	date_format(reg_date,'%Y년 %m월 %d일 ') as reg_date ,category_no from product order by no desc;
 	</select>
-	
+
 	<select id="getListforUser" resultMap="productAdminResult" parameterType="Long"> 
 		<![CDATA[
 			select no,name,summary,price,category_no from product

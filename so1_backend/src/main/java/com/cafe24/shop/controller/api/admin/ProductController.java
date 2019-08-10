@@ -76,6 +76,7 @@ public class ProductController {
 		}
 		
 		boolean result = productService.addProduct(vo);
+		
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
 
@@ -95,7 +96,7 @@ public class ProductController {
 	@ApiOperation(value="관리자 상품 상세 조회")
 	@GetMapping("/{no}")
 	public ResponseEntity<JSONResult> productDetail(@PathVariable(value="no") Long no) {
-		
+	
 		//상품 디테일 조회
 		ProductVo vo = productService.getProductDetail(no);
 		

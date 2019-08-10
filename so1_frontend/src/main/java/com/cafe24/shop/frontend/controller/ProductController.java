@@ -25,7 +25,7 @@ public class ProductController {
 		
 		List<ProductVo> productList = productService.getProductList(no);
 		List<CategoryVo> categoryList = productService.getCategoryList();
-		
+		System.out.println("관리자 상품 조회하면");
 		model.addAttribute("productList", productList);
 		model.addAttribute("categoryList", categoryList);
 

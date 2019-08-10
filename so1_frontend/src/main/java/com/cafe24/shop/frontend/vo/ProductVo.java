@@ -12,8 +12,8 @@ public class ProductVo {
 
 	private Long no;
 	
-	//@NotNull
-	//@Length(min=2)
+	@NotNull
+	@Length(min=2)
 	private String name;
 	
 	private String summary;
@@ -30,10 +30,9 @@ public class ProductVo {
 	private String reg_date;
 	private Long category_no;
 	
-	
 	private List<ImageVo> pro_Image;
 	
-	@Valid
+	//@Valid
 	private List<OptionVo> option;
 	
 	private List<ProductOptionVo> pro_option;

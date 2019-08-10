@@ -58,10 +58,10 @@
 					    </tr>
 					  </thead>
 					  <tbody>
-					  <%-- <c:set var="count" value="${fn:length(productList) }"/> --%>
+					     <c:set var="count" value="${fn:length(productList) }"/> 
 						  <c:forEach items='${productList }' var='vo' varStatus = "status">
 						  	<tr>
-						    	<th scope="row">${status.index+1 }</th>
+						    	<th scope="row">${count - status.index }</th>
 						    	<td> 
 						    		<c:forEach items='${vo.pro_Image }' var='iList'>
 						    			<img alt="상품 메인 이미지" src="${pageContext.request.contextPath}/assets-upload${iList.url }">  
@@ -71,10 +71,10 @@
 						    	<td>${vo.price }</td>
 						    	<c:choose>
 									<c:when test="${vo.is_show}">
-										<td>진열안함</td>
+										<td>진열함</td>
 									</c:when>
 									<c:otherwise>
-										<td>진열함</td>
+										<td>진열안함</td>
 									</c:otherwise>
 								</c:choose>	
 						    	

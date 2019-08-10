@@ -81,4 +81,5 @@ public class MVCConfig extends WebMvcConfigurerAdapter {
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
 		argumentResolvers.add(authUserHandlerMethodArgumentResolver());
 	}	
+	
 }

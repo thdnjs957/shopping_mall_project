@@ -68,13 +68,10 @@ public class ProductService {
 			optionCount = productDao.insertProOption(map);
 		}
 		
-		int checkSize2 = (pro_optionList.isEmpty()) ? 0 : pro_optionList.size();
-		
-		return imageCount == checkSize1 && optionCount == checkSize2;
+		return imageCount == checkSize1;
 	}
 
 	public List<ProductVo> getProductListforAdmin() {
-		
 		//product + main image
 		List<ProductVo> pList = productDao.getListforAdmin();
 		
@@ -82,7 +79,6 @@ public class ProductService {
 	}
 	
 	public List<ProductVo> getProductList(Optional<Long> no) { //no => category_no
-		
 		List<ProductVo> pList = productDao.getListforUser(no);
 
 		return pList;
