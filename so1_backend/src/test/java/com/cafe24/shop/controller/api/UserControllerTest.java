@@ -77,7 +77,7 @@ public class UserControllerTest {
 	public void bTestJoinUser() throws Exception{
 
 		// 1. Normal User's Join Data
-		UserVo userVo = new UserVo(null,"관리자","admin","Athdnjs@7946","thdnjs9570@naver.com","01076363123","FEMALE","ROLE_ADMIN","2019-07-16",null);
+		UserVo userVo = new UserVo(null,"박건형","rjsgud9570","Athdnjs@7946","rjsgud9570@naver.com","01082938493","MALE","ROLE_USER","2019-08-10",null);
 		
 		ResultActions resultActions =
 			mockMvc

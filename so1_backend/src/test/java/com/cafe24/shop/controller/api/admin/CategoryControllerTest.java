@@ -37,7 +37,7 @@ import com.google.gson.Gson;
 @ContextConfiguration(classes= {AppConfig.class, TestWebConfig.class})
 @WebAppConfiguration
 @TransactionConfiguration(defaultRollback = true)
-@Transactional
+//@Transactional
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CategoryControllerTest {
 
@@ -51,12 +51,12 @@ public class CategoryControllerTest {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 	
-	@Ignore
+	
 	@Test
 	public void aTestCategoryRegister() throws Exception{
 		
 		// 1. Normal cateogory register Data
-		CategoryVo vo = new CategoryVo(null,"TOP",1); 
+		CategoryVo vo = new CategoryVo(null,"DRESS",1); 
 		
 		ResultActions resultActions =
 			mockMvc

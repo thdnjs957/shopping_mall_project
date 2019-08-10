@@ -27,7 +27,8 @@
 	src="${pageContext.servletContext.contextPath }/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$('.minus').click(function () {
+		
+		$(document).on('click','.minus',function(e){
 			var $input = $(this).parent().find('input');
 			var count = parseInt($input.val()) - 1;
 			count = count < 1 ? 1 : count;
@@ -35,13 +36,66 @@
 			$input.change();
 			return false;
 		});
-		$('.plus').click(function () {
+		
+		$(document).on('click','.plus',function(e){
 			var $input = $(this).parent().find('input');
 			$input.val(parseInt($input.val()) + 1);
 			$input.change();
 			return false;
 		});
+		
+		$('.option_select').change(function() {
+			
+			var se = $(".option_select option:selected");
+			
+			//console.log(se.first().text());
+			
+			var result = '';
+			if($(".option_select option:selected").last().val() != ''){ 
+				
+				se.each(function(index,item) {
+					if(item.value == ''){
+						alert('옵션값을 선택해주세요');
+						return false;
+					}
+					else{
+						result += item.text +'/';
+					}
+				});
+
+				result = result.substr(0, result.length -1);
+				
+				var pro_option = $(".option_select option:selected").text();
+				
+				var tag = '<tr id = "pro_option_tr"><td>${vo.name }:'+result+'</td>'
+		            tag += '<td style="width:80px;">'
+		            tag+='<span class="minus">-</span>'
+		            tag+='<input class="count_input" type="text" value="1"/>'
+		            tag+='<span class="plus">+</span>'		
+		           	tag+='</td>'
+					tag+='<td class="right"><span class="quantity_price">${vo.price }</span>'
+					tag+='</td></tr>'
+				
+					$('#tBody').append(tag);
+				
+			}
+			
+			
+		
+			
+			/* 	if($('.option_select').children().val() == ''){
+					alert('옵션값을 모두 선택해 주세요.')
+				} 
+				
+				var optionList= new Array(); */
+				
+				
+	          // alert($(this).val());
+	          // alert($(this).children("option:selected").text());
+		});
+		
 	});
+	
 </script>
 
 </head>
@@ -64,7 +118,7 @@ body {
 
 .right-content {
 	margin-left: 400px;
-	height: 650px;
+	height: 560px;
 }
 
 span {cursor:pointer; }
@@ -95,6 +149,10 @@ span {cursor:pointer; }
     vertical-align: middle;
 }
 
+element.style 
+{ 
+    width:300px !important; 
+} 
 </style>
 
 
@@ -142,10 +200,10 @@ span {cursor:pointer; }
 						<p>
 							<c:forEach items='${vo.option }' var='option_list'>
 								<h6>${option_list.name }</h6>
-								<select class="form-control">
-									<c:forEach items="${option_list.option_ma}"
-										var="option_ma_list">
-										<option>${option_ma_list.value}</option>
+								<select class="form-control option_select" >
+									<option value="" selected disabled >==선택하세요==</option>
+									<c:forEach items="${option_list.option_ma}" var="option_ma_list">
+										<option value="pro_option">${option_ma_list.value}</option>
 									</c:forEach>
 								</select>
 								<br />
@@ -169,18 +227,8 @@ span {cursor:pointer; }
 									<th scope="col">가격</th>
 								</tr>
 							</thead>
-							<tbody class="displaynone">
-								<tr>
-									<td>${vo.name }</td>
-									<td style="width:80px;">
-										<span class="minus">-</span>
-										<input class="count_input" type="text" value="1"/>
-										<span class="plus">+</span>
-									 </td>
-									<td class="right"><span class="quantity_price">${vo.price }</span>
-									
-									</td>
-								</tr>
+							<tbody id="tBody">
+								
 							</tbody>
 							
 						</table>

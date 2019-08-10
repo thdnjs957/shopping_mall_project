@@ -48,7 +48,7 @@ public class UserController {
 		boolean jResult = userService.join(userVo); 
 		
 		if(jResult)
-			return "redirect:/";
+			return "redirect:/user/join_success";
 		else
 			return "redirect:/user/join";
 	}

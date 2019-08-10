@@ -46,7 +46,7 @@
 					<div class="carousel-inner" role="listbox">
 
 						<div class="carousel-item active">
-							<img class="d-block img-fluid" src="${pageContext.servletContext.contextPath}/assets/images/main1.png" alt="First slide">
+							<img class="d-block img-fluid" src="${pageContext.servletContext.contextPath}/assets/images/main1.PNG" alt="First slide">
 						</div>
 						<div class="carousel-item">
 							<img class="d-block img-fluid" src="${pageContext.servletContext.contextPath}/assets/images/main2.PNG" alt="Second slide">
