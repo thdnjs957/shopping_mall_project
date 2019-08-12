@@ -1,6 +1,6 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -44,14 +44,15 @@
 			return false;
 		});
 		
+		var isFirst = true;
+		
 		$('.option_select').change(function() {
 			
 			var se = $(".option_select option:selected");
 			
-			//console.log(se.first().text());
-			
 			var result = '';
-			if($(".option_select option:selected").last().val() != ''){ 
+			
+			if(se.last().val() != ''){ 
 				
 				se.each(function(index,item) {
 					if(item.value == ''){
@@ -62,36 +63,46 @@
 						result += item.text +'/';
 					}
 				});
-
-				result = result.substr(0, result.length -1);
 				
-				var pro_option = $(".option_select option:selected").text();
+				if(result != ''){
+					
+					if(isFirst){
+						var tag = '(최소주문수량 1개 이상<span class="displaynone"> / 최대주문수량 0개 이하</span>)'
+			            tag += '<table border="0" summary="">'
+			            tag+='<colgroup>'
+			            tag+='<col style="width: 150px;" /><col style="width: 180px;" /><col style="width: 110px;" />'
+			            tag+='</colgroup>'		
+			           	tag+='<thead><tr><th scope="col">상품명</th><th scope="col">상품수</th><th scope="col">가격</th></tr></thead>'
+			           	tag+='<tbody id="tBody">'
+			           	tag+='</tbody>'
+			           	tag+='</table>'
+			           	
+			           	$('#pro_option_div').append(tag);
+					}
 				
-				var tag = '<tr id = "pro_option_tr"><td>${vo.name }:'+result+'</td>'
-		            tag += '<td style="width:80px;">'
-		            tag+='<span class="minus">-</span>'
-		            tag+='<input class="count_input" type="text" value="1"/>'
-		            tag+='<span class="plus">+</span>'		
-		           	tag+='</td>'
-					tag+='<td class="right"><span class="quantity_price">${vo.price }</span>'
-					tag+='</td></tr>'
-				
+					result = result.substr(0, result.length -1);
+					
+					var pro_option = se.text();
+					
+					var tag = '<tr id = "pro_option_tr"><td>'+result+'</td>'
+			            tag += '<td style="width:80px;">'
+			            tag+='<span class="minus">-</span>'
+			            tag+='<input class="count_input" type="text" value="1"/>'
+			            tag+='<span class="plus">+</span>'		
+			           	tag+='</td>'
+						tag+='<td class="right"><span class="quantity_price">${vo.price }</span>'
+						tag+='</td></tr>'
+					
 					$('#tBody').append(tag);
+					
+					isFirst = false;
+				}
+				
 				
 			}
 			
 			
-		
-			
-			/* 	if($('.option_select').children().val() == ''){
-					alert('옵션값을 모두 선택해 주세요.')
-				} 
-				
-				var optionList= new Array(); */
-				
-				
-	          // alert($(this).val());
-	          // alert($(this).children("option:selected").text());
+
 		});
 		
 	});
@@ -211,30 +222,14 @@ element.style
 						</p>
 						
 						<p class="info ">
-							(최소주문수량 1개 이상<span class="displaynone"> / 최대주문수량 0개 이하</span>)
+							
 						</p>
 						
-						<table border="0" summary="">
-							<colgroup>
-								<col style="width: 150px;" />
-								<col style="width: 180px;" />
-								<col style="width: 110px;" />
-							</colgroup>
-							<thead>
-								<tr>
-									<th scope="col">상품명</th>
-									<th scope="col">상품수</th>
-									<th scope="col">가격</th>
-								</tr>
-							</thead>
-							<tbody id="tBody">
-								
-							</tbody>
+						<div id="pro_option_div" style="float:left; margin-bottom:20px;">
 							
-						</table>
-						
 						</div>
-						<div class="detail">
+						</div>
+						<div class="detail" >
 							<p>${vo.detail }</p>
 						</div>
 

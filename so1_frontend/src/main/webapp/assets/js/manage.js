@@ -78,7 +78,7 @@ $(document).ready(function() {
             console.log(r);
             
             var tag = ''
-              tag += '<table border = "1" style="width:1000px; margin-top:20px;"><thead><th>옵션(품목코드)</th><th>추가금액</th><th>재고수량(-1 입력하시면 재고관리를 하지않습니다.)</th></tr></thead>'
+                tag += '<table border = "1" style="width:1000px; margin-top:20px;"><thead><th>옵션(품목코드)</th><th>추가금액</th><th>재고수량(-1 입력하시면 재고관리를 하지않습니다.)</th></tr></thead>'
                 tag+='<tbody class="collectionOption">'
                 
             r.forEach(function(item,index) {
