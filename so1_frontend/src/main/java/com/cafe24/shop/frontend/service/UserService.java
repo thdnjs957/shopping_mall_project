@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.cafe24.shop.frontend.dto.JSONResult;
+import com.cafe24.shop.frontend.vo.BasketVo;
+import com.cafe24.shop.frontend.vo.ProductOptionVo;
 import com.cafe24.shop.frontend.vo.UserVo;
 
 @Service
@@ -29,6 +31,14 @@ public class UserService {
 		String endpoint = "http://localhost:8080/so1_backend/api/user";
 		JSONResultUserList jsonResult = restTemplate.getForObject(endpoint,JSONResultUserList.class);
 		return jsonResult.getData();
+	}
+	
+	public boolean addBasket(BasketVo basketVo) {
+		
+		String endpoint = "http://localhost:8080/so1_backend/api/user/join";
+		JSONResultJoin jsonResult = restTemplate.postForObject(endpoint,basketVo,JSONResultJoin.class);
+		return jsonResult.getData();
+		
 	}
 	
 	private static class JSONResultUser extends JSONResult<UserVo> {}

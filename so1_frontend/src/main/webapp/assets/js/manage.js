@@ -1,5 +1,4 @@
 
-
 $(document).ready(function() {
 
     $('#summernote').summernote({
@@ -34,7 +33,6 @@ $(document).ready(function() {
       $("#optionTBody").append(row);
 
      });
-    
 
         // 삭제버튼 클릭시
         $(document).on("click",".delBtn",function(e){

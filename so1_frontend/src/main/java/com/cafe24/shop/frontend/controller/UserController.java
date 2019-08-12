@@ -1,10 +1,15 @@
 package com.cafe24.shop.frontend.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,8 +18,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cafe24.shop.frontend.security.SecurityUser;
 import com.cafe24.shop.frontend.service.UserService;
+import com.cafe24.shop.frontend.vo.BasketVo;
+import com.cafe24.shop.frontend.vo.ProductOptionVo;
 import com.cafe24.shop.frontend.vo.ProductVo;
 import com.cafe24.shop.frontend.vo.UserVo;
 
@@ -60,5 +69,20 @@ public class UserController {
 		return "admin/user_list";
 	}
 	
+	//장바구니 페이지
+	@ResponseBody
+	@PostMapping("/basket")
+	public boolean join(@ModelAttribute BasketVo basketVo, Model model,@AuthenticationPrincipal SecurityUser user) { 		
 	
+		Long userNo = user.getNo();
+		
+		BasketVo bv = new BasketVo();
+		bv.setPro_option_no(basketVo.getPro_option_no());
+		bv.setCount(basketVo.getCount());
+		bv.setNo(userNo);
+		
+		boolean result = userService.addBasket(bv);
+		
+		return result;
+	}
 }

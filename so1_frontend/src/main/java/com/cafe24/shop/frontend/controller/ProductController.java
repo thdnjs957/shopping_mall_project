@@ -6,11 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cafe24.shop.frontend.service.ProductService;
 import com.cafe24.shop.frontend.vo.CategoryVo;
+import com.cafe24.shop.frontend.vo.ProductOptionVo;
 import com.cafe24.shop.frontend.vo.ProductVo;
 
 @Controller
@@ -44,6 +48,15 @@ public class ProductController {
 		
 		return "product/item";
 	}
+	
+	@ResponseBody
+	@PostMapping("/getByName")
+	public ProductOptionVo get(@ModelAttribute ProductOptionVo vo) {
+		ProductOptionVo pov = productService.getByName(vo);
+		return pov;
+	}
+	
+	
 	
 //	@ResponseBody
 //	@GetMapping("/list/{no}")

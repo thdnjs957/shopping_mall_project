@@ -92,7 +92,7 @@
 	
 	<select id="getProductOptionByName" resultType="productoptionvo" parameterType="productoptionvo">
 		<![CDATA[
-			select no,name,stock,use_stock,plus,product_no from pro_option where product_no = #{product_no} and name = #{name}
+			select * from pro_option where product_no = #{product_no} and TRIM(name) = #{name}
 		]]>
 	</select>
 	

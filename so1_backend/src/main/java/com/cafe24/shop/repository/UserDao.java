@@ -37,7 +37,6 @@ public class UserDao {
 		return result;
 	}
 	
-	
 	public UserVo get(Long no) {
 		
 		UserVo result = sqlSession.selectOne("user.getByNo",no);

@@ -31,7 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			securityUser.setGender(userVo.getGender());
 			securityUser.setJoin_date(userVo.getJoin_date());
 
-			securityUser.setUsername(userVo.getEmail()); // principal
+			securityUser.setUsername(userVo.getId()); // principal
 			securityUser.setPassword(userVo.getPassword()); // credential
 			
 			//Arrays.asList(new SimpleGrantedAuthority(role));//array를 list로 만듦

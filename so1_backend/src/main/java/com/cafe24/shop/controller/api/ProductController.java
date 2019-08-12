@@ -59,8 +59,7 @@ public class ProductController {
 	
 	@ApiOperation(value="상품 옵션 번호 조회")
 	@PostMapping("/getProOptionNo")
-	public  ResponseEntity<JSONResult> ProductOptionGetNo(@RequestBody ProductOptionVo vo) {
-		
+	public ResponseEntity<JSONResult> ProductOptionGetNo(@RequestBody ProductOptionVo vo) {
 		ProductOptionVo pov = productService.getProductOptionNo(vo);
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(pov));
 		

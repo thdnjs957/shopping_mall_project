@@ -79,6 +79,16 @@ public class ProductService {
 		return jsonResult.getData();
 	}
 	
+
+	public ProductOptionVo getByName(ProductOptionVo vo) {
+		
+		String endpoint = "http://localhost:8080/so1_backend/api/product/getProOptionNo";
+		JSONResultProductOptionVo jsonResult = restTemplate.postForObject(endpoint,vo,JSONResultProductOptionVo.class);
+		System.out.println("jsonResult getData"+jsonResult.getData());
+		return jsonResult.getData();
+		
+	}
+	
 	// DTO Class
 	private static class JSONResultProductList extends JSONResult<List<ProductVo>> {
 	}
@@ -91,7 +101,9 @@ public class ProductService {
 	
 	private static class JSONResultProductReceive extends JSONResult<Boolean> {
 	}
-
+	
+	private static class JSONResultProductOptionVo extends JSONResult<ProductOptionVo> {
+	}
 
 	public String restore(MultipartFile multipartFile) {
 		
@@ -143,5 +155,6 @@ public class ProductService {
 		
 		return filename;
 	}
+
 }
 

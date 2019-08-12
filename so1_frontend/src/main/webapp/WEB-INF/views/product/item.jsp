@@ -28,6 +28,7 @@
 <script>
 	$(document).ready(function() {
 		
+		
 		$(document).on('click','.minus',function(e){
 			var $input = $(this).parent().find('input');
 			var count = parseInt($input.val()) - 1;
@@ -53,6 +54,8 @@
 			var result = '';
 			
 			if(se.last().val() != ''){ 
+				
+				var a;
 				
 				se.each(function(index,item) {
 					if(item.value == ''){
@@ -82,29 +85,78 @@
 				
 					result = result.substr(0, result.length -1);
 					
-					var pro_option = se.text();
+					var pro_no = 0;
 					
-					var tag = '<tr id = "pro_option_tr"><td>'+result+'</td>'
-			            tag += '<td style="width:80px;">'
+					$.ajax({
+					    type: "POST",
+					    url : "${pageContext.servletContext.contextPath }/product/getByName",
+					    data : { 
+					    		  product_no: ${vo.no},
+					              name: result 
+					            },
+					    contentType : "application/x-www-form-urlencoded; charset=utf-8",
+					    dataType : "json",
+					    async:false,
+					    success : function(data){
+					    	 //Ajax 성공시
+					    	 pro_no = data.no;
+					    },error : function(){
+					        //Ajax 실패시
+					        alert('실패했습니다');
+					    }
+					});
+					
+					var tag = '<tr id = "pro_option_tr"><td>(${vo.name})'+result+'</td>'
+			            tag+='<td style="width:80px;">'
 			            tag+='<span class="minus">-</span>'
 			            tag+='<input class="count_input" type="text" value="1"/>'
 			            tag+='<span class="plus">+</span>'		
 			           	tag+='</td>'
-						tag+='<td class="right"><span class="quantity_price">${vo.price }</span>'
-						tag+='</td></tr>'
+						tag+='<td class="right"><span class="quantity_price">${vo.price }</span></td>'
+						tag+='<td><input type="hidden" value="'+pro_no+'" name="'+pro_no+'" class="pro_option_no"/></td>'
+						tag+='</tr>'
 					
 					$('#tBody').append(tag);
 					
 					isFirst = false;
 				}
 				
-				
 			}
-			
-			
 
 		});
 		
+		//장바구니 ajax
+		//basketVo의 pro_option_no,count,user_no
+		$('#basket_button').click(function() {
+			 var no = $(".pro_option_no").val();
+			 var count = $(".quantity_price").text();
+				console.log(no);
+				console.log(count);
+				$.ajax({
+				    type: "POST",
+				    url : "${pageContext.servletContext.contextPath }/user/basket",
+				    data : {
+				    		  pro_option_no: no,
+				    		  count: count
+				            },
+				    contentType : "application/x-www-form-urlencoded; charset=utf-8",
+				    dataType : "json",
+				    success : function(data){
+				    	 //Ajax 성공시
+				    	 // window.location.href = "main.html";
+						 alert('성공했습니다.');
+				    },error : function(){
+				        //Ajax 실패시
+				        alert('실패했습니다');
+				    }
+
+				});
+				
+		});
+		
+
+	
+	
 	});
 	
 </script>
@@ -160,10 +212,6 @@ span {cursor:pointer; }
     vertical-align: middle;
 }
 
-element.style 
-{ 
-    width:300px !important; 
-} 
 </style>
 
 
@@ -180,7 +228,7 @@ element.style
 			<!-- left_section -->
 			<c:import url='/WEB-INF/views/includes/left_section.jsp' />
 			<!-- left_section end -->
-
+			<h1>${pov.no }</h1>
 			<div class="col-lg-9">
 				<div style="margin-top: 110px;">
 					<div class="left-content">
@@ -225,11 +273,18 @@ element.style
 							
 						</p>
 						
+						<!-- form -->
 						<div id="pro_option_div" style="float:left; margin-bottom:20px;">
 							
 						</div>
+						
+						<div id ="base-button" style="float:left;"> 
+							<button class="btn btn-info" id = "basket_button">장바구니 추가</button>
+							<button class="btn btn-info">주문하기</button>
 						</div>
-						<div class="detail" >
+						
+						</div>
+						<div class="detail" style="margin-top:50px;">
 							<p>${vo.detail }</p>
 						</div>
 
