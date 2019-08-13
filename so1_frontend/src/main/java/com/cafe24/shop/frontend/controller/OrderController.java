@@ -19,12 +19,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cafe24.shop.frontend.dto.BasketDto;
 import com.cafe24.shop.frontend.dto.BasketListDto;
+import com.cafe24.shop.frontend.dto.OrderDetailListDto;
 import com.cafe24.shop.frontend.security.SecurityUser;
 import com.cafe24.shop.frontend.service.BasketService;
 import com.cafe24.shop.frontend.service.OrderService;
 import com.cafe24.shop.frontend.service.UserService;
 import com.cafe24.shop.frontend.vo.BasketVo;
 import com.cafe24.shop.frontend.vo.BasketVoSend;
+import com.cafe24.shop.frontend.vo.OrderVo;
 import com.cafe24.shop.frontend.vo.UserVo;
 
 @Controller
@@ -34,16 +36,6 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 
-	//주문 페이지
-//	@ResponseBody
-//	@PostMapping("/register")
-//	public boolean join(@RequestBody BasketVoSend param, Model model,@AuthenticationPrincipal SecurityUser user) { 		
-//	
-//		Long userNo = user.getNo();
-//		
-//		return result;
-//	}
-	
 	@PostMapping("/info")
 	public String orderInfo(@ModelAttribute BasketListDto basketList, Model model,@AuthenticationPrincipal SecurityUser user) { 		
 
@@ -53,22 +45,36 @@ public class OrderController {
 		List<BasketDto> dto = basketList.getBasketList();
 		model.addAttribute("basketList",dto);
 		
-
 		return "user/order";
 	}
 	
+	@PostMapping("")
+	public String addOrder(@ModelAttribute OrderVo orderVo,@ModelAttribute OrderDetailListDto list, Model model,@AuthenticationPrincipal SecurityUser user) { 		
+
+		Long userNo = user.getNo();
+		
+		orderVo.setUser_no(userNo);
+		orderVo.setStatus("주문완료");
+		orderVo.setTot_price(0);
+		orderVo.setDel_price(2500);
+		orderVo.setOrderDetailList(list.getDetailList());
+		
+		boolean result = orderService.addOrder(orderVo);
+		
+		return "user/order_success";
+	}
+	
+	
 	
 	@GetMapping("")
-	public String getBasketList(Model model,@AuthenticationPrincipal SecurityUser user) {
+	public String getOrderListByUser(Model model,@AuthenticationPrincipal SecurityUser user) {
 		
 		Long userNo = user.getNo();
 		
-		BasketVo bv = new BasketVo();
-		bv.setUser_no(userNo);
-		
-		//List<Map<String, Object>> basketList = basketService.getList(bv);
-		//model.addAttribute("basketList",basketList);
+		List<Map<String, Object>> orderList = orderService.getListUser(userNo);
+		model.addAttribute("orderList",orderList);
 		return "user/order";
+		
 	}
 	
 	

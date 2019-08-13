@@ -28,7 +28,6 @@ public class BasketService {
 		String endpoint = "http://localhost:8080/so1_backend/api/basket/register";
 		JSONResultBoolean jsonResult = restTemplate.postForObject(endpoint,param.getBasketList(),JSONResultBoolean.class);
 		return jsonResult.getData();
-		
 	}
 	
 	private static class JSONResultMapList extends JSONResult<List<Map<String,Object>>> {}

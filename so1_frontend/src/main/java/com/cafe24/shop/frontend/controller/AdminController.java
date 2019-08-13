@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cafe24.shop.frontend.service.OrderService;
 import com.cafe24.shop.frontend.service.ProductService;
 import com.cafe24.shop.frontend.service.UserService;
 import com.cafe24.shop.frontend.vo.CategoryVo;
@@ -37,6 +38,10 @@ public class AdminController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private OrderService orderService;
+	
 	
 	@GetMapping("")
 	public String main() {
@@ -118,5 +123,15 @@ public class AdminController {
 		return "redirect:/admin/product/register";
 	}
 
+	
+
+	@GetMapping("/order")
+	public String getOrderListByAdmin(Model model) {
+		
+		List<Map<String, Object>> orderList = orderService.getListAdmin();
+		model.addAttribute("orderList",orderList);
+		return "admin/order";
+	}
+	
 	
 }

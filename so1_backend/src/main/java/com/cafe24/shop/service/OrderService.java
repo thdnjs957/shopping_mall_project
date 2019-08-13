@@ -61,5 +61,10 @@ public class OrderService {
 		return map;
 	}
 
+	public List<Map<String, Object>> showOrderForAdmin() {
+		
+		List<Map<String, Object>> map = orderDao.getListForAdmin();
+		return map;
+	}
 	
 }

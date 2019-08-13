@@ -41,6 +41,7 @@
 					  	<tr>
 					  		<td><input type="checkbox" name="chk_info" value=""></td>
 					    	<td>
+					    		<input type="hidden" name="basketList[${status.index }].pro_option_no" value="${list.pro_option_no }">
 						    	<input type="hidden" name="basketList[${status.index }].productName" value="${list.productName }">
 						    	<input type="hidden" name="basketList[${status.index }].optionName" value="${list.optionName }">
 						    	<input type="hidden" name="basketList[${status.index }].price" value="${list.price }">
@@ -60,6 +61,8 @@
 			</table>
 				<input type="submit" class="btn btn-info" style="margin-bottom:40px;" value="상품 주문하기">
 			</form>
+			
+			
 			
 			
 	</div>

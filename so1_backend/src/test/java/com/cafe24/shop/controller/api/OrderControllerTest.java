@@ -54,165 +54,135 @@ public class OrderControllerTest {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 	
-	@Test
-	public void aTestOrderRegister() throws Exception{
-		
-		//회원 주문
-		OrderVo vo = new OrderVo(null,"박소원","01076363123","박건형","경기도 고양시 덕양구","01011112222","경비실에 맡겨주세요",3000,50000,null,null,"입금전",null,9L,null); 
-
-		List<OrderDetailVo> orderDetaiList = new ArrayList<OrderDetailVo>();
-		
-		OrderDetailVo dvo = new OrderDetailVo();
-		dvo.setPro_option_no(1L);
-		dvo.setCount(2);
-		
-		OrderDetailVo dvo2 = new OrderDetailVo();
-		dvo2.setPro_option_no(2L);
-		dvo2.setCount(1);
-		
-		orderDetaiList.add(dvo);
-		orderDetaiList.add(dvo2);
-		
-		vo.setOrderDetailList(orderDetaiList);
-		
-		ResultActions resultActions =
-			mockMvc
-			.perform(post("/api/order/register").contentType(MediaType.APPLICATION_JSON)
-			 .content(new Gson().toJson(vo)));
-		
-		resultActions.andExpect(status().isOk())
-			.andDo(print())
-			.andExpect(jsonPath("$.result", is("success")));
-	}
 	
-	@Test
-	public void aTestOrderRegister2() throws Exception{
-		
-		//회원 재고 없는 상품 주문
-		OrderVo vo = new OrderVo(null,"박소원","01076363123","박건형","경기도 고양시 덕양구","01011112222","경비실에 맡겨주세요",3000,50000,null,null,"입금전",null,9L,null); 
-
-		List<OrderDetailVo> orderDetaiList = new ArrayList<OrderDetailVo>();
-		
-		OrderDetailVo dvo = new OrderDetailVo();
-		dvo.setPro_option_no(4L);
-		dvo.setCount(2);
-		
-		OrderDetailVo dvo2 = new OrderDetailVo();
-		dvo2.setPro_option_no(2L);
-		dvo2.setCount(1);
-		
-		orderDetaiList.add(dvo);
-		orderDetaiList.add(dvo2);
-		
-		vo.setOrderDetailList(orderDetaiList);
-		
-		ResultActions resultActions =
-			mockMvc
-			.perform(post("/api/order/register").contentType(MediaType.APPLICATION_JSON)
-			 .content(new Gson().toJson(vo)));
-		
-		resultActions.andExpect(status().isBadRequest())
-			.andDo(print())
-			.andExpect(jsonPath("$.result", is("fail")));
-	}
-	
-	
-	@Test
-	public void aTestOrderRegister3() throws Exception{
-		
-		//재고 보다 많은 수량 주문
-		OrderVo vo = new OrderVo(null,"박소원","01076363123","박건형","경기도 고양시 덕양구","01011112222","경비실에 맡겨주세요",3000,50000,null,null,"입금전",null,9L,null); 
-
-		List<OrderDetailVo> orderDetaiList = new ArrayList<OrderDetailVo>();
-		
-		OrderDetailVo dvo = new OrderDetailVo();
-		dvo.setPro_option_no(5L);
-		dvo.setCount(5);
-		
-		OrderDetailVo dvo2 = new OrderDetailVo();
-		dvo2.setPro_option_no(2L);
-		dvo2.setCount(1);
-		
-		orderDetaiList.add(dvo);
-		orderDetaiList.add(dvo2);
-		
-		vo.setOrderDetailList(orderDetaiList);
-		
-		ResultActions resultActions =
-			mockMvc
-			.perform(post("/api/order/register").contentType(MediaType.APPLICATION_JSON)
-			 .content(new Gson().toJson(vo)));
-		
-		resultActions.andExpect(status().isBadRequest())
-			.andDo(print())
-			.andExpect(jsonPath("$.result", is("fail")));
-	}
-	
-	@Test
-	public void bTestNonUserOrderRegister() throws Exception{
-		
-		//비회원 주문
-		OrderVo vo = new OrderVo(null,"박소원","01076363123","박건형","경기도 고양시 덕양구","01011112222","경비실에 맡겨주세요",3000,50000,null,"thdnjs2","입금전",null,null,null); 
-
-		List<OrderDetailVo> orderDetaiList = new ArrayList<OrderDetailVo>();
-		
-		OrderDetailVo dvo = new OrderDetailVo();
-		dvo.setPro_option_no(1L);
-		dvo.setCount(2);
-		
-		OrderDetailVo dvo2 = new OrderDetailVo();
-		dvo2.setPro_option_no(2L);
-		dvo2.setCount(1);
-		
-		orderDetaiList.add(dvo);
-		orderDetaiList.add(dvo2);
-		
-		vo.setOrderDetailList(orderDetaiList);
-		
-		ResultActions resultActions =
-			mockMvc
-			.perform(post("/api/order/register").contentType(MediaType.APPLICATION_JSON)
-			 .content(new Gson().toJson(vo)));
-		
-		resultActions.andExpect(status().isOk())
-			.andDo(print())
-			.andExpect(jsonPath("$.result", is("success")));
-	}
-	
-	//회원 주문 조회
-	@Test
-	public void cTestOrderList() throws Exception{
-		
-		OrderVo ov = new OrderVo();
-		ov.setUser_no(9L);
-		
-		ResultActions resultActions =
-			mockMvc
-			.perform(get("/api/order").contentType(MediaType.APPLICATION_JSON)
-			 .content(new Gson().toJson(ov)));
-		
-		resultActions.andExpect(status().isOk())
-			.andDo(print())
-			.andExpect(jsonPath("$.result", is("success")));
-	}
-	
-	//비회원 주문 조회
-	@Test
-	public void dTestNonMemberOrderList() throws Exception{
-		
-		OrderVo ov = new OrderVo();
-		ov.setJu_number("2019073000006");
-		ov.setPassword("thdnjs2");
-		
-		ResultActions resultActions =
-			mockMvc
-			.perform(get("/api/order").contentType(MediaType.APPLICATION_JSON)
-			 .content(new Gson().toJson(ov)));
-		
-		resultActions.andExpect(status().isOk())
-			.andDo(print())
-			.andExpect(jsonPath("$.result", is("success")));
-	}
-	
+	/*
+	 * @Test public void aTestOrderRegister() throws Exception{
+	 * 
+	 * //회원 주문 OrderVo vo = new OrderVo(null,"박소원","01076363123","박건형","경기도 고양시 덕양구"
+	 * ,"01011112222","경비실에 맡겨주세요",3000,50000,null,null,"입금전",null,9L,null);
+	 * 
+	 * List<OrderDetailVo> orderDetaiList = new ArrayList<OrderDetailVo>();
+	 * 
+	 * OrderDetailVo dvo = new OrderDetailVo(); dvo.setPro_option_no(1L);
+	 * dvo.setCount(2);
+	 * 
+	 * OrderDetailVo dvo2 = new OrderDetailVo(); dvo2.setPro_option_no(2L);
+	 * dvo2.setCount(1);
+	 * 
+	 * orderDetaiList.add(dvo); orderDetaiList.add(dvo2);
+	 * 
+	 * vo.setOrderDetailList(orderDetaiList);
+	 * 
+	 * ResultActions resultActions = mockMvc
+	 * .perform(post("/api/order/register").contentType(MediaType.APPLICATION_JSON)
+	 * .content(new Gson().toJson(vo)));
+	 * 
+	 * resultActions.andExpect(status().isOk()) .andDo(print())
+	 * .andExpect(jsonPath("$.result", is("success"))); }
+	 * 
+	 * @Test public void aTestOrderRegister2() throws Exception{
+	 * 
+	 * //회원 재고 없는 상품 주문 OrderVo vo = new
+	 * OrderVo(null,"박소원","01076363123","박건형","경기도 고양시 덕양구"
+	 * ,"01011112222","경비실에 맡겨주세요",3000,50000,null,null,"입금전",null,9L,null);
+	 * 
+	 * List<OrderDetailVo> orderDetaiList = new ArrayList<OrderDetailVo>();
+	 * 
+	 * OrderDetailVo dvo = new OrderDetailVo(); dvo.setPro_option_no(4L);
+	 * dvo.setCount(2);
+	 * 
+	 * OrderDetailVo dvo2 = new OrderDetailVo(); dvo2.setPro_option_no(2L);
+	 * dvo2.setCount(1);
+	 * 
+	 * orderDetaiList.add(dvo); orderDetaiList.add(dvo2);
+	 * 
+	 * vo.setOrderDetailList(orderDetaiList);
+	 * 
+	 * ResultActions resultActions = mockMvc
+	 * .perform(post("/api/order/register").contentType(MediaType.APPLICATION_JSON)
+	 * .content(new Gson().toJson(vo)));
+	 * 
+	 * resultActions.andExpect(status().isBadRequest()) .andDo(print())
+	 * .andExpect(jsonPath("$.result", is("fail"))); }
+	 * 
+	 * 
+	 * @Test public void aTestOrderRegister3() throws Exception{
+	 * 
+	 * //재고 보다 많은 수량 주문 OrderVo vo = new
+	 * OrderVo(null,"박소원","01076363123","박건형","경기도 고양시 덕양구"
+	 * ,"01011112222","경비실에 맡겨주세요",3000,50000,null,null,"입금전",null,9L,null);
+	 * 
+	 * List<OrderDetailVo> orderDetaiList = new ArrayList<OrderDetailVo>();
+	 * 
+	 * OrderDetailVo dvo = new OrderDetailVo(); dvo.setPro_option_no(5L);
+	 * dvo.setCount(5);
+	 * 
+	 * OrderDetailVo dvo2 = new OrderDetailVo(); dvo2.setPro_option_no(2L);
+	 * dvo2.setCount(1);
+	 * 
+	 * orderDetaiList.add(dvo); orderDetaiList.add(dvo2);
+	 * 
+	 * vo.setOrderDetailList(orderDetaiList);
+	 * 
+	 * ResultActions resultActions = mockMvc
+	 * .perform(post("/api/order/register").contentType(MediaType.APPLICATION_JSON)
+	 * .content(new Gson().toJson(vo)));
+	 * 
+	 * resultActions.andExpect(status().isBadRequest()) .andDo(print())
+	 * .andExpect(jsonPath("$.result", is("fail"))); }
+	 * 
+	 * @Test public void bTestNonUserOrderRegister() throws Exception{
+	 * 
+	 * //비회원 주문 OrderVo vo = new
+	 * OrderVo(null,"박소원","01076363123","박건형","경기도 고양시 덕양구"
+	 * ,"01011112222","경비실에 맡겨주세요",3000,50000,null,"thdnjs2","입금전",null,null,null);
+	 * 
+	 * List<OrderDetailVo> orderDetaiList = new ArrayList<OrderDetailVo>();
+	 * 
+	 * OrderDetailVo dvo = new OrderDetailVo(); dvo.setPro_option_no(1L);
+	 * dvo.setCount(2);
+	 * 
+	 * OrderDetailVo dvo2 = new OrderDetailVo(); dvo2.setPro_option_no(2L);
+	 * dvo2.setCount(1);
+	 * 
+	 * orderDetaiList.add(dvo); orderDetaiList.add(dvo2);
+	 * 
+	 * vo.setOrderDetailList(orderDetaiList);
+	 * 
+	 * ResultActions resultActions = mockMvc
+	 * .perform(post("/api/order/register").contentType(MediaType.APPLICATION_JSON)
+	 * .content(new Gson().toJson(vo)));
+	 * 
+	 * resultActions.andExpect(status().isOk()) .andDo(print())
+	 * .andExpect(jsonPath("$.result", is("success"))); }
+	 */
+	  
+	  //회원 주문 조회
+	  
+	  @Test public void cTestOrderList() throws Exception{
+	  
+	  OrderVo ov = new OrderVo(); ov.setUser_no(9L);
+	  
+	  ResultActions resultActions = mockMvc
+	  .perform(get("/api/order").contentType(MediaType.APPLICATION_JSON)
+	  .content(new Gson().toJson(ov)));
+	  
+	  resultActions.andExpect(status().isOk()) .andDo(print())
+	  .andExpect(jsonPath("$.result", is("success"))); }
+	  
+	  //비회원 주문 조회
+	  
+	  @Test public void dTestNonMemberOrderList() throws Exception{
+	  
+	  OrderVo ov = new OrderVo(); ov.setJu_number("2019073000006");
+	  ov.setPassword("thdnjs2");
+	  
+	  ResultActions resultActions = mockMvc
+	  .perform(get("/api/order").contentType(MediaType.APPLICATION_JSON)
+	  .content(new Gson().toJson(ov)));
+	  
+	  resultActions.andExpect(status().isOk()) .andDo(print())
+	  .andExpect(jsonPath("$.result", is("success"))); }
+	 
 	
 }

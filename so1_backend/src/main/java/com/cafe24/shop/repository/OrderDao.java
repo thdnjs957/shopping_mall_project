@@ -43,5 +43,10 @@ public class OrderDao {
 		List<Map<String, Object>> map  = sqlSession.selectList("order.getList",vo);
 		return map;
 	}
+
+	public List<Map<String, Object>> getListForAdmin() {
+		List<Map<String, Object>> map  = sqlSession.selectList("order.getListForAdmin");
+		return map;
+	}
 	
 }

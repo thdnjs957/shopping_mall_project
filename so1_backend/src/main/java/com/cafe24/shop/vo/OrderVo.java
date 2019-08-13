@@ -3,13 +3,18 @@ package com.cafe24.shop.vo;
 import java.util.List;
 
 public class OrderVo {
-	
 	private Long no;
 	private String ju_name;
 	private String ju_phone;
+	//c
+	private String ju_email;
+	//c
+	private String ju_address;
 	private String su_name;
 	private String su_address;
 	private String su_phone;
+	//c
+	private String su_email;
 	private String message;
 	private int del_price;
 	private int tot_price;
@@ -22,15 +27,19 @@ public class OrderVo {
 	
 	public OrderVo() {}
 
-	public OrderVo(Long no, String ju_name, String ju_phone, String su_name, String su_address, String su_phone,
-			String message, int del_price, int tot_price, String ju_number, String password, String status,
-			String order_date, Long user_no, List<OrderDetailVo> orderDetailList) {
+	public OrderVo(Long no, String ju_name, String ju_phone, String ju_email, String ju_address, String su_name,
+			String su_address, String su_phone, String su_email, String message, int del_price, int tot_price,
+			String ju_number, String password, String status, String order_date, Long user_no,
+			List<OrderDetailVo> orderDetailList) {
 		this.no = no;
 		this.ju_name = ju_name;
 		this.ju_phone = ju_phone;
+		this.ju_email = ju_email;
+		this.ju_address = ju_address;
 		this.su_name = su_name;
 		this.su_address = su_address;
 		this.su_phone = su_phone;
+		this.su_email = su_email;
 		this.message = message;
 		this.del_price = del_price;
 		this.tot_price = tot_price;
@@ -43,7 +52,15 @@ public class OrderVo {
 	}
 
 
-
+	@Override
+	public String toString() {
+		return "OrderVo [no=" + no + ", ju_name=" + ju_name + ", ju_phone=" + ju_phone + ", ju_email=" + ju_email
+				+ ", ju_address=" + ju_address + ", su_name=" + su_name + ", su_address=" + su_address + ", su_phone="
+				+ su_phone + ", su_email=" + su_email + ", message=" + message + ", del_price=" + del_price
+				+ ", tot_price=" + tot_price + ", ju_number=" + ju_number + ", password=" + password + ", status="
+				+ status + ", order_date=" + order_date + ", user_no=" + user_no + ", orderDetailList="
+				+ orderDetailList + "]";
+	}
 
 	public Long getNo() {
 		return no;
@@ -69,6 +86,22 @@ public class OrderVo {
 		this.ju_phone = ju_phone;
 	}
 
+	public String getJu_email() {
+		return ju_email;
+	}
+
+	public void setJu_email(String ju_email) {
+		this.ju_email = ju_email;
+	}
+
+	public String getJu_address() {
+		return ju_address;
+	}
+
+	public void setJu_address(String ju_address) {
+		this.ju_address = ju_address;
+	}
+
 	public String getSu_name() {
 		return su_name;
 	}
@@ -91,6 +124,14 @@ public class OrderVo {
 
 	public void setSu_phone(String su_phone) {
 		this.su_phone = su_phone;
+	}
+
+	public String getSu_email() {
+		return su_email;
+	}
+
+	public void setSu_email(String su_email) {
+		this.su_email = su_email;
 	}
 
 	public String getMessage() {
@@ -164,7 +205,5 @@ public class OrderVo {
 	public void setOrderDetailList(List<OrderDetailVo> orderDetailList) {
 		this.orderDetailList = orderDetailList;
 	}
-	
-	
-	
+
 }

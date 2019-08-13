@@ -6,11 +6,15 @@
 	    <choose>
 	  	  <when test="user_no != null">
 			<![CDATA[
-				INSERT INTO orders (no,ju_name,ju_phone,su_name,su_address,su_phone,message,del_price,tot_price,
+				INSERT INTO orders (no,ju_name,ju_phone,ju_email,ju_address,su_name,su_address,su_phone,su_email,message,del_price,tot_price,
 					ju_number,password,status,order_date,user_no) 
 				VALUES (null,HEX(aes_encrypt(#{ju_name},'sowonkey')),HEX(aes_encrypt(#{ju_phone},'sowonkey')),
+					HEX(aes_encrypt(#{ju_email},'sowonkey')),
+					HEX(aes_encrypt(#{ju_address},'sowonkey')),
 					HEX(aes_encrypt(#{su_name},'sowonkey')),HEX(aes_encrypt(#{su_address},'sowonkey')),
-					HEX(aes_encrypt(#{su_phone},'sowonkey')),#{message},#{del_price},#{tot_price},
+					HEX(aes_encrypt(#{su_phone},'sowonkey')),
+					HEX(aes_encrypt(#{su_email},'sowonkey')),
+					#{message},#{del_price},#{tot_price},
 				CONCAT(
 	            DATE_FORMAT(now(),'%Y%m%d'),
 	            LPAD( ((select count(*) from orders o
@@ -68,12 +72,12 @@
 	
 	<select id="getList" parameterType="ordervo" resultType="map"> 
 		<![CDATA[
-			select o.order_date,o.status, o.ju_number, od.count,p.name, po.name
+			select o.order_date,o.status,o.ju_number,od.count,p.name as productName, po.name as optionName
 				from order_detail od, pro_option po, orders o , product p
 				where od.pro_option_no = po.no and od.order_no = o.no and po.product_no = p.no 
 		]]>			
 		<choose>
-			<when test="user_no != null and password != null">
+			<when test="user_no != null and password == null">
 				<![CDATA[
 					and o.user_no = #{user_no} 
 				]]>
@@ -90,7 +94,12 @@
 		]]>	
 	</select>
 	
-	
+	<select id="getListForAdmin" resultType="map"> 
+		<![CDATA[
+			select CAST(aes_decrypt(UNHEX(u.name),'sowonkey') as char) as userName,o.order_date,o.status,o.ju_number,od.count,p.name as productName, po.name as optionName
+				from order_detail od, pro_option po, orders o , product p,user u
+				where od.pro_option_no = po.no and od.order_no = o.no and po.product_no = p.no and o.user_no = u.no order by order_date;
+		]]>			
+	</select>
    
-	
 </mapper>
