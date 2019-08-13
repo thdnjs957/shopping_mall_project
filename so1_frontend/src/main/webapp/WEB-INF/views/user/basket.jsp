@@ -23,10 +23,11 @@
 	<!-- /.Navigation -->
 
  	<div class="container">
- 		
-			<table class="table" style="margin:100px 0;">
+ 		<form name="result_form" action="${pageContext.servletContext.contextPath }/order/info" method="POST">
+			<table class="table" style="margin:70px 0;">
 				  <thead>
 				    <tr>
+				      <th scope="col"><input type="checkbox" name="chk_info" value=""></th>
 				      <th scope="col">이미지</th>
 				      <th scope="col">상품명</th>
 				      <th scope="col">옵션명</th>
@@ -36,21 +37,31 @@
 				    </tr>
 				  </thead>
 				  <tbody>
-				  	<c:forEach items='${basketList }' var='list'>
+				  	<c:forEach items='${basketList }' var='list' varStatus="status">
 					  	<tr>
-					    	<th></th>
+					  		<td><input type="checkbox" name="chk_info" value=""></td>
+					    	<td>
+						    	<input type="hidden" name="basketList[${status.index }].productName" value="${list.productName }">
+						    	<input type="hidden" name="basketList[${status.index }].optionName" value="${list.optionName }">
+						    	<input type="hidden" name="basketList[${status.index }].price" value="${list.price }">
+						    	<input type="hidden" name="basketList[${status.index }].count" value="${list.count }">
+					    	</td>
 					    	<td>${list.productName }</td>
 					    	<td>${list.optionName }</td>
 					    	<td>기본 배송</td>
 					    	<td>${list.price }</td>
 					    	<td>${list.count }</td>
+					    	
+					    	
 					  	</tr>
 				  	</c:forEach>
 				  </tbody>
 				  
 			</table>
+				<input type="submit" class="btn btn-info" style="margin-bottom:40px;" value="상품 주문하기">
+			</form>
 			
-
+			
 	</div>
 	<!-- /.container -->
 

@@ -13,7 +13,7 @@ import com.cafe24.shop.frontend.vo.ProductOptionVo;
 import com.cafe24.shop.frontend.vo.UserVo;
 
 @Service
-public class BasketService {
+public class OrderService {
 	
 	RestTemplate restTemplate = new RestTemplate();
 	
@@ -25,6 +25,7 @@ public class BasketService {
 	
 	
 	public boolean addBasket(BasketVoSend param) {
+		System.out.println("param은"+param);
 		String endpoint = "http://localhost:8080/so1_backend/api/basket/register";
 		JSONResultBoolean jsonResult = restTemplate.postForObject(endpoint,param.getBasketList(),JSONResultBoolean.class);
 		return jsonResult.getData();

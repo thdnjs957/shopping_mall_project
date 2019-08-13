@@ -4,8 +4,6 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -18,10 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cafe24.shop.frontend.security.SecurityUser;
 import com.cafe24.shop.frontend.service.BasketService;
-import com.cafe24.shop.frontend.service.UserService;
 import com.cafe24.shop.frontend.vo.BasketVo;
 import com.cafe24.shop.frontend.vo.BasketVoSend;
-import com.cafe24.shop.frontend.vo.UserVo;
 
 @Controller
 @RequestMapping("/basket")
@@ -55,7 +51,6 @@ public class BasketController {
 		bv.setUser_no(userNo);
 		
 		List<Map<String, Object>> basketList = basketService.getList(bv);
-		System.out.println("-----"+basketList);
 		model.addAttribute("basketList",basketList);
 		return "user/basket";
 	}
