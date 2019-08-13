@@ -24,8 +24,32 @@
 
  	<div class="container">
  		
-		
-
+			<table class="table" style="margin:100px 0;">
+				  <thead>
+				    <tr>
+				      <th scope="col">이미지</th>
+				      <th scope="col">상품명</th>
+				      <th scope="col">옵션명</th>
+				      <th scope="col">배송구분</th>				      
+				      <th scope="col">판매가</th>
+				      <th scope="col">수량</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  	<c:forEach items='${basketList }' var='list'>
+					  	<tr>
+					    	<th></th>
+					    	<td>${list.productName }</td>
+					    	<td>${list.optionName }</td>
+					    	<td>기본 배송</td>
+					    	<td>${list.price }</td>
+					    	<td>${list.count }</td>
+					  	</tr>
+				  	</c:forEach>
+				  </tbody>
+				  
+			</table>
+			
 
 	</div>
 	<!-- /.container -->

@@ -106,7 +106,7 @@
 					    }
 					});
 					
-					var tag = '<tr id = "pro_option_tr"><td>(${vo.name})'+result+'</td>'
+					var tag = '<tr class = "pro_option_tr"><td>(${vo.name})'+result+'</td>'
 			            tag+='<td style="width:80px;">'
 			            tag+='<span class="minus">-</span>'
 			            tag+='<input class="count_input" type="text" value="1"/>'
@@ -120,37 +120,46 @@
 					
 					isFirst = false;
 				}
-				
 			}
-
 		});
 		
 		//장바구니 ajax
-		//basketVo의 pro_option_no,count,user_no
 		$('#basket_button').click(function() {
-			 var no = $(".pro_option_no").val();
-			 var count = $(".quantity_price").text();
-				console.log(no);
-				console.log(count);
-				$.ajax({
-				    type: "POST",
-				    url : "${pageContext.servletContext.contextPath }/user/basket",
-				    data : {
-				    		  pro_option_no: no,
-				    		  count: count
-				            },
-				    contentType : "application/x-www-form-urlencoded; charset=utf-8",
-				    dataType : "json",
-				    success : function(data){
-				    	 //Ajax 성공시
-				    	 // window.location.href = "main.html";
-						 alert('성공했습니다.');
-				    },error : function(){
-				        //Ajax 실패시
-				        alert('실패했습니다');
-				    }
+		
+			var totVo = new Object();
+			var voList = new Array();
+			
+			$(".pro_option_tr").each(function(index, item) {
+				var vo = new Object();
+				vo["pro_option_no"] = $(item).children().eq(3).find('.pro_option_no').val();
+				vo["count"] = $(item).children().eq(1).find('.count_input').val();
+				voList.push(vo);
+			});
+			
+			totVo["basketList"] = voList;
+			
+			$.ajax({
+			    type: "POST",
+			    url : "${pageContext.servletContext.contextPath }/basket/register",
+			    data : JSON.stringify(totVo) ,
+			    dataType : "json",
+			    contentType: 'application/json',
+			    success : function(data){
+			    	 //Ajax 성공시
+			    	 var con = confirm('장바구니 등록에 성공하셨습니다. 확인하시겠습니까?');
+					 if (con) {
+						  window.location.href = "${pageContext.servletContext.contextPath}/basket"
+					 }
+					 else {
+					     alert('삭제가 취소되었습니다.');
+					 }
+					 
+			    },error : function(){
+			        //Ajax 실패시
+			        alert('실패했습니다');
+			    }
 
-				});
+			});
 				
 		});
 		

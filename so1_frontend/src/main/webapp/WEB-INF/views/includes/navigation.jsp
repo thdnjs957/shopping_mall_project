@@ -22,7 +22,7 @@
 						</sec:authorize>
 						<sec:authorize access="isAuthenticated()">
 							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/logout">로그아웃</a></li>
-							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/basket">장바구니</a></li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/basket">장바구니</a></li>
 						</sec:authorize>
 						<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a></li>
 					</c:when>
@@ -34,7 +34,7 @@
 						</sec:authorize>
 						<sec:authorize access="isAuthenticated()">
 							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/logout">로그아웃</a></li>
-							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/basket">장바구니</a></li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/basket">장바구니</a></li>
 						</sec:authorize>
 						<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a></li>
 					</c:when>
@@ -46,7 +46,7 @@
 						</sec:authorize>
 						<sec:authorize access="isAuthenticated()">
 							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/logout">로그아웃</a></li>
-							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/basket">장바구니</a></li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/basket">장바구니</a></li>
 						</sec:authorize>
 						<li class="nav-item active"><a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a></li>
 					</c:when>					
@@ -58,7 +58,7 @@
 						</sec:authorize>
 						<sec:authorize access="isAuthenticated()">
 							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/logout">로그아웃</a></li>
-							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/user/basket">장바구니</a></li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/basket">장바구니</a></li>
 						</sec:authorize>
 						<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a></li>
 					</c:otherwise>				

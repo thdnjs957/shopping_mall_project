@@ -7,6 +7,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.cafe24.shop.frontend.dto.JSONResult;
 import com.cafe24.shop.frontend.vo.BasketVo;
+import com.cafe24.shop.frontend.vo.BasketVoSend;
 import com.cafe24.shop.frontend.vo.ProductOptionVo;
 import com.cafe24.shop.frontend.vo.UserVo;
 
@@ -23,7 +24,7 @@ public class UserService {
 	
 	public Boolean join(UserVo userVo) {
 		String endpoint = "http://localhost:8080/so1_backend/api/user/join";
-		JSONResultJoin jsonResult = restTemplate.postForObject(endpoint,userVo,JSONResultJoin.class);
+		JSONResultBoolean jsonResult = restTemplate.postForObject(endpoint,userVo,JSONResultBoolean.class);
 		return jsonResult.getData();
 	}
 	
@@ -33,16 +34,9 @@ public class UserService {
 		return jsonResult.getData();
 	}
 	
-	public boolean addBasket(BasketVo basketVo) {
-		
-		String endpoint = "http://localhost:8080/so1_backend/api/user/join";
-		JSONResultJoin jsonResult = restTemplate.postForObject(endpoint,basketVo,JSONResultJoin.class);
-		return jsonResult.getData();
-		
-	}
 	
 	private static class JSONResultUser extends JSONResult<UserVo> {}
-	private static class JSONResultJoin extends JSONResult<Boolean> {}
+	private static class JSONResultBoolean extends JSONResult<Boolean> {}
 	private static class JSONResultUserList extends JSONResult<List<UserVo>> {}
 	
 

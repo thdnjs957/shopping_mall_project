@@ -21,9 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.shop.dto.JSONResult;
 import com.cafe24.shop.service.BasketService;
-import com.cafe24.shop.service.ProductService;
 import com.cafe24.shop.vo.BasketVo;
-import com.cafe24.shop.vo.ProductOptionVo;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -45,7 +43,6 @@ public class BasketController {
 	public  ResponseEntity<JSONResult> BasketRegister(@RequestBody List<BasketVo> bvoList ,BindingResult bResult) {
 		
 		boolean result = basketService.addBasket(bvoList);
-		
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
 
@@ -74,7 +71,7 @@ public class BasketController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="BasketVo", value ="장바구니 BasketVo", required=true, dataType="BasketVo", defaultValue="")
 	})
-	@GetMapping("")
+	@PostMapping("")
 	public  ResponseEntity<JSONResult> BasketList(@RequestBody BasketVo vo) {
 		
 		List<Map<String, Object>> bv = basketService.showBasket(vo); 
