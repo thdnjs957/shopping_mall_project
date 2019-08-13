@@ -34,6 +34,8 @@
 			var count = parseInt($input.val()) - 1;
 			count = count < 1 ? 1 : count;
 			$input.val(count);
+			var $price = $(this).parent().parent().find('.quantity_price');
+			$price.text(parseInt($input.val()) * ${vo.price});
 			$input.change();
 			return false;
 		});
@@ -41,6 +43,8 @@
 		$(document).on('click','.plus',function(e){
 			var $input = $(this).parent().find('input');
 			$input.val(parseInt($input.val()) + 1);
+			var $price = $(this).parent().parent().find('.quantity_price');
+			$price.text(parseInt($input.val()) * ${vo.price});
 			$input.change();
 			return false;
 		});

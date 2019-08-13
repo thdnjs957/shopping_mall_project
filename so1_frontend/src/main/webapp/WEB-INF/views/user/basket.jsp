@@ -50,9 +50,8 @@
 					    	<td>${list.productName }</td>
 					    	<td>${list.optionName }</td>
 					    	<td>기본 배송</td>
-					    	<td>${list.price }</td>
+					    	<td>${list.price * list.count }</td>
 					    	<td>${list.count }</td>
-					    	
 					    	
 					  	</tr>
 				  	</c:forEach>

@@ -94,12 +94,36 @@
 		]]>	
 	</select>
 	
-	<select id="getListForAdmin" resultType="map"> 
+	<select id="getListForAdminOrderDetail" resultType="map"> 
 		<![CDATA[
 			select CAST(aes_decrypt(UNHEX(u.name),'sowonkey') as char) as userName,o.order_date,o.status,o.ju_number,od.count,p.name as productName, po.name as optionName
 				from order_detail od, pro_option po, orders o , product p,user u
-				where od.pro_option_no = po.no and od.order_no = o.no and po.product_no = p.no and o.user_no = u.no order by order_date;
+				where od.pro_option_no = po.no and od.order_no = o.no and po.product_no = p.no and o.user_no = u.no order by o.no desc
 		]]>			
 	</select>
-   
+	
+	<select id="getListForAdminOrder" resultType="map"> 
+		<![CDATA[
+			select CAST(aes_decrypt(UNHEX(u.name),'sowonkey') as char) as userName,o.order_date,o.status,o.ju_number,od.count,p.name as productName, po.name as optionName
+				from order_detail od, pro_option po, orders o , product p,user u
+				where od.pro_option_no = po.no and od.order_no = o.no and po.product_no = p.no and o.user_no = u.no order by o.no desc
+		]]>			
+	</select>
+	
+	
+	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -55,7 +55,6 @@ public class OrderController {
 		
 		orderVo.setUser_no(userNo);
 		orderVo.setStatus("주문완료");
-		orderVo.setTot_price(0);
 		orderVo.setDel_price(2500);
 		orderVo.setOrderDetailList(list.getDetailList());
 		

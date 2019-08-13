@@ -81,6 +81,14 @@
 			return true;
 		}
 		
+		//총 가격 계산
+		var total = 0;
+		$(".basketTr").each(function(index,item){
+			total += Number($(item).find('.sep_price').text());
+		});
+		
+		$("#tot_price").text("총 합계 : "+total+"원");
+		$("input[name=tot_price]").val(total);
 	});
 	
 	
@@ -99,7 +107,7 @@
 	
 		<form id ="order_info_form" action="${pageContext.servletContext.contextPath }/order" method="POST" onsubmit="return submitCheck()">
 	
-		<table class="table" style="margin: 70px 0;">
+		<table class="table" style="margin: 70px 0 30px 0;">
 			<thead>
 				<tr>
 					<th scope="col"><input type="checkbox" name="chk_info"
@@ -114,7 +122,7 @@
 			</thead>
 			<tbody>
 				<c:forEach items='${basketList }' var='list' varStatus="status">
-					<tr>
+					<tr class="basketTr">
 						<td><input type="checkbox" name="chk_info" value=""></td>
 						<td>
 					    	<input type="hidden" name="detailList[${status.index }].pro_option_no" value="${list.pro_option_no }">
@@ -123,17 +131,19 @@
 						<td>${list.productName }</td>
 						<td>${list.optionName }</td>
 						<td>기본 배송</td>
-						<td>${list.price }</td>
+						<td class="sep_price">${list.price * list.count }</td>
 						<td>${list.count }</td>
 					</tr>
 				</c:forEach>
 			</tbody>
-
+			
 		</table>
+			<input type="number" name="tot_price" value="" style="display:none"/>
+			<h5 id = "tot_price" style="float:right;" ></h5>
 		
 		
 		     <!-- 주문 정보 -->
-             <div class="orderArea  ec-shop-ordererForm">
+             <div class="orderArea  ec-shop-ordererForm" style = "margin-top:70px;">
                  <div class="title">
                      <h4 class="-titlepack -font-ns">주문 정보</h4>
                      <p class="required">
